@@ -1,25 +1,19 @@
 # ArcadeDream
 Arcade Dream
-Alfred Shaker
-Design Document
 
-Overall premiss: This game takes place in a small town where a new arcade just opened up. As one of select lucky winners, you get to test out games at this arcade before it opens up. The owner seems nice enough, but you’re more focused on the games at this point. Maybe just look over your shoulder every once in a while…
+Project Manager: Alfred Shaker
 
+Design Document: https://github.com/ksu-cs-robotics/ArcadeDream/blob/master/doc/DesignDocument.md
 
-The Main Loop: Mainly this game will revolve around the player walking around an arcade using a created avatar (customizable) and playing games at the arcade. The player walks up to an arcade game and either plays it single player or opts in for multiplayer and waits for others to walk up and join them. The game transitions to whatever game the player selects and runs a new session for multiplayer if needed. Succeeding at the games will earn you rewards such as cosmetic things for your avatar or maybe something to expand on the overarching story with the arcade itself. 
+Rules of Naming conventions: https://github.com/ksu-cs-robotics/ArcadeDream/blob/master/doc/rules_nameing_convensions.md
 
-Examples:
-
-Lobby from Dragon Ball Fighterz
-
-Lobby from Guilty Gear Xrd Rev 2
-
+Rules of Version Control: https://github.com/ksu-cs-robotics/ArcadeDream/blob/master/doc/rules_version_control.md
 
 Teams:
 Overall structure: 
 Teams will build the overall arcade throughout the semester and each iteration make one arcade game. They will create a design document at the start of each iteration for the game they will make during it. While at the same time progressing the story of the arcade, increasing the size and adding elements to the arcade room. Maybe unlock cosmetics for winning the games. So each iteration they can come up with new things for the arcade itself while also making a new game inside it. This will allow them to create different types of games and learn to iterate and move quickly. 
 
-https://www.mindmeister.com/1313083613
+https://mm.tt/1316263107?t=4ZLPKRvYiN
 
 
 Team 1:
@@ -37,12 +31,6 @@ Artist: create/get visuals for the game based on design for the game
 Team 4: 
 Networking: create networking for the games of the iterations. Mostly will be implementing the overall networking technique for the arcade games but in their own sessions. This will help people rotate into the networking job and learn more about it and figure out problems with the main networking team. 
 
-google forms for team evaluations
-https://docs.google.com/forms/d/1y1kPM-fZkTCFyaZxhyKJcpgVJAXu32iHm3csTrGL1mo/edit
 
 
-Naming conventions for filenames and variable names
-Global variables: LikeThis
-Private variables: likeThis_m
-Filenames: LikeThis.cs
 
