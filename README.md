@@ -3,11 +3,11 @@ Arcade Dream
 
 Project Manager: Alfred Shaker
 
-Design Document: https://github.com/ksu-cs-robotics/ArcadeDream/blob/master/doc/DesignDocument.md
+1. Design Document: https://github.com/ksu-cs-robotics/fall-2019-gdp-main-project-arcadedream/blob/master/doc/DesignDocument.md
 
-Rules of Naming conventions: https://github.com/ksu-cs-robotics/ArcadeDream/blob/master/doc/rules_nameing_convensions.md
+2. Rules of Naming conventions: https://github.com/ksu-cs-robotics/fall-2019-gdp-main-project-arcadedream/blob/master/doc/rules_nameing_convensions.md
 
-Rules of Version Control: https://github.com/ksu-cs-robotics/ArcadeDream/blob/master/doc/rules_version_control.md
+3. Rules of Version Control: https://github.com/ksu-cs-robotics/fall-2019-gdp-main-project-arcadedream/blob/master/doc/rules_version_control.md
 
 Teams:
 Overall structure: 
