@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+
 /// <summary>
 /// Makes the parent (Camera) gameobject follow another referenced gameobject with a given offset
 /// Author: Josh Dotson

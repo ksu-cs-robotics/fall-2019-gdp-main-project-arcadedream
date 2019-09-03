@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// Implements basics controls for 
+/// Implements basics controls for WASD, and jumping movements
+/// Author: Josh Dotson
+/// Version: 1
 /// </summary>
 [RequireComponent(typeof(Rigidbody))]
 public class PlayerController : MonoBehaviour
@@ -12,6 +14,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] public float JUMPSPEED = 5.0f;
 
     protected Rigidbody rigidbody_m;
+    protected List<Collider> colliders_m;
 
     // Start is called before the first frame update
     void Start()
@@ -49,6 +52,33 @@ public class PlayerController : MonoBehaviour
                 rigidbody_m.AddRelativeForce(Vector3.up * JUMPSPEED, ForceMode.Impulse);
             }          
         }
+
+        if (Input.GetAxis("Submit").Equals(0))
+        {
+            var game = colliders_m.Find((c) => c.gameObject.tag == "Game");
+
+            if (game.Equals(default(Collider)))
+            {
+                //colliders_m[0].gameObject.GetComponent<>
+            }
+            else
+            {
+                //game.gameObject.GetComponent<>
+            }
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (!colliders_m.Contains(other))
+        {
+            colliders_m.Add(other);
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        colliders_m.Remove(other);
     }
 }
 
