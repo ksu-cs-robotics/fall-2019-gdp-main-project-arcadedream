@@ -53,7 +53,7 @@ public class PlayerController : MonoBehaviour
             }          
         }
 
-        if (Input.GetAxis("Submit").Equals(0))
+        if (!Input.GetAxis("Submit").Equals(0))
         {
             var game = colliders_m.Find((c) => c.gameObject.tag == "Game");
 
