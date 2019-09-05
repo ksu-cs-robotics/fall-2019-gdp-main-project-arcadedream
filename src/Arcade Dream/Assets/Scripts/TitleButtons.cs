@@ -13,7 +13,7 @@ public class TitleButtons : MonoBehaviour
 
     public void Settings()
     {
-        Debug.Log("Openning Setting");
+        Debug.Log("Opening Setting");
         //
         //make setting UI visable 
         //
