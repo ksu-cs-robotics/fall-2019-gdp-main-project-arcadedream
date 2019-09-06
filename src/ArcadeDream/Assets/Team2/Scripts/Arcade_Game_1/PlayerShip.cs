@@ -27,9 +27,9 @@ public enum WeaponInfo : int
 /// </summary>
 public class Weapon
 {
-    static double Damage { get; set; }
-    static int FireRate { get; set; }
-    static int NumProjectiles { get; set; }
+    public double Damage { get; set; }
+    public int FireRate { get; set; }
+    public int NumProjectiles { get; set; }
 
     public Weapon()
     {
@@ -49,6 +49,7 @@ public class Weapon
     {
         NumProjectiles = newNumProjectiles;
     }
+    public Weapon(Weapon newWeapon) : this(newWeapon.Damage, newWeapon.FireRate, newWeapon.NumProjectiles) { }
 }
 
 /// <summary>
@@ -61,6 +62,7 @@ public static class PlayerWeapons
     public static Weapon Standard = new Weapon();
     public static Weapon IncreasedDamage = new Weapon((double)WeaponInfo.PlayerDamageIncreased);
     public static Weapon IncreasedFireRate = new Weapon((double)WeaponInfo.PlayerDamageStandard, (int)WeaponInfo.PlayerFireRateIncreased);
+    public static Weapon TripleShot = new Weapon((double)WeaponInfo.PlayerDamageStandard, (int)WeaponInfo.PlayerFireRateStandard, (int)WeaponInfo.PlayerNumProjectilesTriple);
 }
 
 /// <summary>
@@ -72,24 +74,34 @@ public static class PlayerWeapons
 public class PlayerShip : MonoBehaviour
 {
     [SerializeField] public float MOVEMENTSPEED = 1.0f;
+    [SerializeField] public float BULLETSPEED = 5.0f;
+    [SerializeField] public GameObject BULLETPREFAB;
 
     // These are serialized for debugging purposes
-    [SerializeField] public double HEALTH;
-    [SerializeField] public int LIVES;
+    [SerializeField] public double HEALTH = 100.0f;
+    [SerializeField] public int LIVES = 3;
+
+    // Points will be incremented remotely by impacting Bullets referencing this instance
+    public int Points;
 
     protected Rigidbody rigidbody_m;
     protected Weapon primaryWeapon_m;
+    protected float weaponTimer_m;
 
-    // Events that may be useful for others using this class
-    public event Action TookDamage;
+    // Events that may be useful for others using this class such as Team 1 for UI elements
+    public event Action PointsChanged;
+    public event Action HealthChanged;
     public event Action Respawned;
     public event Action Death;
 
     public PlayerShip()
     {
+        Points = 0;
+
         primaryWeapon_m = PlayerWeapons.Standard;
 
-        TookDamage = () => { };
+        PointsChanged = () => { };
+        HealthChanged = () => { };
         Respawned = () => { };
         Death = () => { };
     }
@@ -131,10 +143,15 @@ public class PlayerShip : MonoBehaviour
     }
     private void Attack()
     {
-        if (!Input.GetAxis("Fire1").Equals(0))
+        weaponTimer_m += Time.deltaTime;
+
+        if ((!Input.GetAxis("Fire1").Equals(0)) && ((1.0 / primaryWeapon_m.FireRate) <= weaponTimer_m))
         {
-            // Instantiate(** Bullet Prefab **, ** Local Position on PlayerShip Prefab)
-            // Set velocity of this new object to the bullet speed
+            GameObject bullet = Instantiate(BULLETPREFAB, transform.position + Vector3.right, transform.rotation);
+            // make the bullet assinged to the player gameObject
+            bullet.GetComponent<Rigidbody>().velocity = Vector3.right * BULLETSPEED;
+
+            weaponTimer_m = 0.0f;
         }
 
         // We may use this in the future if we decide to add secondarys/abilities
@@ -156,7 +173,7 @@ public class PlayerShip : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         // if it is an enemy object ie tagged enemy, destory the player object and decrement the lives
-
+        // TookDamage.Invoke();
         // if it is a powerup, delete it, and apply the effects
     }
 }

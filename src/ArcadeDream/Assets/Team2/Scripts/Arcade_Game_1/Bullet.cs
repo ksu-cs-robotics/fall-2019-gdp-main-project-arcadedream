@@ -2,20 +2,21 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody))]
 public class Bullet : MonoBehaviour
 {
-    GameObject firer;
+    GameObject Shooter { get; set; }
 
     private Bullet()
     {
 
     }
-    public Bullet(ref GameObject playerObject) : this()
+    public Bullet(GameObject playerObject) : this()
     {
-        firer = playerObject;
+        Shooter = playerObject;
     }
 
-    private void OnTriggerEnter(ref Collider other)
+    private void OnTriggerEnter(Collider other)
     {
         // If other is not an Enemy, it will throw an exception
         try
