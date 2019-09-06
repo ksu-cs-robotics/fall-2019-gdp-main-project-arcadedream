@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     public float speed = 1;
+    Vector3 movement;
     // Start is called before the first frame update
     void Start()
     {
@@ -14,7 +15,12 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        transform.Translate(Input.GetAxisRaw("Horizontal") * Time.deltaTime * speed, 0f, Input.GetAxisRaw("Vertical") * Time.deltaTime * speed);
-        
+        float h = Input.GetAxisRaw("Horizontal");
+        float v = Input.GetAxisRaw("Vertical");
+        movement.Set(h, 0f, v);
+        movement = movement.normalized * speed * Time.deltaTime;
+        transform.Translate(movement);
+
+
     }
 }
