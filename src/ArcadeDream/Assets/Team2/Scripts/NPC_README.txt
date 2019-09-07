@@ -4,7 +4,7 @@ To get NPC/player interaction to work properly:
 -create sphere collider around npc (as big as you want the interaction radius), set as trigger
 
 PlayerController.cs script must be attached to the player object. This script uses a 
-variable "DIALOGUECANVAS". The canvas that houses all of the NPC dialogue (buttons, 
+variable "DIALOGUECANVAS". Everything for the NPC dialogue (buttons, 
 text, etc) should be housed under one canvas and dragged to this variable.
 
 NpcInteraction.cs script must be attached to the npc objects. This script uses a 
