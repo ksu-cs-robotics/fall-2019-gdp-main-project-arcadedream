@@ -8,5 +8,5 @@ variable "DIALOGUECANVAS". Everything for the NPC dialogue (buttons,
 text, etc) should be housed under one canvas and dragged to this variable.
 
 NpcInteraction.cs script must be attached to the npc objects. This script uses a 
-variable "INTERACTTEXT". I created a text element under the global canvas to say
+variable "INTERACTTEXT". Create a text element under the global canvas to say
 "[X] To Talk". This text element needs to be dragged to this variable.
