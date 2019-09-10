@@ -175,5 +175,26 @@ public class PlayerShip : MonoBehaviour
         // if it is an enemy object ie tagged enemy, destory the player object and decrement the lives
         // TookDamage.Invoke();
         // if it is a powerup, delete it, and apply the effects
+
+        if (other.gameObject.tag != gameObject.tag)
+        {
+            switch (other.gameObject.tag)
+            {
+                case "Player":
+                {
+                    break;
+                }
+                case "PowerUp":
+                {
+                    // Get the power ups effects from GetComponent 
+                    break;
+                }
+                default:
+                {
+                    // DEATH
+                    break;
+                }
+            }
+        }
     }
 }

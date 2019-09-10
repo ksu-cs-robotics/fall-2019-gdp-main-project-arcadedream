@@ -18,14 +18,30 @@ public class Bullet : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        // If other is not an Enemy, it will throw an exception
-        try
+        if (Shooter.gameObject.tag == other.gameObject.tag)
+            return;
+
+        switch (other.gameObject.tag)
         {
-            // other.gameObject.GetComponent<Enemy>().
-        }
-        finally
-        {
-            // Deal the damage to the other Collider and then destory this gameobject
+            case "Player" :
+                {
+                    // other.gameObject.GetComponent<PlayerShip>().HEALTH 
+                    break;
+                }
+            case "Enemy":
+                {
+                    // other.gameObject.GetComponent<Enemy>().HEALTH 
+                    break;
+                }
+            case "Obstacle":
+                {
+                    // other.gameObject.GetComponent<Obstacle>().HEALTH 
+                    break;
+                }
+            default:
+                {
+                    break;
+                }
         }
     }
 }
