@@ -18,7 +18,7 @@ public class InteractController : MonoBehaviour
     private List<GameObject> blacklist_m;
 
     // Event that will be executed when player interacts, and this can be changed at runtime
-    public event Func<GameObject, dynamic> OnInteract;
+    public event Func<GameObject, GameObject> OnInteract;
 
     // Defines default behaviour of the InteractController
     public InteractController()
@@ -37,7 +37,7 @@ public class InteractController : MonoBehaviour
         OnInteract += interactHandler;
     }
 
-    public dynamic Interact(GameObject caller)
+    public GameObject Interact(GameObject caller)
     {
         // If this caller is muted, dont return anything
         if (blacklist_m.Exists((c) => c == caller))

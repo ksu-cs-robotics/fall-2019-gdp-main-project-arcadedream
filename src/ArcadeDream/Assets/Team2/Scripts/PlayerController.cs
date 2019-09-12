@@ -21,15 +21,16 @@ public class PlayerController : MonoBehaviour // NetworkBehaviour
 
     // Stores references to both the Players UI canvas, as well as the text element regarding interact text
     protected GameObject playerUICanvas_m;
+    protected GameObject playerDialogMenu_m;
     protected Text playerUIInteractText_m;
-                                                // Defines what object [E] interacts with, and is used to update InteractText every frame
-    // protected bool talkFlag_m = false;       //flag to keep track of whether or not the player wants to talk to NPC
-    // public GameObject DIALOGUECANVAS;
 
     // Containers that store references to all colliders, as well as which one is active for interaction
     protected List<Collider> nearbyInteractableObjects_m;
     public Collider currentInteractableObject_m;
     public bool IsInteracting;
+
+    // protected bool talkFlag_m = false;       //flag to keep track of whether or not the player wants to talk to NPC
+    // public GameObject DIALOGUECANVAS;
 
     // This acts as a buffer to prevent a interact loop from occuring when the sumbit key is held down
     protected bool SubmitKeyDown;
@@ -45,7 +46,7 @@ public class PlayerController : MonoBehaviour // NetworkBehaviour
     {
         rigidbody_m = GetComponent<Rigidbody>();
 
-        playerUICanvas_m = gameObject.transform.Find("PlayerUICanvas").gameObject;
+        playerUICanvas_m = gameObject.transform.Find("UI").gameObject;
         playerUIInteractText_m = playerUICanvas_m.transform.Find("InteractText").gameObject.GetComponent<UnityEngine.UI.Text>();
 
         // Probably should have made an actual constructor to put this in but YOLO
@@ -108,7 +109,7 @@ public class PlayerController : MonoBehaviour // NetworkBehaviour
     void Update()
     {
         // Display interaction text onto the players UI (Would rather use ?? for this but unity is being stupid about it so if statement it is)
-        if (currentInteractableObject_m != null)
+        if (currentInteractableObject_m != null && !IsInteracting)
         {
             playerUIInteractText_m.text = currentInteractableObject_m.GetComponent<InteractController>().INTERACTTEXT;
         }
@@ -128,12 +129,19 @@ public class PlayerController : MonoBehaviour // NetworkBehaviour
                 {
                     var dialogBox = currentInteractableObject_m.GetComponent<InteractController>().Interact(this.gameObject);
                     IsInteracting = true;
+
                     // Put dialog box on player UI canvas
+                    playerDialogMenu_m = Instantiate(dialogBox, playerUICanvas_m.transform);
+                    playerDialogMenu_m.transform.SetParent(playerUICanvas_m.transform, false);
+                    playerDialogMenu_m.SetActive(true);
                 }
                 else
                 {
                     IsInteracting = false;
+
                     // Remove dialog box from player UI canvas, and return player to arcade
+                    playerDialogMenu_m.SetActive(false);
+                    Destroy(playerDialogMenu_m);
                 }
             }
             catch (Exception ex)
