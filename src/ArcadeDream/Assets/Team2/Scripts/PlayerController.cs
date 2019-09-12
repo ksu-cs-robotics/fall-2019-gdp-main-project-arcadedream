@@ -28,7 +28,17 @@ public class PlayerController : MonoBehaviour // NetworkBehaviour
 
     // Containers that store references to all colliders, as well as which one is active for interaction
     protected List<Collider> nearbyInteractableObjects_m;
-    protected Collider currentInteractableObject_m; 
+    public Collider currentInteractableObject_m;
+    public bool IsInteracting;
+
+    // This acts as a buffer to prevent a interact loop from occuring when the sumbit key is held down
+    protected bool SubmitKeyDown;
+
+    void Awake()
+    {
+        // This will prevent the playerObject from being destroyed when they enter or exit another subgame scene
+        DontDestroyOnLoad(transform.gameObject);
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -41,6 +51,9 @@ public class PlayerController : MonoBehaviour // NetworkBehaviour
         // Probably should have made an actual constructor to put this in but YOLO
         nearbyInteractableObjects_m = new List<Collider>();
 
+        // Stores whether or not a character is already interacting with someone, and if so, ignore interact input
+        IsInteracting = false;
+
         // DIALOGUECANVAS.SetActive(false);    //doesnt need to be in player, can be moved to an enviroment start script at a later time
         //implemented here for now for clariy
     }
@@ -50,14 +63,17 @@ public class PlayerController : MonoBehaviour // NetworkBehaviour
         var movement = new Vector3();
         var jump = new Vector3();
 
-        movement.Set(Input.GetAxisRaw("Horizontal"), 0f, Input.GetAxisRaw("Vertical"));
-        movement = movement.normalized * Time.deltaTime;
+        // If the character is interacting with a game, ignore movement input so they don't act out there actions in the subgame
+        if (!IsInteracting)
+        {
+            movement.Set(Input.GetAxisRaw("Horizontal"), 0f, Input.GetAxisRaw("Vertical"));
+            movement = movement.normalized * Time.deltaTime;
+            jump.Set(0f, Input.GetAxisRaw("Jump"), 0f);
 
-        // Choose movement multiplier based on whether or not the sprint input is used
-        if (!Input.GetAxis("Sprint").Equals(0)) { movement *= RUNSPEED; }
-        else { movement *= WALKSPEED; }
-
-        jump.Set(0f, Input.GetAxisRaw("Jump"), 0f);
+            // Choose movement multiplier based on whether or not the sprint input is used
+            if (!Input.GetAxisRaw("Sprint").Equals(0)) { movement *= RUNSPEED; }
+            else { movement *= WALKSPEED; }
+        }
 
         // Process user movement input...
         if (!movement.Equals(Vector3.zero))
@@ -102,13 +118,22 @@ public class PlayerController : MonoBehaviour // NetworkBehaviour
         }
         
         // Process interaction input ([E])
-        if (!Input.GetAxis("Submit").Equals(0))
+        if (!Input.GetAxisRaw("Submit").Equals(0) && !SubmitKeyDown)
         {
+            SubmitKeyDown = true;
+
             try
             {
-                if (!currentInteractableObject_m.Equals(default(Collider)))
+                if (!IsInteracting && currentInteractableObject_m != null)
                 {
                     var dialogBox = currentInteractableObject_m.GetComponent<InteractController>().Interact(this.gameObject);
+                    IsInteracting = true;
+                    // Put dialog box on player UI canvas
+                }
+                else
+                {
+                    IsInteracting = false;
+                    // Remove dialog box from player UI canvas, and return player to arcade
                 }
             }
             catch (Exception ex)
@@ -117,7 +142,10 @@ public class PlayerController : MonoBehaviour // NetworkBehaviour
             }
             /*finally { }*/ // If the player doesnt need to know if someone blocked them, use finally instead
         }
-
+        else if (Input.GetAxisRaw("Submit").Equals(0)) // This is to prevent server DDOSing from holding down the sumbit key...
+        {
+            SubmitKeyDown = false;
+        }
     }
 
     // When object comes in contact with the player, add it to the list of nearby objects
@@ -156,7 +184,7 @@ public class PlayerController : MonoBehaviour // NetworkBehaviour
         // Remove other, as it just moved out of range
         nearbyInteractableObjects_m.Remove(other);
 
-        // If the object that just moved out of range was the current interactable object
+        // If the object that just moved out of range was the current interactable object. The null check is so its not resorted when other is null
         if (currentInteractableObject_m != null && currentInteractableObject_m.Equals(other))
         {
             // Find new proximal interactable object

@@ -23,6 +23,8 @@ public class InteractController : MonoBehaviour
     // Defines default behaviour of the InteractController
     public InteractController()
     {
+        blacklist_m = new List<GameObject>();
+
         Func<GameObject, GameObject> genericInteractHandler = (caller) =>
         {
             return dialogMenuCanvas;
@@ -30,7 +32,7 @@ public class InteractController : MonoBehaviour
 
         OnInteract += genericInteractHandler;
     }
-    public InteractController(Func<GameObject, GameObject> interactHandler)
+    public InteractController(Func<GameObject, GameObject> interactHandler) : this()
     {
         OnInteract += interactHandler;
     }

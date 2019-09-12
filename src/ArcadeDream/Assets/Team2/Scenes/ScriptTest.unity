@@ -282,6 +282,7 @@ GameObject:
   - component: {fileID: 603849699}
   - component: {fileID: 603849698}
   - component: {fileID: 603849701}
+  - component: {fileID: 603849702}
   m_Layer: 0
   m_Name: ArcadeGame
   m_TagString: Game
@@ -375,6 +376,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   INTERACTTEXT: Press [E] to play "Xeonic Invaders"
   dialogMenuCanvas: {fileID: 0}
+--- !u!114 &603849702
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 603849696}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ec82d657ca8c7b4ea64f9e0c2ad17a7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SUBGAMESCENENAME: 
 --- !u!1 &624688409
 GameObject:
   m_ObjectHideFlags: 0
