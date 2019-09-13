@@ -3,9 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Implements the basic enemy mechanics
+/// Author: Jared Anderson
+/// Version: 1
+/// </summary>
 public class Enemy : MonoBehaviour
 {
-    // Start is called before the first frame update
     void Start()
     {
         
