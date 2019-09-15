@@ -67,8 +67,8 @@ public static class PlayerWeapons
 
 /// <summary>
 /// Implements the basic mechanics and attributes associted with any player's ship
-/// Author: Josh Dotson
-/// Version: 1
+/// Author: Josh Dotson, Lew Fortwangler
+/// Version: 2
 /// </summary>
 [RequireComponent(typeof(Rigidbody))]
 public class PlayerShip : MonoBehaviour
@@ -76,6 +76,7 @@ public class PlayerShip : MonoBehaviour
     [SerializeField] public float MOVEMENTSPEED = 1.0f;
     [SerializeField] public float BULLETSPEED = 5.0f;
     [SerializeField] public GameObject BULLETPREFAB;
+    [SerializeField] public GameObject LASERPREFAB;
 
     // These are serialized for debugging purposes
     [SerializeField] public double HEALTH = 100.0f;
@@ -87,6 +88,17 @@ public class PlayerShip : MonoBehaviour
     protected Rigidbody rigidbody_m;
     protected Weapon primaryWeapon_m;
     protected float weaponTimer_m;
+
+    //whether or not the user can fire powerups
+
+    //LASER POWERUP ///////////////////////
+    private bool hasLaser_m = false;
+    private float startTime_m = 0.0f;
+    private float timeCharged_m = 0.0f;
+    private float laserWidth_m = 0.25f;
+    ///////////////////////////////////////
+
+    //attributes for other powerups in the future
 
     // Events that may be useful for others using this class such as Team 1 for UI elements
     public event Action PointsChanged;
@@ -113,6 +125,16 @@ public class PlayerShip : MonoBehaviour
     }
     private void Update()
     {
+        //calculates how much time has passed while holding down the fire button
+        if (Input.GetKeyDown("m"))
+        {
+            startTime_m = Time.time;
+        }
+        if (Input.GetKeyUp("m"))
+        {
+            timeCharged_m = Time.time - startTime_m;
+        }
+
         Attack();
     }
     void FixedUpdate()
@@ -145,6 +167,7 @@ public class PlayerShip : MonoBehaviour
     {
         weaponTimer_m += Time.deltaTime;
 
+        //shooting the default weapon
         if ((!Input.GetAxis("Fire1").Equals(0)) && ((1.0 / primaryWeapon_m.FireRate) <= weaponTimer_m))
         {
             GameObject bullet = Instantiate(BULLETPREFAB, transform.position + Vector3.right, transform.rotation);
@@ -152,6 +175,15 @@ public class PlayerShip : MonoBehaviour
             bullet.GetComponent<Rigidbody>().velocity = Vector3.right * BULLETSPEED;
 
             weaponTimer_m = 0.0f;
+        }
+
+        //shooting a laser
+        if (Input.GetKeyUp("m") && 
+            hasLaser_m == true && 
+            ((1.0 / primaryWeapon_m.FireRate) <= weaponTimer_m))
+        {
+            chargeLaser(timeCharged_m);     //calls chargeLaser to modify width based on charged time
+            GameObject Laser = Instantiate(LASERPREFAB, transform.position + Vector3.right, LASERPREFAB.transform.rotation);
         }
 
         // We may use this in the future if we decide to add secondarys/abilities
@@ -170,6 +202,30 @@ public class PlayerShip : MonoBehaviour
         }*/
     }
 
+    private void chargeLaser(float timeCharged_m)
+    {
+        if ((timeCharged_m >= 1.0) && (timeCharged_m < 2.0))
+        {
+            laserWidth_m = 0.5f;
+        }
+        else if ((timeCharged_m >= 2.0) && (timeCharged_m < 3.0))
+        {
+            laserWidth_m = 1.0f;
+        }
+        else if (timeCharged_m >= 3.0)
+        {
+            laserWidth_m = 1.5f;
+        }
+        else
+        {
+            laserWidth_m = 0.25f;
+        }
+
+        LASERPREFAB.transform.localScale = new Vector3(LASERPREFAB.transform.localScale.x, 
+                                                       LASERPREFAB.transform.localScale.y, 
+                                                       laserWidth_m);
+    }
+    
     private void OnTriggerEnter(Collider other)
     {
         // if it is an enemy object ie tagged enemy, destory the player object and decrement the lives
@@ -184,9 +240,9 @@ public class PlayerShip : MonoBehaviour
                 {
                     break;
                 }
-                case "PowerUp":
+                case "LaserPowerup":
                 {
-                    // Get the power ups effects from GetComponent 
+                    hasLaser_m = true;
                     break;
                 }
                 default:
