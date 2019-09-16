@@ -8,16 +8,11 @@ using UnityEngine;
 /// Author: Jared Anderson
 /// Version: 1
 /// </summary>
-public class Enemy : MonoBehaviour
+public abstract class Enemy : MonoBehaviour
 {
-    void Start()
-    {
-        
-    }
+    // The speed of this enemy.
+    public float SPEED = 1f;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    public abstract void Attack();
+    public abstract void Move();
 }
