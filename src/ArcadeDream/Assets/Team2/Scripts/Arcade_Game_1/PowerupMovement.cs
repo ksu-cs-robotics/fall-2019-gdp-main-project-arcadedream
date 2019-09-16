@@ -3,12 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// Movement for obstacle, destruction requirements
+/// specific movement related to powerUps
+/// cannot be destroyed by bullet/laser
+/// player must come in contact with them to recieve the buff
 /// Author: Lew Fortwangler
 /// Version: 1
 /// </summary>
+/// 
 
-public class ObstacleMovement : MonoBehaviour
+public class PowerupMovement : MonoBehaviour
 {
     private float moveSpeed_m = 9.0f;
     private bool isOnScreen_m;  //keep track if the obstacle is visible on screen or not
@@ -20,7 +23,7 @@ public class ObstacleMovement : MonoBehaviour
 
     // Update is called once per frame
     private void Update()
-    {   
+    {
         transform.Translate(0, 0, -Time.deltaTime * moveSpeed_m);
     }
 
@@ -34,18 +37,18 @@ public class ObstacleMovement : MonoBehaviour
     //Then destroy object and set on screen variable to false
     private void OnBecameInvisible()
     {
-        if(isOnScreen_m == true)
+        if (isOnScreen_m == true)
         {
             Destroy(gameObject);
             isOnScreen_m = false;
         }
     }
 
-    //destroy object if collides with the player, bullet, or laser
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "Player") Destroy(gameObject);
-        if (other.gameObject.tag == "Bullet") Destroy(gameObject);
-        if (other.gameObject.tag == "Laser") Destroy(gameObject);
+        if(other.gameObject.tag == "Player")
+        {
+            Destroy(gameObject);
+        }
     }
 }

@@ -11,6 +11,7 @@ public class EnemyController : MonoBehaviour
 {
     // The enemy prefab to be spawned.
     public GameObject ENEMYPREFAB;
+
     // The spawn point of this enemy.
     private Transform position_m;
 

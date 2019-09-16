@@ -5,29 +5,18 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody))]
 public class Bullet : MonoBehaviour
 {
-    GameObject Shooter { get; set; }
+    //GameObject Shooter { get; set; }
 
-    private Bullet() { }
-    public Bullet(GameObject playerObject) : this()
+    //private Bullet() { }
+    //public Bullet(GameObject playerObject) : this()
+
+    void OnTriggerEnter(Collider other)
     {
-        Shooter = playerObject;
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (Shooter.gameObject.tag == other.gameObject.tag)
-            return;
-
         switch (other.gameObject.tag)
         {
-            case "Player" :
-                {
-                    // other.gameObject.GetComponent<PlayerShip>().HEALTH 
-                    break;
-                }
             case "Enemy":
                 {
-                    // other.gameObject.GetComponent<Enemy>().HEALTH 
+                    other.gameObject.GetComponent<EnemyHealth>().TakeDamage(); 
                     break;
                 }
             case "Obstacle":
