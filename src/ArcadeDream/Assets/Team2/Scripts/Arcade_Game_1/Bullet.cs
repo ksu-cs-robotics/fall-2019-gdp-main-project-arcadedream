@@ -7,10 +7,7 @@ public class Bullet : MonoBehaviour
 {
     GameObject Shooter { get; set; }
 
-    private Bullet()
-    {
-
-    }
+    private Bullet() { }
     public Bullet(GameObject playerObject) : this()
     {
         Shooter = playerObject;

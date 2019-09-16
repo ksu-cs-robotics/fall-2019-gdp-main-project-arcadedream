@@ -27,6 +27,7 @@ public class PlayerController : MonoBehaviour // NetworkBehaviour
     // Containers that store references to all colliders, as well as which one is active for interaction
     protected List<Collider> nearbyInteractableObjects_m;
     public Collider currentInteractableObject_m;
+    public bool IsUsingMouseInteract;
     public bool IsInteracting;
 
     // protected bool talkFlag_m = false;       //flag to keep track of whether or not the player wants to talk to NPC
@@ -53,6 +54,7 @@ public class PlayerController : MonoBehaviour // NetworkBehaviour
         nearbyInteractableObjects_m = new List<Collider>();
 
         // Stores whether or not a character is already interacting with someone, and if so, ignore interact input
+        IsUsingMouseInteract = false;
         IsInteracting = false;
 
         // DIALOGUECANVAS.SetActive(false);    //doesnt need to be in player, can be moved to an enviroment start script at a later time
@@ -117,7 +119,33 @@ public class PlayerController : MonoBehaviour // NetworkBehaviour
         {
             playerUIInteractText_m.text = String.Empty;
         }
-        
+
+        if (!Input.GetAxisRaw("Fire1").Equals(0))
+        {
+            Ray camRay = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+            // Create a RaycastHit variable to store information about what was hit by the ray.
+            RaycastHit gameObjectHit;
+
+            if (Physics.Raycast(camRay, out gameObjectHit))
+            {
+                if (gameObjectHit.transform.gameObject.GetComponent<InteractController>())
+                {
+                    currentInteractableObject_m = gameObjectHit.transform.gameObject.GetComponent<Collider>();
+                    IsUsingMouseInteract = true;
+                }
+                else
+                {
+                    IsUsingMouseInteract = false;
+
+                    currentInteractableObject_m =
+                        nearbyInteractableObjects_m.Find((c) => c.gameObject.tag == "NPC") ??
+                        nearbyInteractableObjects_m.Find((c) => c.gameObject.tag == "Game") ??
+                        nearbyInteractableObjects_m.Find((c) => c.gameObject.tag == "Player");
+                }
+            }
+        }
+
         // Process interaction input ([E])
         if (!Input.GetAxisRaw("Submit").Equals(0) && !SubmitKeyDown)
         {
@@ -175,10 +203,13 @@ public class PlayerController : MonoBehaviour // NetworkBehaviour
             nearbyInteractableObjects_m.Add(other);
 
             // Reevaluate the current proximal interactable object
-            currentInteractableObject_m =
-                nearbyInteractableObjects_m.Find((c) => c.gameObject.tag == "NPC") ??
-                nearbyInteractableObjects_m.Find((c) => c.gameObject.tag == "Game") ??
-                nearbyInteractableObjects_m.Find((c) => c.gameObject.tag == "Player");
+            if (!IsUsingMouseInteract)
+            {
+                currentInteractableObject_m =
+                    nearbyInteractableObjects_m.Find((c) => c.gameObject.tag == "NPC") ??
+                    nearbyInteractableObjects_m.Find((c) => c.gameObject.tag == "Game") ??
+                    nearbyInteractableObjects_m.Find((c) => c.gameObject.tag == "Player");
+            }
         }
     }
 
@@ -196,10 +227,13 @@ public class PlayerController : MonoBehaviour // NetworkBehaviour
         if (currentInteractableObject_m != null && currentInteractableObject_m.Equals(other))
         {
             // Find new proximal interactable object
-            currentInteractableObject_m = 
-                nearbyInteractableObjects_m.Find((c) => c.gameObject.tag == "NPC") ??
-                nearbyInteractableObjects_m.Find((c) => c.gameObject.tag == "Game") ??
-                nearbyInteractableObjects_m.Find((c) => c.gameObject.tag == "Player");
+            if (!IsUsingMouseInteract)
+            {
+                currentInteractableObject_m =
+                    nearbyInteractableObjects_m.Find((c) => c.gameObject.tag == "NPC") ??
+                    nearbyInteractableObjects_m.Find((c) => c.gameObject.tag == "Game") ??
+                    nearbyInteractableObjects_m.Find((c) => c.gameObject.tag == "Player");
+            }
         }
     }
 }
