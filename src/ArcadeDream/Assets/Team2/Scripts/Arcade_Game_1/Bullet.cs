@@ -5,6 +5,11 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody))]
 public class Bullet : MonoBehaviour
 {
+    //GameObject Shooter { get; set; }
+
+    //private Bullet() { }
+    //public Bullet(GameObject playerObject) : this()
+
     void OnTriggerEnter(Collider other)
     {
         switch (other.gameObject.tag)
