@@ -13,9 +13,10 @@ GameObject:
   - component: {fileID: 687658985908473676}
   - component: {fileID: 8822071994537012968}
   - component: {fileID: 2249271718712083637}
+  - component: {fileID: 961781745556676279}
   m_Layer: 0
   m_Name: PowerupObstacle
-  m_TagString: Untagged
+  m_TagString: PowerupObstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -104,3 +105,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 862301de57f442b4990648af560884ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &961781745556676279
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2172375084021857381}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6cd38586885ebf845a2b68dc101e5d9e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  powerupArray:
+  - {fileID: 938833135417747424, guid: eec1871a68c995045ab77079c9222755, type: 3}
