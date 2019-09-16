@@ -311,9 +311,10 @@ GameObject:
   - component: {fileID: 1287966690}
   - component: {fileID: 1287966689}
   - component: {fileID: 1287966688}
+  - component: {fileID: 1287966691}
   m_Layer: 0
   m_Name: PlayerShip
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -333,6 +334,8 @@ MonoBehaviour:
   MOVEMENTSPEED: 10
   BULLETSPEED: 20
   BULLETPREFAB: {fileID: 6565133877976343921, guid: 3f321bc9967ced940b6a0bed3fb46606,
+    type: 3}
+  LASERPREFAB: {fileID: 5260650553365157988, guid: 3c8fc480eeb662d47afb5e752808c30d,
     type: 3}
   HEALTH: 100
   LIVES: 3
@@ -361,7 +364,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1287966687}
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: -10, y: 0.05, z: 0}
+  m_LocalPosition: {x: -10, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1674596587}
@@ -369,6 +372,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
+--- !u!65 &1287966691
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1287966687}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1674596586
 GameObject:
   m_ObjectHideFlags: 0
@@ -602,7 +618,7 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 60
+  field of view: 59.616734
   orthographic: 0
   orthographic size: 5
   m_Depth: -1
@@ -646,9 +662,10 @@ GameObject:
   - component: {fileID: 2133207153}
   - component: {fileID: 2133207152}
   - component: {fileID: 2133207151}
+  - component: {fileID: 2133207154}
   m_Layer: 0
   m_Name: Background
-  m_TagString: Untagged
+  m_TagString: Background
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -661,7 +678,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2133207149}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -0.02, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 10}
   m_Children: []
   m_Father: {fileID: 293491477}
@@ -726,3 +743,17 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2133207149}
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &2133207154
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2133207149}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e4b668da777abb4eb8fd595d1c467c1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  POWERUPOBSTACLE_PREFAB: {fileID: 2172375084021857381, guid: 7442ea13263287e479875b596b6afd96,
+    type: 3}
