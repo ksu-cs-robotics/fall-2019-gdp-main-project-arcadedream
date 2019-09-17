@@ -4,6 +4,17 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
+/// Defines basic operations that all Interactable objects must implement
+/// Author: Josh Dotson
+/// Version: 1
+/// </summary>
+public interface IInteractable
+{
+    void Submit();
+    void Cancel();
+}
+
+/// <summary>
 /// Implements a generic sketelon for interactable objects to handle interactions
 /// Author: Josh Dotson
 /// Version: 1
@@ -12,7 +23,7 @@ public class InteractController : MonoBehaviour
 {
     // Assigned via editor references to prefabs
     [SerializeField] public string INTERACTTEXT = "";
-    [SerializeField] private GameObject dialogMenuCanvas;
+    [SerializeField] private GameObject UIMenuPrefab;
 
     // Stores a list of players in the current session that interact requests should be ignored
     private List<GameObject> blacklist_m;
@@ -27,7 +38,14 @@ public class InteractController : MonoBehaviour
 
         Func<GameObject, GameObject> genericInteractHandler = (caller) =>
         {
-            return dialogMenuCanvas;
+            var newUIMenu = Instantiate(UIMenuPrefab, caller.transform.Find("UI").gameObject.transform) as GameObject;
+            var newUIMenuController = newUIMenu.GetComponent<InteractControllerUI>();
+
+            // Here, the InteractController gives the new menu the gameObject its working with, and returns the menu
+            newUIMenuController.InteractableObject = gameObject;
+            newUIMenuController.InteractingObject = caller;
+
+            return newUIMenu;
         };
 
         OnInteract += genericInteractHandler;

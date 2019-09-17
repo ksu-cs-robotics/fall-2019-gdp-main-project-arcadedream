@@ -48,6 +48,7 @@ public class PlayerController : MonoBehaviour // NetworkBehaviour
         rigidbody_m = GetComponent<Rigidbody>();
 
         playerUICanvas_m = gameObject.transform.Find("UI").gameObject;
+        playerDialogMenu_m = gameObject.transform.Find("UI").gameObject;
         playerUIInteractText_m = playerUICanvas_m.transform.Find("InteractText").gameObject.GetComponent<UnityEngine.UI.Text>();
 
         // Probably should have made an actual constructor to put this in but YOLO
@@ -155,11 +156,13 @@ public class PlayerController : MonoBehaviour // NetworkBehaviour
             {
                 if (!IsInteracting && currentInteractableObject_m != null)
                 {
-                    var dialogBox = currentInteractableObject_m.GetComponent<InteractController>().Interact(this.gameObject);
-                    IsInteracting = true;
+                    // var dialogBox = currentInteractableObject_m.GetComponent<InteractController>().Interact(this.gameObject);
+                    // IsInteracting = true;
 
                     // Put dialog box on player UI canvas
-                    playerDialogMenu_m = Instantiate(dialogBox, playerUICanvas_m.transform);
+                    playerDialogMenu_m = currentInteractableObject_m.GetComponent<InteractController>().Interact(this.gameObject);
+                    IsInteracting = true;
+
                     playerDialogMenu_m.transform.SetParent(playerUICanvas_m.transform, false);
                     playerDialogMenu_m.SetActive(true);
                 }

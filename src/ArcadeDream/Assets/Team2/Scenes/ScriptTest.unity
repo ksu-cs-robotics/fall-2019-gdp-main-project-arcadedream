@@ -375,7 +375,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   INTERACTTEXT: Press [E] to play "Xeonic Invaders"
-  dialogMenuCanvas: {fileID: 6268604050567560040, guid: 8bc7814a865441245896c58f3cae8481,
+  UIMenuPrefab: {fileID: 6268604050567560040, guid: 8bc7814a865441245896c58f3cae8481,
     type: 3}
 --- !u!114 &603849702
 MonoBehaviour:
@@ -389,7 +389,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ec82d657ca8c7b4ea64f9e0c2ad17a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SUBGAMESCENENAME: 
+  SUBGAMESCENENAME: ArcadeGame1Test
 --- !u!1 &624688409
 GameObject:
   m_ObjectHideFlags: 0
@@ -988,6 +988,7 @@ MonoBehaviour:
   RUNSPEED: 5
   JUMPSPEED: 5
   currentInteractableObject_m: {fileID: 0}
+  IsUsingMouseInteract: 0
   IsInteracting: 0
 --- !u!54 &1757667053
 Rigidbody:
@@ -1018,7 +1019,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   INTERACTTEXT: 
-  dialogMenuCanvas: {fileID: 0}
+  UIMenuPrefab: {fileID: 0}
 --- !u!136 &1757667055
 CapsuleCollider:
   m_ObjectHideFlags: 0
