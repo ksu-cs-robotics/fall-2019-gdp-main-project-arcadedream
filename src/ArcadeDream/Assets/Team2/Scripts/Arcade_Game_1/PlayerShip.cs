@@ -98,6 +98,11 @@ public class PlayerShip : MonoBehaviour
     private float laserWidth_m = 0.25f;
     ///////////////////////////////////////
 
+    /// //TOPGUN POWERUP ///////////////////////
+    private bool hasTopGun_m = false;
+    public GameObject topGun;
+    ////////////////////////////////////////////
+
     //attributes for other powerups in the future
 
     // Events that may be useful for others using this class such as Team 1 for UI elements
@@ -121,6 +126,7 @@ public class PlayerShip : MonoBehaviour
     #region ** Start, and Update Functions **
     private void Start()
     {
+        topGun.SetActive(false);
         rigidbody_m = GetComponent<Rigidbody>();
     }
     private void Update()
@@ -171,6 +177,11 @@ public class PlayerShip : MonoBehaviour
         if ((!Input.GetAxis("Fire1").Equals(0)) && ((1.0 / primaryWeapon_m.FireRate) <= weaponTimer_m))
         {
             GameObject bullet = Instantiate(BULLETPREFAB, transform.position + Vector3.right, transform.rotation);
+            if(hasTopGun_m == true)
+            {
+                GameObject topBullet = Instantiate(BULLETPREFAB, topGun.transform.position + Vector3.right, transform.rotation);
+                topBullet.GetComponent<Rigidbody>().velocity = Vector3.right * BULLETSPEED;
+            }
             // make the bullet assinged to the player gameObject
             bullet.GetComponent<Rigidbody>().velocity = Vector3.right * BULLETSPEED;
 
@@ -243,6 +254,17 @@ public class PlayerShip : MonoBehaviour
                 case "LaserPowerup":
                 {
                     hasLaser_m = true;
+                    break;
+                }
+                case "1upPowerup":
+                {
+                     ++LIVES;
+                     break;
+                }
+                case "TopGunPowerup":
+                {
+                    topGun.SetActive(true);
+                    hasTopGun_m = true;
                     break;
                 }
                 default:
