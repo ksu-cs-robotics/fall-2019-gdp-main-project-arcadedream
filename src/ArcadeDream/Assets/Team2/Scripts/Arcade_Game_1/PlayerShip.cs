@@ -98,7 +98,7 @@ public class PlayerShip : MonoBehaviour
     private float laserWidth_m = 0.25f;
     ///////////////////////////////////////
 
-    /// //TOPGUN POWERUP ///////////////////////
+    //////TOPGUN POWERUP ///////////////////////
     private bool hasTopGun_m = false;
     public GameObject topGun;
     ////////////////////////////////////////////
@@ -139,7 +139,7 @@ public class PlayerShip : MonoBehaviour
         if (Input.GetKeyUp("m"))
         {
             timeCharged_m = Time.time - startTime_m;
-        }
+        } 
 
         Attack();
     }

@@ -8,20 +8,21 @@ using UnityEngine;
 /// Defines a list of enemy actions that when combined form a full behaviour cycle
 /// Author: Josh Dotson
 /// Version: 1
-/// Notes: Fully implements IEnumerable, 
+/// Notes: Fully implements IEnumerable
 /// </summary>
 public class EnemyBehaviour : IEnumerable<EnemyAction>
 {
-    List<EnemyAction> standardBehaviourCycle { get; set; }
+    public List<EnemyAction> standardBehaviourCycle { get; set; }
 
     public EnemyBehaviour()
     {
         standardBehaviourCycle = new List<EnemyAction>();
     }
-    public EnemyBehaviour(EnemyBehaviour newBehaviourCycle) : this()
+    public EnemyBehaviour(List<EnemyAction> newBehaviourCycle) : this()
     {
-        standardBehaviourCycle = newBehaviourCycle.standardBehaviourCycle;
+        standardBehaviourCycle = newBehaviourCycle;
     }
+    public EnemyBehaviour(EnemyBehaviour newBehaviourCycle) : this(newBehaviourCycle.standardBehaviourCycle) { }
 
     // The other option is to GetEnumerator in Enemy Update to an IEnumerator class attribute, and call if (MoveNext()) every frame
     /*public IEnumerator<EnemyAction> GetNextCycleAction()
@@ -52,11 +53,11 @@ public class EnemyBehaviour : IEnumerable<EnemyAction>
 public class EnemyAction 
 {
     // Direction enemy should move, as well as how quickley it should move
-    Vector3 Movement { get; set; }
+    public Vector3 Movement { get; set; }
     // Vector3 velocity;
 
     // Whether or not an enemy should attack
-    bool IsAttacking;
+    public bool IsAttacking;
 
     public EnemyAction()
     {
@@ -76,13 +77,20 @@ public class EnemyAction
 
 /// <summary>
 /// Implements a statically configured list of standard enemy behaviours by enemy type
+/// Author: Josh Dotson
+/// Version: 1
 /// </summary>
 public static class XIEnemyBehaviours
 {
-    // This is for example purposes...
-    public static EnemyBehaviour fighterStandard = new EnemyBehaviour()
-    {
-        // fighter
-    };
+    public static EnemyBehaviour MoveInSquare = new EnemyBehaviour
+    (
+        new List<EnemyAction>()
+        {
+            new EnemyAction(Vector3.forward, true),
+            new EnemyAction(Vector3.right, true),
+            new EnemyAction(Vector3.back, true),
+            new EnemyAction(Vector3.left, true),
+        }
+    );
 }
 
