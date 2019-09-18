@@ -88,6 +88,7 @@ public class PlayerShip : MonoBehaviour
     // Points will be incremented remotely by impacting Bullets referencing this instance
     public int Points;
 
+    protected Rigidbody rigidbody_m;
     protected Weapon primaryWeapon_m;
     protected float weaponTimer_m;
 
@@ -130,6 +131,7 @@ public class PlayerShip : MonoBehaviour
         Death = () => { };
 
         topGun.SetActive(false);
+        rigidbody_m = GetComponent<Rigidbody>();
     }
     private void Update()
     {
@@ -167,12 +169,12 @@ public class PlayerShip : MonoBehaviour
     {
         var movement = new Vector3();
 
-        movement.Set(-Input.GetAxisRaw("Vertical"), 0f, Input.GetAxisRaw("Horizontal"));
+        movement.Set(Input.GetAxisRaw("Horizontal"), 0f, Input.GetAxisRaw("Vertical"));
         movement = movement.normalized * MOVEMENTSPEED * Time.deltaTime;
 
         if (!movement.Equals(Vector3.zero))
         {
-            transform.Translate(movement);
+            rigidbody_m.MovePosition(transform.position + movement);
         }
     }
     private void Attack()
@@ -223,7 +225,7 @@ public class PlayerShip : MonoBehaviour
     }
     private IEnumerator Respawn()
     {
-        gameObject.transform.position = new Vector3(-10, 50, 0);
+        gameObject.transform.position = new Vector3(-100, 0, 0);
         yield return new WaitForSeconds(3);
         
         // Quick and dirty way to set a spawn point for the players
@@ -269,6 +271,10 @@ public class PlayerShip : MonoBehaviour
             switch (other.gameObject.tag)
             {
                 case "Player":
+                {
+                    break;
+                }
+                case "Background":
                 {
                     break;
                 }
