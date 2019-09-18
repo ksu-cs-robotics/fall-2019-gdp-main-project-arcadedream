@@ -10,13 +10,18 @@ public class ArcadeGame : MonoBehaviour
     public int ArcadeNumber = 0; //= 0 if NPC
 
 
+
     private PlayArcadeGame playArcadeGame;
     private int heightAboveCharacter = 175; //adjust to fit the text box nicely above the character 
+
+    public GameObject thePlayer;
+    private float speed;
 
     // Start is called before the first frame update
     void Start()
     {
         playArcadeGame = FindObjectOfType<PlayArcadeGame>();
+
     }
 
     // Update is called once per frame
@@ -38,6 +43,10 @@ public class ArcadeGame : MonoBehaviour
             this.gameObject.GetComponent<ArcadeGame>().enabled = true;
             playArcadeGame.arcadeNumber = ArcadeNumber;
             FindObjectOfType<PlayArcadeGame>().ArcadeName();
+            //Disabling player movement
+            PlayerMovement playerMovement = thePlayer.GetComponent<PlayerMovement>();
+            speed = playerMovement.speed;
+            playerMovement.speed = 0.0f;
         }
     }
     //When leaving the collider, the dialog box should disappear
@@ -46,4 +55,7 @@ public class ArcadeGame : MonoBehaviour
         FindObjectOfType<PlayArcadeGame>().OutOfRange();
         this.gameObject.GetComponent<ArcadeGame>().enabled = false;
     }
+
+
+
 }
