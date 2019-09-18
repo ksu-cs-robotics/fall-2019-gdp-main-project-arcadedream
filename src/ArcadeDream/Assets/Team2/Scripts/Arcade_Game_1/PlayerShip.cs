@@ -185,9 +185,11 @@ public class PlayerShip : MonoBehaviour
         if ((!Input.GetAxis("Fire1").Equals(0)) && ((1.0 / primaryWeapon_m.FireRate) <= weaponTimer_m))
         {
             GameObject bullet = Instantiate(BULLETPREFAB, transform.position + Vector3.right, transform.rotation);
+            bullet.transform.parent = gameObject.transform;
             if(hasTopGun_m == true)
             {
                 GameObject topBullet = Instantiate(BULLETPREFAB, topGun.transform.position + Vector3.right, transform.rotation);
+                topBullet.transform.parent = gameObject.transform;
                 topBullet.GetComponent<Rigidbody>().velocity = Vector3.right * BULLETSPEED;
             }
             // make the bullet assinged to the player gameObject

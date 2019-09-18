@@ -8,9 +8,14 @@ public class Bullet : MonoBehaviour
     GameObject Shooter { get; set; }
     private bool isOnScreen_m = false;
 
+    private void Start()
+    {
+        Shooter = gameObject.transform.parent.gameObject;
+    }
+
     private Bullet()
     {
-
+        
     }
     public Bullet(GameObject playerObject) : this()
     {
@@ -31,7 +36,7 @@ public class Bullet : MonoBehaviour
                 }
             case "Enemy":
                 {
-                    // other.gameObject.GetComponent<Enemy>().HEALTH 
+                    other.gameObject.GetComponent<EnemyHealth>().TakeDamage(); 
                     break;
                 }
             case "Obstacle":
