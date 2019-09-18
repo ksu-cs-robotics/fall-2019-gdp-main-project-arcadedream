@@ -1,7 +1,7 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Networking;
 
 public class Login : MonoBehaviour
 {
@@ -17,7 +17,10 @@ public class Login : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        loginButton.onClick.AddListener(() =>
+        {
+            StartCoroutine(login(username_m, password_m));
+        });
     }
 
     // Update is called once per frame
@@ -42,11 +45,31 @@ public class Login : MonoBehaviour
             if (username_m != "" &&
                password_m != "")
             {
-                loginButton.Select();
+                StartCoroutine(login(username_m, password_m));
             }
         }
 
         username_m = username.GetComponent<InputField>().text;
         password_m = password.GetComponent<InputField>().text;
+    }
+
+    public IEnumerator login(string username, string password)
+    {
+        WWWForm form = new WWWForm();
+        form.AddField("loginUser", username);
+        form.AddField("loginPassword", password);
+
+        using (UnityWebRequest www = UnityWebRequest.Post("http://localhost/Unity/DBLogin.php", form))
+        {
+            yield return www.SendWebRequest();
+
+            if (www.isNetworkError || www.isHttpError) Debug.Log("Error: " + www.error);
+            else
+            {
+                string data = www.downloadHandler.text;
+                Debug.Log("Return: " + data);
+                byte[] results = www.downloadHandler.data;
+            }
+        }
     }
 }

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 11, 2019 at 09:16 PM
+-- Generation Time: Sep 18, 2019 at 03:21 AM
 -- Server version: 10.1.37-MariaDB
 -- PHP Version: 7.3.1
 
@@ -19,7 +19,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `arcade_dream_database`
+-- Database: `arcadedream`
 --
 
 -- --------------------------------------------------------
@@ -31,9 +31,9 @@ SET time_zone = "+00:00";
 CREATE TABLE `playerlist` (
   `ID` int(11) NOT NULL,
   `Username` varchar(16) NOT NULL,
-  `UserPassword` varchar(26) DEFAULT NULL,
-  `Coins` int(11) DEFAULT NULL,
-  `Total_Points` int(11) DEFAULT NULL,
+  `UserPassword` varchar(255) NOT NULL,
+  `Coins` int(11) NOT NULL,
+  `Total_Points` int(11) NOT NULL,
   `Ava` int(11) DEFAULT NULL,
   `HatID` int(11) DEFAULT NULL,
   `ShirtID` int(11) DEFAULT NULL,
