@@ -11,7 +11,7 @@ using UnityEngine;
 public class Bullet : MonoBehaviour
 {
     // Stores a reference to the gameobject that shot the bullet
-    GameObject Shooter { get; set; }
+    public GameObject Shooter { get; set; }
 
     void OnTriggerEnter(Collider other)
     {
@@ -27,7 +27,11 @@ public class Bullet : MonoBehaviour
                 }
             case "Enemy":
                 {
-                    other.gameObject.GetComponent<EnemyHealth>().TakeDamage(); 
+                    var healthComponent = other.gameObject.GetComponent<EnemyHealth>();
+
+                    healthComponent.TakeDamage();
+                    Shooter.GetComponent<PlayerShip>().Points += healthComponent.SCOREVALUE;
+
                     break;
                 }
             case "Obstacle":

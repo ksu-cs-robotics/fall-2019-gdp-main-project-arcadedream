@@ -17,7 +17,7 @@ public class EnemyController : MonoBehaviour
     private Transform position_m;
 
     // Stores the behaviour of the enemy ship, as well as it's iterator
-    private EnemyBehaviour behaviour_m;
+    public EnemyBehaviour Behaviour;
     private IEnumerator<EnemyAction> behaviourIterator_m;
 
     [SerializeField] public float ENEMYSPEED = 1.0f;
@@ -29,8 +29,8 @@ public class EnemyController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        behaviour_m = XIEnemyBehaviours.MoveInSquare;
-        behaviourIterator_m = behaviour_m.GetEnumerator();
+        Behaviour = XIEnemyBehaviours.MoveInSquare;
+        behaviourIterator_m = Behaviour.GetEnumerator();
 
         // Starts up the iterator
         behaviourIterator_m.MoveNext();

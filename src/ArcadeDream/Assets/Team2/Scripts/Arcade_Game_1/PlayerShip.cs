@@ -70,7 +70,6 @@ public static class PlayerWeapons
 /// Author: Josh Dotson, Lew Fortwangler
 /// Version: 2
 /// </summary>
-[RequireComponent(typeof(Rigidbody))]
 public class PlayerShip : MonoBehaviour
 {
     [SerializeField] public float MOVEMENTSPEED = 1.0f;
@@ -82,10 +81,13 @@ public class PlayerShip : MonoBehaviour
     [SerializeField] public double HEALTH = 100.0f;
     [SerializeField] public int LIVES = 3;
 
+    private bool isInvulnerable_m;
+    private bool isDead_m;
+    private float spawnProtectionTimer_m;
+
     // Points will be incremented remotely by impacting Bullets referencing this instance
     public int Points;
 
-    protected Rigidbody rigidbody_m;
     protected Weapon primaryWeapon_m;
     protected float weaponTimer_m;
 
@@ -111,9 +113,14 @@ public class PlayerShip : MonoBehaviour
     public event Action Respawned;
     public event Action Death;
 
-    public PlayerShip()
+    #region ** Start, and Update Functions **
+    private void Start()
     {
         Points = 0;
+
+        isInvulnerable_m = false;
+        isDead_m = false;
+        spawnProtectionTimer_m = 0.0f;
 
         primaryWeapon_m = PlayerWeapons.Standard;
 
@@ -121,16 +128,12 @@ public class PlayerShip : MonoBehaviour
         HealthChanged = () => { };
         Respawned = () => { };
         Death = () => { };
-    }
 
-    #region ** Start, and Update Functions **
-    private void Start()
-    {
         topGun.SetActive(false);
-        rigidbody_m = GetComponent<Rigidbody>();
     }
     private void Update()
     {
+        
         //calculates how much time has passed while holding down the fire button
         if (Input.GetKeyDown("m"))
         {
@@ -139,13 +142,24 @@ public class PlayerShip : MonoBehaviour
         if (Input.GetKeyUp("m"))
         {
             timeCharged_m = Time.time - startTime_m;
-        } 
+        }
+
+        // Invulnerable is mean't to protect players from insta death upon spawning
+        if (isInvulnerable_m)
+        {
+            spawnProtectionTimer_m -= Time.deltaTime;
+
+            if (spawnProtectionTimer_m <= 0.0f)
+            {
+                isInvulnerable_m = false;
+            }
+        }
 
         Attack();
     }
     void FixedUpdate()
     {
-        Movement();
+        if (!isDead_m) { Movement(); }
     }
     #endregion
 
@@ -153,20 +167,12 @@ public class PlayerShip : MonoBehaviour
     {
         var movement = new Vector3();
 
-        movement.Set(Input.GetAxisRaw("Horizontal"), 0f, Input.GetAxisRaw("Vertical"));
+        movement.Set(-Input.GetAxisRaw("Vertical"), 0f, Input.GetAxisRaw("Horizontal"));
         movement = movement.normalized * MOVEMENTSPEED * Time.deltaTime;
 
         if (!movement.Equals(Vector3.zero))
         {
-            // Start walking animation
-
-            Vector3 newPosition = transform.position + movement;
-
-            rigidbody_m.MovePosition(newPosition);
-        }
-        else
-        {
-            // Stop walking animation
+            transform.Translate(movement);
         }
     }
     private void Attack()
@@ -181,9 +187,12 @@ public class PlayerShip : MonoBehaviour
             {
                 GameObject topBullet = Instantiate(BULLETPREFAB, topGun.transform.position + Vector3.right, transform.rotation);
                 topBullet.GetComponent<Rigidbody>().velocity = Vector3.right * BULLETSPEED;
+                topBullet.GetComponent<Bullet>().Shooter = gameObject;
             }
+
             // make the bullet assinged to the player gameObject
             bullet.GetComponent<Rigidbody>().velocity = Vector3.right * BULLETSPEED;
+            bullet.GetComponent<Bullet>().Shooter = gameObject;
 
             weaponTimer_m = 0.0f;
         }
@@ -212,6 +221,18 @@ public class PlayerShip : MonoBehaviour
             }
         }*/
     }
+    private IEnumerator Respawn()
+    {
+        gameObject.transform.position = new Vector3(-10, 50, 0);
+        yield return new WaitForSeconds(3);
+        
+        // Quick and dirty way to set a spawn point for the players
+        gameObject.transform.position = new Vector3(-10, 0, 0);
+        gameObject.transform.rotation = Quaternion.Euler(0, 90, 0);
+
+        isInvulnerable_m = true;
+        spawnProtectionTimer_m = 3.0f;
+    }
 
     private void chargeLaser(float timeCharged_m)
     {
@@ -236,7 +257,7 @@ public class PlayerShip : MonoBehaviour
                                                        LASERPREFAB.transform.localScale.y, 
                                                        laserWidth_m);
     }
-    
+
     private void OnTriggerEnter(Collider other)
     {
         // if it is an enemy object ie tagged enemy, destory the player object and decrement the lives
@@ -269,7 +290,28 @@ public class PlayerShip : MonoBehaviour
                 }
                 default:
                 {
-                    // DEATH
+                    // This line, at least for now, will make sure the neither the player or other players can kill each other
+                    if (other.gameObject.tag == "Bullet" && other.gameObject.GetComponent<Bullet>().Shooter.gameObject.tag == "Player")
+                        return;
+
+                    // If the player did not just respawn...
+                    if (!isInvulnerable_m)
+                    {
+                        --LIVES;
+
+                        if (LIVES > 0)
+                        {
+                            StartCoroutine(Respawn());
+                        }
+                        else
+                        {
+                            gameObject.SetActive(false);
+                            isDead_m = true;
+
+                            // Record score with timestamp here
+                        }
+                    }
+
                     break;
                 }
             }
