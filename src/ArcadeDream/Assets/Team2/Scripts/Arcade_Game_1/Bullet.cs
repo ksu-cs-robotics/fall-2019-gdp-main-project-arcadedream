@@ -5,7 +5,7 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody))]
 public class Bullet : MonoBehaviour
 {
-    GameObject Shooter { get; set; }
+    public GameObject Shooter { get; set; }
     private bool isOnScreen_m = false;
 
     private void Start()

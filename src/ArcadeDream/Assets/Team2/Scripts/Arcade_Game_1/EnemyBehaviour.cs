@@ -24,15 +24,6 @@ public class EnemyBehaviour : IEnumerable<EnemyAction>
     }
     public EnemyBehaviour(EnemyBehaviour newBehaviourCycle) : this(newBehaviourCycle.standardBehaviourCycle) { }
 
-    // The other option is to GetEnumerator in Enemy Update to an IEnumerator class attribute, and call if (MoveNext()) every frame
-    /*public IEnumerator<EnemyAction> GetNextCycleAction()
-    {
-        foreach (var action in standardBehaviourCycle)
-        { 
-            yield return action;
-        }
-    }*/
-
     #region ** Implementation of IEnumerable **
     public IEnumerator<EnemyAction> GetEnumerator()
     {

@@ -69,10 +69,13 @@ public static class PlayerWeapons
 /// <summary>
 /// Implements the basic mechanics and attributes associted with any player's ship
 /// Author: Josh Dotson, Lew Fortwangler
-/// Version: 2
+/// Version: 3
 /// </summary>
 public class PlayerShip : MonoBehaviour
 {
+    // Will store the player's username when multiplayer is a thing...
+    public string PlayerUsername;
+
     [SerializeField] public float MOVEMENTSPEED = 1.0f;
     [SerializeField] public float BULLETSPEED = 5.0f;
     [SerializeField] public GameObject BULLETPREFAB;
@@ -85,6 +88,7 @@ public class PlayerShip : MonoBehaviour
     private bool isInvulnerable_m;
     private bool isDead_m;
     private float spawnProtectionTimer_m;
+    public long ScoreUnixTimestamp;
 
     // Points will be incremented remotely by impacting Bullets referencing this instance
     public int Points;
@@ -123,6 +127,7 @@ public class PlayerShip : MonoBehaviour
     private void Start()
     {
         Points = 0;
+        ScoreUnixTimestamp = 0;
 
         isInvulnerable_m = false;
         isDead_m = false;
@@ -327,10 +332,9 @@ public class PlayerShip : MonoBehaviour
                         }
                         else
                         {
-                            gameObject.SetActive(false);
                             isDead_m = true;
-
-                            // Record score with timestamp here
+                            ScoreUnixTimestamp = ((DateTimeOffset)DateTime.UtcNow).ToUnixTimeSeconds();
+                            gameObject.SetActive(false);
                         }
                     }
 
