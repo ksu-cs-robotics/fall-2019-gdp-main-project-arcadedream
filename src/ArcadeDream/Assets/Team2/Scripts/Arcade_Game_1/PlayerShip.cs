@@ -5,8 +5,9 @@ using UnityEngine;
 
 /// <summary>
 /// Defines various predefined weapon property configurations
-/// Author: Josh Dotson
-/// Version: 1
+/// Allows player to pickup powerups and applys its affects to their ship
+/// Author: Josh Dotson, Lew Fortwangler
+/// Version: 2
 /// </summary>
 public enum WeaponInfo : int
 {
@@ -14,7 +15,7 @@ public enum WeaponInfo : int
     PlayerDamageIncreased = 20,
 
     PlayerFireRateStandard = 5,
-    PlayerFireRateIncreased = 10,
+    PlayerFireRateIncreased = 20,
 
     PlayerNumProjectilesStandard = 1,
     PlayerNumProjectilesTriple = 3
@@ -101,9 +102,13 @@ public class PlayerShip : MonoBehaviour
     private float laserWidth_m = 0.25f;
     ///////////////////////////////////////
 
-    //////TOPGUN POWERUP ///////////////////////
+    /// //TOPGUN POWERUP ///////////////////////
     private bool hasTopGun_m = false;
     public GameObject topGun;
+    ////////////////////////////////////////////
+
+    /// //RAPIDFIRE POWERUP ///////////////////////
+    private bool hasRapidFire_m = false;
     ////////////////////////////////////////////
 
     //attributes for other powerups in the future
@@ -156,6 +161,9 @@ public class PlayerShip : MonoBehaviour
                 isInvulnerable_m = false;
             }
         }
+        
+        if (hasRapidFire_m == true)
+            primaryWeapon_m = PlayerWeapons.IncreasedFireRate;
 
         Attack();
     }
@@ -185,9 +193,11 @@ public class PlayerShip : MonoBehaviour
         if ((!Input.GetAxis("Fire1").Equals(0)) && ((1.0 / primaryWeapon_m.FireRate) <= weaponTimer_m))
         {
             GameObject bullet = Instantiate(BULLETPREFAB, transform.position + Vector3.right, transform.rotation);
+            bullet.transform.parent = gameObject.transform;
             if(hasTopGun_m == true)
             {
                 GameObject topBullet = Instantiate(BULLETPREFAB, topGun.transform.position + Vector3.right, transform.rotation);
+                topBullet.transform.parent = gameObject.transform;
                 topBullet.GetComponent<Rigidbody>().velocity = Vector3.right * BULLETSPEED;
                 topBullet.GetComponent<Bullet>().Shooter = gameObject;
             }
@@ -200,12 +210,13 @@ public class PlayerShip : MonoBehaviour
         }
 
         //shooting a laser
-        if (Input.GetKeyUp("m") && 
+        if (Input.GetKeyUp("m") &&
             hasLaser_m == true && 
             ((1.0 / primaryWeapon_m.FireRate) <= weaponTimer_m))
         {
             chargeLaser(timeCharged_m);     //calls chargeLaser to modify width based on charged time
             GameObject Laser = Instantiate(LASERPREFAB, transform.position + Vector3.right, LASERPREFAB.transform.rotation);
+            weaponTimer_m = 0.0f;
         }
 
         // We may use this in the future if we decide to add secondarys/abilities
@@ -292,6 +303,11 @@ public class PlayerShip : MonoBehaviour
                 {
                     topGun.SetActive(true);
                     hasTopGun_m = true;
+                    break;
+                }
+                case "RapidFirePowerup":
+                {
+                    hasRapidFire_m = true;
                     break;
                 }
                 default:
