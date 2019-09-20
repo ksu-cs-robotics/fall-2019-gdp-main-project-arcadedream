@@ -40,12 +40,14 @@ public class Bullet : MonoBehaviour
 
                     healthComponent.TakeDamage();
                     Shooter.GetComponent<PlayerShip>().Points += healthComponent.SCOREVALUE;
+                    Destroy(gameObject);
 
                     break;
                 }
-            case "Obstacle":
+            case "PowerupObstacle":
                 {
                     // other.gameObject.GetComponent<Obstacle>().HEALTH 
+                    Destroy(gameObject);
                     break;
                 }
             default:
