@@ -50,6 +50,26 @@ public class Bullet : MonoBehaviour
                     Destroy(gameObject);
                     break;
                 }
+            case "1upPowerup":
+                {
+                    Destroy(gameObject);
+                    break;
+                }
+            case "LaserPowerup":
+                {
+                    Destroy(gameObject);
+                    break;
+                }
+            case "RapidFirePowerup":
+                {
+                    Destroy(gameObject);
+                    break;
+                }
+            case "TopGunPowerup":
+                {
+                    Destroy(gameObject);
+                    break;
+                }
             default:
                 {
                     break;

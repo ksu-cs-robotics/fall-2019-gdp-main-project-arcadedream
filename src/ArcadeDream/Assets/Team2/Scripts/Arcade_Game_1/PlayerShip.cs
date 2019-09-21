@@ -318,12 +318,18 @@ public class PlayerShip : MonoBehaviour
                 default:
                 {
                     // This line, at least for now, will make sure the neither the player or other players can kill each other
-                    if (other.gameObject.tag == "Bullet" && other.gameObject.GetComponent<Bullet>().Shooter.gameObject.tag == "Player")
+                    if ((other.gameObject.tag == "Bullet" || 
+                        other.gameObject.tag == "Laser") &&
+                        other.gameObject.GetComponent<Bullet>().Shooter.gameObject.tag == "Player")
                         return;
 
                     // If the player did not just respawn...
                     if (!isInvulnerable_m)
                     {
+                        hasLaser_m = false;
+                        hasTopGun_m = false;
+                        hasRapidFire_m = false;
+                        topGun.SetActive(false);
                         --LIVES;
 
                         if (LIVES > 0)
