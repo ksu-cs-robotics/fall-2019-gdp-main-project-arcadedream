@@ -202,9 +202,7 @@ public class PlayerShip : MonoBehaviour
         //shooting the default weapon
         if ((!Input.GetAxis("Fire1").Equals(0)) && ((1.0 / primaryWeapon_m.FireRate) <= weaponTimer_m))
         {
-            GameObject bullet = Instantiate(BULLETPREFAB, transform.position + Vector3.right, transform.rotation);
-            bullet.transform.parent = gameObject.transform;
-            if(hasTopGun_m == true)
+            if (hasTopGun_m == true)
             {
                 GameObject topBullet = Instantiate(BULLETPREFAB, topGun.transform.position + Vector3.right, transform.rotation);
                 topBullet.transform.parent = gameObject.transform;
@@ -212,7 +210,9 @@ public class PlayerShip : MonoBehaviour
                 topBullet.GetComponent<Bullet>().Shooter = gameObject;
             }
 
-            // make the bullet assinged to the player gameObject
+            // Make the bullet assigned to the player gameObject
+            GameObject bullet = Instantiate(BULLETPREFAB, transform.position + Vector3.right, transform.rotation);
+            bullet.transform.parent = gameObject.transform;         
             bullet.GetComponent<Rigidbody>().velocity = Vector3.right * BULLETSPEED;
             bullet.GetComponent<Bullet>().Shooter = gameObject;
 

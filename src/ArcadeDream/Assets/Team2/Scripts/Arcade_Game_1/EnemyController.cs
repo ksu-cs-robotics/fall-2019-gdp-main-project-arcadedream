@@ -29,7 +29,7 @@ public class EnemyController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        // Below is where one may initialize a behaviour for this Enemy
+        // Below is where one may initialize a behaviour for this Enemy, and get an iterator for cycling
         Behaviour = XIEnemyBehaviours.MoveInSquare;
         behaviourIterator_m = Behaviour.GetEnumerator();
 
@@ -45,12 +45,15 @@ public class EnemyController : MonoBehaviour
     // Update is called every frame
     private void Update()
     {
+        // Every interval of the behaviour cycle is tied to the behaviourTimer_m
         behaviourTimer_m += Time.deltaTime;
 
         if ((behaviourTimer_m >= BEHAVIOURINTERVAL))
         {
+            // If there is a new stage in the cycle, start its behaviour
             if (behaviourIterator_m.MoveNext())
             {
+                // Reset behaviour timer everytime MoveNext() is successfully called
                 behaviourTimer_m = 0.0f;
             }
             else // This else statement resets the cycle from the beginning
@@ -61,6 +64,7 @@ public class EnemyController : MonoBehaviour
             }
         }
 
+        // Apply the movement commands from the EnemyAction to the actual
         transform.Translate(behaviourIterator_m.Current.Movement * Time.deltaTime * ENEMYSPEED);
     }
 }
