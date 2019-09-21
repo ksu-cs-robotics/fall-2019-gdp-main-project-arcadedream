@@ -229,6 +229,7 @@ public class PlayerShip : MonoBehaviour
             weaponTimer_m = 0.0f;
         }
 
+        //shooting a homing laser
         if(Input.GetKeyDown("n") &&
            hasHomingLaser_m == true)
         {
