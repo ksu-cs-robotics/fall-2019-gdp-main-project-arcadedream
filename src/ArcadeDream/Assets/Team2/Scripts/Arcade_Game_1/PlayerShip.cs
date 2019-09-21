@@ -7,7 +7,7 @@ using UnityEngine;
 /// Defines various predefined weapon property configurations
 /// Allows player to pickup powerups and applys its affects to their ship
 /// Author: Josh Dotson, Lew Fortwangler
-/// Version: 2
+/// Version: 3
 /// </summary>
 public enum WeaponInfo : int
 {
@@ -80,6 +80,7 @@ public class PlayerShip : MonoBehaviour
     [SerializeField] public float BULLETSPEED = 5.0f;
     [SerializeField] public GameObject BULLETPREFAB;
     [SerializeField] public GameObject LASERPREFAB;
+    [SerializeField] public GameObject HOMINGPREFAB;
 
     // These are serialized for debugging purposes
     [SerializeField] public double HEALTH = 100.0f;
@@ -111,10 +112,14 @@ public class PlayerShip : MonoBehaviour
     public GameObject topGun;
     ////////////////////////////////////////////
 
-    /// //RAPIDFIRE POWERUP ///////////////////////
+    /// //RAPIDFIRE POWERUP ////////////////////
     private bool hasRapidFire_m = false;
     ////////////////////////////////////////////
 
+    /////HOMINGLASER POWERUP ///////////////////
+    private bool hasHomingLaser_m = false;
+    ////////////////////////////////////////////
+    
     //attributes for other powerups in the future
 
     // Events that may be useful for others using this class such as Team 1 for UI elements
@@ -224,6 +229,14 @@ public class PlayerShip : MonoBehaviour
             weaponTimer_m = 0.0f;
         }
 
+        if(Input.GetKeyDown("n") &&
+           hasHomingLaser_m == true)
+        {
+            GameObject HomingLaser = Instantiate(HOMINGPREFAB, transform.position + Vector3.right, HOMINGPREFAB.transform.rotation);
+            hasHomingLaser_m = false;
+            StartCoroutine(HomingTimer());
+        }
+
         // We may use this in the future if we decide to add secondarys/abilities
         /*if (!Input.GetAxis("Submit").Equals(0))
         {
@@ -239,6 +252,13 @@ public class PlayerShip : MonoBehaviour
             }
         }*/
     }
+
+    private IEnumerator HomingTimer()
+    {
+        yield return new WaitForSeconds(2);
+        hasHomingLaser_m = true;
+    }
+
     private IEnumerator Respawn()
     {
         gameObject.transform.position = new Vector3(-100, 0, 0);
@@ -315,11 +335,17 @@ public class PlayerShip : MonoBehaviour
                     hasRapidFire_m = true;
                     break;
                 }
+                case "HomingPowerup":
+                {
+                    hasHomingLaser_m = true;
+                    break;
+                }
                 default:
                 {
                     // This line, at least for now, will make sure the neither the player or other players can kill each other
                     if ((other.gameObject.tag == "Bullet" || 
-                        other.gameObject.tag == "Laser") &&
+                        other.gameObject.tag == "Laser" ||
+                        other.gameObject.tag == "HomingLaser") &&
                         other.gameObject.GetComponent<Bullet>().Shooter.gameObject.tag == "Player")
                         return;
 
@@ -328,6 +354,7 @@ public class PlayerShip : MonoBehaviour
                     {
                         hasLaser_m = false;
                         hasTopGun_m = false;
+                        hasHomingLaser_m = false;
                         hasRapidFire_m = false;
                         topGun.SetActive(false);
                         --LIVES;

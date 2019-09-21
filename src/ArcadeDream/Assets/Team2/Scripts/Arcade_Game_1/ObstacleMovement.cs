@@ -10,7 +10,7 @@ using UnityEngine;
 
 public class ObstacleMovement : MonoBehaviour
 {
-    private float moveSpeed_m = 9.0f;
+    private float moveSpeed_m = 15.0f;
     private bool isOnScreen_m;  //keep track if the obstacle is visible on screen or not
 
     private void Start()
