@@ -43,10 +43,6 @@ public class ArcadeGame : MonoBehaviour
             this.gameObject.GetComponent<ArcadeGame>().enabled = true;
             playArcadeGame.arcadeNumber = ArcadeNumber;
             FindObjectOfType<PlayArcadeGame>().ArcadeName();
-            //Disabling player movement
-            PlayerMovement playerMovement = thePlayer.GetComponent<PlayerMovement>();
-            speed = playerMovement.speed;
-            playerMovement.speed = 0.0f;
         }
     }
     //When leaving the collider, the dialog box should disappear
