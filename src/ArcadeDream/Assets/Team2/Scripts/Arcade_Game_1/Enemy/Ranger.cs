@@ -13,7 +13,7 @@ public class Ranger : Enemy
     protected override void Start()
     {
         // Set the Ranger's movement pattern before running the rest of the standard Enemy Start behavior.
-        behaviour_m = XIEnemyBehaviours.MoveInSquare;
+        behaviour_m = XIEnemyBehaviours.FlyAndReturn;
         base.Start();
     }
 }

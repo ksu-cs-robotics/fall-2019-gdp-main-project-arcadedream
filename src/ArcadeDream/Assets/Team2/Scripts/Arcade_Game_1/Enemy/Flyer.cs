@@ -13,7 +13,8 @@ public class Flyer : Enemy
     protected override void Start()
     {
         // Set the Flyer's movement pattern before running the rest of the standard Enemy Start behavior.
-        behaviour_m = XIEnemyBehaviours.MoveInSquare;
+        if (gameObject.transform.position.z > 0) behaviour_m = XIEnemyBehaviours.SwoopDown;
+        else behaviour_m = XIEnemyBehaviours.SwoopUp;
         base.Start();
     }
 }
