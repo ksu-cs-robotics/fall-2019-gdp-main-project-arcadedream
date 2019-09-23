@@ -8,23 +8,22 @@ using UnityEngine;
 /// Author: Jared Anderson
 /// Version: 1
 /// </summary>
-public class Enemy : MonoBehaviour
+public abstract class Enemy : MonoBehaviour
 {
     // The speed of this enemy.
     [SerializeField] public float SPEED = 1f;
 
     // Stores the behaviour of the enemy ship, as well as it's iterator
-    private EnemyBehaviour behaviour_m;
-    private IEnumerator<EnemyAction> behaviourIterator_m;
+    protected EnemyBehaviour behaviour_m;
+    protected IEnumerator<EnemyAction> behaviourIterator_m;
 
     // Stores the speed of the behaviour cycle in seconds, and keeps track of this in the timer
     [SerializeField] public float BEHAVIOURINTERVAL = 1.0f;
-    private float behaviourTimer_m;
+    protected float behaviourTimer_m;
 
     // Start is called before the first frame update
-    void Start()
+    protected virtual void Start()
     {
-        behaviour_m = XIEnemyBehaviours.MoveInSquare;
         behaviourIterator_m = behaviour_m.GetEnumerator();
 
         // Starts up the iterator
@@ -34,7 +33,7 @@ public class Enemy : MonoBehaviour
     }
 
     // Update is called every frame
-    private void Update()
+    protected virtual void Update()
     {
         behaviourTimer_m += Time.deltaTime;
 
