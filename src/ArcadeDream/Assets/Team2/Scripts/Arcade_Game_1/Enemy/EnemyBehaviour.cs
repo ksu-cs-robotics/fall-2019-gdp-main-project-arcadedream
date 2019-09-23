@@ -80,7 +80,7 @@ public static class XIEnemyBehaviours
             new EnemyAction(Vector3.forward, true),
             new EnemyAction(Vector3.right, true),
             new EnemyAction(Vector3.back, true),
-            new EnemyAction(Vector3.left, true),
+            new EnemyAction(Vector3.left, true)
         }
     );
 }
