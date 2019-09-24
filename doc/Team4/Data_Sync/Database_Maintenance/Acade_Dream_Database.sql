@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 18, 2019 at 03:21 AM
+-- Generation Time: Sep 25, 2019 at 12:15 AM
 -- Server version: 10.1.37-MariaDB
 -- PHP Version: 7.3.1
 
@@ -47,7 +47,7 @@ CREATE TABLE `playerlist` (
 --
 
 CREATE TABLE `subgame1` (
-  `GameTime` decimal(16,0) NOT NULL,
+  `GameTime` int(11) NOT NULL,
   `Highscore` int(11) DEFAULT NULL,
   `Username` varchar(16) DEFAULT NULL,
   `ID` int(11) DEFAULT NULL
@@ -60,7 +60,7 @@ CREATE TABLE `subgame1` (
 --
 
 CREATE TABLE `subgame2` (
-  `GameTime` decimal(16,0) NOT NULL,
+  `GameTime` int(11) NOT NULL,
   `Highscore` int(11) DEFAULT NULL,
   `Username` varchar(16) DEFAULT NULL,
   `ID` int(11) DEFAULT NULL
@@ -73,7 +73,7 @@ CREATE TABLE `subgame2` (
 --
 
 CREATE TABLE `subgame3` (
-  `GameTime` decimal(16,0) NOT NULL,
+  `GameTime` int(11) NOT NULL,
   `Highscore` int(11) DEFAULT NULL,
   `Username` varchar(16) DEFAULT NULL,
   `ID` int(11) DEFAULT NULL
@@ -86,7 +86,7 @@ CREATE TABLE `subgame3` (
 --
 
 CREATE TABLE `subgame4` (
-  `GameTime` decimal(16,0) NOT NULL,
+  `GameTime` int(11) NOT NULL,
   `Highscore` int(11) DEFAULT NULL,
   `Username` varchar(16) DEFAULT NULL,
   `ID` int(11) DEFAULT NULL
