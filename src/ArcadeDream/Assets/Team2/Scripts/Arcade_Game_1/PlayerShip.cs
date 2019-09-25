@@ -347,7 +347,8 @@ public class PlayerShip : MonoBehaviour
                     // This line, at least for now, will make sure the neither the player or other players can kill each other
                     if ((other.gameObject.tag == "Bullet" || 
                         other.gameObject.tag == "Laser" ||
-                        other.gameObject.tag == "HomingLaser") &&
+                        other.gameObject.tag == "HomingLaser" ||
+                        other.gameObject.tag == "Boundary") &&
                         other.gameObject.GetComponent<Bullet>().Shooter.gameObject.tag == "Player")
                         return;
 

@@ -54,7 +54,7 @@ public abstract class Enemy : MonoBehaviour
         weaponTimer_m += Time.deltaTime;
         behaviourTimer_m += Time.deltaTime;
 
-        if ((behaviourTimer_m >= BEHAVIOURINTERVAL))
+        if (behaviourTimer_m >= BEHAVIOURINTERVAL && behaviourIterator_m.Current.Loop == false)
         {
             if (behaviourIterator_m.MoveNext())
             {

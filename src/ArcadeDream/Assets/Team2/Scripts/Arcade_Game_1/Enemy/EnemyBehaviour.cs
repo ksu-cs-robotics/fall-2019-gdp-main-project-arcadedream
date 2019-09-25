@@ -50,6 +50,9 @@ public class EnemyAction
     // Whether or not an enemy should attack
     public bool IsAttacking;
 
+    // Whether or not to loop this action infinitely
+    public bool Loop;
+
     public EnemyAction()
     {
         Movement = new Vector3();
@@ -62,6 +65,10 @@ public class EnemyAction
     public EnemyAction(Vector3 newMovement, bool isAttacking) : this(newMovement)
     {
         IsAttacking = isAttacking;
+    }
+    public EnemyAction(Vector3 newMovement, bool isAttacking, bool loop) : this(newMovement, isAttacking)
+    {
+        Loop = loop;
     }
     public EnemyAction(EnemyAction copy) : this(copy.Movement, copy.IsAttacking) { }
 }
@@ -77,10 +84,37 @@ public static class XIEnemyBehaviours
     (
         new List<EnemyAction>()
         {
-            new EnemyAction(Vector3.forward, true),
-            new EnemyAction(Vector3.right, true),
-            new EnemyAction(Vector3.back, true),
-            new EnemyAction(Vector3.left, true)
+            new EnemyAction(Vector3.forward, true, false),
+            new EnemyAction(Vector3.right, true, false),
+            new EnemyAction(Vector3.back, true, false),
+            new EnemyAction(Vector3.left, true, false)
+        }
+    );
+    public static EnemyBehaviour FlyAndReturn = new EnemyBehaviour
+    (
+        new List<EnemyAction>()
+        {
+            new EnemyAction(new Vector3(0, 0, -2), true, false),
+            new EnemyAction(new Vector3(1, 0, 0), true, false),
+            new EnemyAction(new Vector3(0, 0, 2), true, true)
+        }
+    );
+    public static EnemyBehaviour SwoopDown = new EnemyBehaviour
+    (
+        new List<EnemyAction>()
+        {
+            new EnemyAction(new Vector3(1, 0, 0), true, false),
+            new EnemyAction(new Vector3(1, 0, -1), true, false),
+            new EnemyAction(new Vector3(0, 0, -1), true, true)
+        }
+    );
+    public static EnemyBehaviour SwoopUp = new EnemyBehaviour
+    (
+        new List<EnemyAction>()
+        {
+            new EnemyAction(new Vector3(-1, 0, 0), true, false),
+            new EnemyAction(new Vector3(-1, 0, -1), true, false),
+            new EnemyAction(new Vector3(0, 0, -1), true, true)
         }
     );
 
