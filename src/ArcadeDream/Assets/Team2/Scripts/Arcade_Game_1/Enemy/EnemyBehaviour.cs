@@ -51,7 +51,7 @@ public class EnemyAction
     public bool IsAttacking;
 
     // Whether or not to loop this action infinitely
-    public bool Loop;
+    // public bool Loop;
 
     public EnemyAction()
     {

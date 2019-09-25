@@ -1,0 +1,9 @@
+Bullet - Josh, Jared and Lew 
+
+Implements a basic controller for bullet funcitonality. Speed of bullets is not determined by the script, only what happens on impact, and 
+whether or not the bullet should be destroyed.
+
+Start() - Takes a reference to the entity who shot this bullet and stores it in Shooter. That way if this bullet kills someone, we will
+be able to determine who should get the credit for it.
+
+OnTriggerEnter() - Defines a series of actions that need to be performed when the bullet collides with something based on the collider's tag
