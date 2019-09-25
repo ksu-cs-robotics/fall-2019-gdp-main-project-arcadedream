@@ -14,6 +14,9 @@ public class Cancer : Enemy
 
     protected bool armsAreOpen;
 
+    [SerializeField] private GameObject rightArm_m;
+    [SerializeField] private GameObject leftArm_m;
+
     // Start is called before the first frame update
     protected override void Start()
     {
@@ -60,5 +63,15 @@ public class Cancer : Enemy
     protected void ToggleBladeArms()
     {
         armsAreOpen = !armsAreOpen;
+        if (armsAreOpen)
+        {
+            rightArm_m.gameObject.transform.localRotation = Quaternion.Euler(0, -45, 0);
+            leftArm_m.gameObject.transform.localRotation = Quaternion.Euler(0, 45, 0);
+        }
+        else
+        {
+            rightArm_m.gameObject.transform.localRotation = Quaternion.Euler(0, 0, 0);
+            leftArm_m.gameObject.transform.localRotation = Quaternion.Euler(0, 0, 0);
+        }
     }
 }
