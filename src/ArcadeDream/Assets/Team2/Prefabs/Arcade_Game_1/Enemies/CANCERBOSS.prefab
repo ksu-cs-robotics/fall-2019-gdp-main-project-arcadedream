@@ -197,6 +197,7 @@ GameObject:
   - component: {fileID: 1152128490116872702}
   - component: {fileID: 3161597257308393995}
   - component: {fileID: 7543722352600039086}
+  - component: {fileID: 8159544782553597904}
   m_Layer: 0
   m_Name: CANCERBOSS
   m_TagString: Enemy
@@ -418,6 +419,19 @@ MonoBehaviour:
   SCOREVALUE: 100
   DEATHCLIP: {fileID: 0}
   DEATHDURATION: 2
+--- !u!65 &8159544782553597904
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4988636998550787344}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.6350601, y: 4.2677727, z: 1}
+  m_Center: {x: -0.0040768236, y: -0.124326706, z: 0}
 --- !u!1 &5693351932556731283
 GameObject:
   m_ObjectHideFlags: 0
