@@ -62,11 +62,10 @@ public class HomingMovement : MonoBehaviour
                 }
             case "Enemy":
                 {
+                    Destroy(gameObject);
                     var healthComponent = other.gameObject.GetComponent<EnemyHealth>();
-
                     healthComponent.TakeDamage();
                     Shooter.GetComponent<PlayerShip>().Points += healthComponent.SCOREVALUE;
-                    Destroy(gameObject);
 
                     break;
                 }
