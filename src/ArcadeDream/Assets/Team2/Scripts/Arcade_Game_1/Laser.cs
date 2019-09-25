@@ -5,17 +5,28 @@ using UnityEngine;
 /// <summary>
 /// sets laser speed and movement, cleans up lasers
 /// Author: Lew Fortwangler
-/// Version: 1
+/// Version: 2
 /// </summary>
 
 public class Laser : MonoBehaviour
 {
+    public GameObject Shooter { get; set; }
     private float laserSpeed_m = 20.0f;
     private bool isOnScreen_m;
 
     private void Start()
     {
+        Shooter = gameObject.transform.parent.gameObject;
         isOnScreen_m = false;
+    }
+
+    private Laser()
+    {
+
+    }
+    public Laser(GameObject playerObject) : this()
+    {
+        Shooter = playerObject;
     }
 
     private void Update()
@@ -37,6 +48,26 @@ public class Laser : MonoBehaviour
         {
             Destroy(gameObject);
             isOnScreen_m = false;
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        switch(other.gameObject.tag)
+        {
+            case "Player":
+                {
+                    break;
+                }
+            case "Enemy":
+                {
+                    var healthComponent = other.gameObject.GetComponent<EnemyHealth>();
+
+                    healthComponent.TakeDamage();
+                    Shooter.GetComponent<PlayerShip>().Points += healthComponent.SCOREVALUE;
+
+                    break;
+                }
         }
     }
 }

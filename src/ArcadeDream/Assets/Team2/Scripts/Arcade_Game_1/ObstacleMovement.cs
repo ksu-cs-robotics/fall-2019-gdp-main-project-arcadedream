@@ -10,7 +10,7 @@ using UnityEngine;
 
 public class ObstacleMovement : MonoBehaviour
 {
-    private float moveSpeed_m = 9.0f;
+    private float moveSpeed_m = 15.0f;
     private bool isOnScreen_m;  //keep track if the obstacle is visible on screen or not
 
     private void Start()
@@ -44,8 +44,9 @@ public class ObstacleMovement : MonoBehaviour
     //destroy object if collides with the player, bullet, or laser
     private void OnTriggerEnter(Collider other)
     {
+        if (other.gameObject.tag == "HomingLaser") Destroy(gameObject);
+        if (other.gameObject.tag == "Laser") Destroy(gameObject);
         if (other.gameObject.tag == "Player") Destroy(gameObject);
         if (other.gameObject.tag == "Bullet") Destroy(gameObject);
-        if (other.gameObject.tag == "Laser") Destroy(gameObject);
     }
 }

@@ -13,7 +13,7 @@ using UnityEngine;
 
 public class PowerupMovement : MonoBehaviour
 {
-    private float moveSpeed_m = 9.0f;
+    private float moveSpeed_m = 15.0f;
     private bool isOnScreen_m;  //keep track if the obstacle is visible on screen or not
 
     private void Start()
@@ -46,9 +46,6 @@ public class PowerupMovement : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject.tag == "Player")
-        {
-            Destroy(gameObject);
-        }
+        if (other.gameObject.tag == "Player") Destroy(gameObject);
     }
 }

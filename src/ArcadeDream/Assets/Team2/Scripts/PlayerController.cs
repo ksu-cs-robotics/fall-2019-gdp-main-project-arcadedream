@@ -77,7 +77,6 @@ public class PlayerController : MonoBehaviour // NetworkBehaviour
             // Choose movement multiplier based on whether or not the sprint input is used
             if (!Input.GetAxisRaw("Sprint").Equals(0)) { movement *= RUNSPEED; }
             else { movement *= WALKSPEED; }
-
         }
 
         // Process user movement input...
@@ -157,23 +156,13 @@ public class PlayerController : MonoBehaviour // NetworkBehaviour
             {
                 if (!IsInteracting && currentInteractableObject_m != null)
                 {
-                    // var dialogBox = currentInteractableObject_m.GetComponent<InteractController>().Interact(this.gameObject);
-                    // IsInteracting = true;
-
-                    // Put dialog box on player UI canvas
-                    playerDialogMenu_m = currentInteractableObject_m.GetComponent<InteractController>().Interact(this.gameObject);
+                    currentInteractableObject_m.GetComponent<InteractController>().Interact(this.gameObject);
                     IsInteracting = true;
-
-                    playerDialogMenu_m.transform.SetParent(playerUICanvas_m.transform, false);
-                    playerDialogMenu_m.SetActive(true);
                 }
                 else
                 {
+                    currentInteractableObject_m.GetComponent<InteractController>().Interact(this.gameObject);
                     IsInteracting = false;
-
-                    // Remove dialog box from player UI canvas, and return player to arcade
-                    playerDialogMenu_m.SetActive(false);
-                    Destroy(playerDialogMenu_m);
                 }
             }
             catch (Exception ex)
