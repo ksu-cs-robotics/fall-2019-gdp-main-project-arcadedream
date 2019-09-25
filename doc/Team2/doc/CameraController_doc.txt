@@ -1,0 +1,16 @@
+Camera Controller Doc - Josh Dotson
+
+CameraController.cs allows the camera to follow a specified gameObject from a predefined viewpoint. When the referenced gameObject moves
+to a new position, the parent Camera object will smoothly interpolate to this new viewing position. 
+
+SMOOTHING allows one to adjust how much
+lag there is between the camera starting to move when the player moves, as well as, stopping when the player stops moving. The higher the,
+the smoother the transition between points will be.
+
+Start() Initializes the parent camera with the particular offset present between the camera and player at start. It also defines an
+interacting offset to allow the camera to transition to a different closer offset when the player is making an interaction with an
+interactable object.
+
+LateUpdate() is called after all other update functions are called, and thus saves resources for more important functions in other scripts.
+Here, we have the slow interpolation between the players position + offset, and the current location of the camera. If the player is interacting,
+the interacting offset will be active causing the camera to zoom into an over the shoulder view of the object from the players perspective

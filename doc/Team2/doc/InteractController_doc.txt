@@ -1,0 +1,19 @@
+Interact Controller Doc - Josh Dotson
+
+The InteractController provides and easy to use backend framework to players to interact with any interactable object in the world no matter
+what that object may be. It will accept player interactions, check them for blacklisting, and if passed, active a the referenced UI element
+in UIGameObject.
+
+InteractText - Stores predefined text that is the text that will appear on the players UI display when he/she is near the interactable
+object, and it is selected as there current interactable object in PlayerController.
+
+blacklist_m - Stores a list of blacklisted players for this object to see if the player is allowed to interact. This is purely conceptual
+at this point, and is not implemented to any real extent at the time of this writing (Version 1).
+
+OnInteract - An event based interact handler that defaults to enabling the referenced UIGameObject. This supports dynamically changing interact
+behavior at runtime allowing for a greater degree of flexability.
+
+The default constuctor gives OnInteract is default behaviour, and the Action constuctor takes a delegate/lambda corresponing to a new set
+of interaction behaviors.
+
+Interact simply checks to blacklist first, and then invokes OnInteract. If the user is denied, it will throw the User Denied exception.
