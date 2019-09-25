@@ -13,15 +13,6 @@ public class Bullet : MonoBehaviour
         Shooter = gameObject.transform.parent.gameObject;
     }
 
-    private Bullet()
-    {
-        
-    }
-    public Bullet(GameObject playerObject) : this()
-    {
-        Shooter = playerObject;
-    }
-
     private void OnTriggerEnter(Collider other)
     {
         if (Shooter.gameObject.tag == other.gameObject.tag)
@@ -32,6 +23,7 @@ public class Bullet : MonoBehaviour
             case "Player" :
                 {
                     // other.gameObject.GetComponent<PlayerShip>().HEALTH 
+                    Destroy(gameObject);
                     break;
                 }
             case "Enemy":

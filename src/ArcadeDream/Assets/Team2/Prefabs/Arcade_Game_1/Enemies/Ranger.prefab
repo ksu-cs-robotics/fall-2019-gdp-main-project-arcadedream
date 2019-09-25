@@ -223,8 +223,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 52dba42662be3604e98cf131ac525661, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SPEED: 1
-  BEHAVIOURINTERVAL: 1
+  SPEED: 3
+  BULLETSPEED: 3
+  PROJECTILE: {fileID: 6565133877976343921, guid: 3f321bc9967ced940b6a0bed3fb46606,
+    type: 3}
+  BEHAVIOURINTERVAL: 2
 --- !u!114 &4313370635952540571
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -83,5 +83,86 @@ public static class XIEnemyBehaviours
             new EnemyAction(Vector3.left, true)
         }
     );
+
+    public static EnemyBehaviour FlyerBehaviourStandard = new EnemyBehaviour
+    (
+        new List<EnemyAction>()
+        {
+            new EnemyAction(Vector3.forward, false)
+        }
+    );
+
+    public static EnemyBehaviour AssaulterBehaviourStandard = new EnemyBehaviour
+    (
+        new List<EnemyAction>()
+        {
+            new EnemyAction(Vector3.right, true),
+            new EnemyAction(Vector3.left, true)
+        }
+    );
+
+    public static EnemyBehaviour StrikerBehaviourStandard = new EnemyBehaviour
+    (
+        new List<EnemyAction>()
+        {
+            new EnemyAction(Vector3.forward, true)
+        }
+    );
+
+    public static EnemyBehaviour RangerBehaviourStandard = new EnemyBehaviour
+    (
+        new List<EnemyAction>()
+        {
+            new EnemyAction(Vector3.forward * 2, false),
+            new EnemyAction(Vector3.back, false),
+            new EnemyAction(Vector3.back, false)
+        }
+    );
+
+    // The movement for Cancer is purely conceptual at this point
+    public static EnemyBehaviour CancerBehaviourStandard = new EnemyBehaviour
+    (
+        new List<EnemyAction>()
+        {
+            new EnemyAction(Vector3.zero, false)
+            
+            /*new EnemyAction
+            (
+                // First things first, find the player, and set the movement appropriately
+                new Func<Vector3>(() =>
+                {
+                    return new Vector3();
+                })(),
+
+                // The thing will not be attacking this interval
+                false
+            ),
+            new EnemyAction
+            (
+                // In the second interval, attack the player
+                new Func<Vector3>(() =>
+                {
+                    var targets = GameObject.FindGameObjectsWithTag("Player");
+
+                    return new Vector3();
+                })(),
+
+                // ATTACK
+                true
+            ),
+
+            new EnemyAction
+            (
+                new Func<Vector3>(() =>
+                {
+                    
+
+                    return new Vector3();
+                })(),
+
+                true
+            ), */
+        }
+    );
 }
 

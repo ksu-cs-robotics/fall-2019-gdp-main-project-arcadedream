@@ -14,6 +14,7 @@ public enum WeaponInfo : int
     PlayerDamageStandard = 5,
     PlayerDamageIncreased = 20,
 
+    EnemyFireRateSingleShot = 1,
     PlayerFireRateStandard = 5,
     PlayerFireRateIncreased = 20,
 
@@ -29,24 +30,24 @@ public enum WeaponInfo : int
 public class Weapon
 {
     public double Damage { get; set; }
-    public int FireRate { get; set; }
+    public double FireRate { get; set; }
     public int NumProjectiles { get; set; }
 
     public Weapon()
     {
-        Damage = (int)WeaponInfo.PlayerDamageStandard;
-        FireRate = (int)WeaponInfo.PlayerFireRateStandard;
+        Damage = (double)WeaponInfo.PlayerDamageStandard;
+        FireRate = (double)WeaponInfo.PlayerFireRateStandard;
         NumProjectiles = (int)WeaponInfo.PlayerNumProjectilesStandard;
     }
     public Weapon(double newDamage) : this()
     {
         Damage = newDamage;
     }
-    public Weapon(double newDamage, int newFireRate) : this(newDamage)
+    public Weapon(double newDamage, double newFireRate) : this(newDamage)
     {
         FireRate = newFireRate;
     }
-    public Weapon(double newDamage, int newFireRate, int newNumProjectiles) : this(newDamage, newFireRate)
+    public Weapon(double newDamage, double newFireRate, int newNumProjectiles) : this(newDamage, newFireRate)
     {
         NumProjectiles = newNumProjectiles;
     }

@@ -4,8 +4,8 @@ using UnityEngine;
 
 /// <summary>
 /// Behavior for Flyer enemy
-/// Author: Jared Anderson
-/// Version: 1
+/// Author: Jared Anderson, Josh Dotson
+/// Version: 2
 /// </summary>
 public class Flyer : Enemy
 {
@@ -13,7 +13,22 @@ public class Flyer : Enemy
     protected override void Start()
     {
         // Set the Flyer's movement pattern before running the rest of the standard Enemy Start behavior.
-        behaviour_m = XIEnemyBehaviours.MoveInSquare;
+        behaviour_m = XIEnemyBehaviours.FlyerBehaviourStandard; // .FlyerStandardBehaviour
+
         base.Start();
+    }
+
+    protected override void Update()
+    {
+        base.Update();
+
+
+    }
+
+    protected override void Shoot()
+    {
+        base.Shoot();
+
+        // This class does not have a weapon
     }
 }
