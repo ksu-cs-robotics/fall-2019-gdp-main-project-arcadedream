@@ -13,6 +13,8 @@ public class PlayArcadeGame : MonoBehaviour
     public bool arcadeActive = false;
     public bool outOfRange = true;
 
+    public int subgameNumber;
+
     [HideInInspector]
     public int arcadeNumber;
 

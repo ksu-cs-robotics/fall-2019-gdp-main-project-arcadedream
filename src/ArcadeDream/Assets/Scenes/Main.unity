@@ -541,6 +541,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 681997ec9ba5cdd48bf6b080bf8477b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  highscoreEntryTransformList: []
 --- !u!95 &74887913
 Animator:
   serializedVersion: 3
@@ -710,7 +711,7 @@ MonoBehaviour:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
     m_FontSize: 22
     m_FontStyle: 1
-    m_BestFit: 0
+    m_BestFit: 1
     m_MinSize: 2
     m_MaxSize: 40
     m_Alignment: 5
@@ -833,7 +834,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &102682262
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1316,7 +1317,7 @@ GameObject:
   - component: {fileID: 174103933}
   - component: {fileID: 174103932}
   m_Layer: 0
-  m_Name: background
+  m_Name: backgroundHighscores
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2748,7 +2749,8 @@ Animation:
   m_Enabled: 1
   serializedVersion: 3
   m_Animation: {fileID: 7400000, guid: c39c249b497e88c4684a3309e494f4b3, type: 2}
-  m_Animations: []
+  m_Animations:
+  - {fileID: 7400000, guid: c39c249b497e88c4684a3309e494f4b3, type: 2}
   m_WrapMode: 0
   m_PlayAutomatically: 0
   m_AnimatePhysics: 0
@@ -3559,7 +3561,7 @@ MonoBehaviour:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
     m_FontSize: 22
     m_FontStyle: 1
-    m_BestFit: 0
+    m_BestFit: 1
     m_MinSize: 2
     m_MaxSize: 40
     m_Alignment: 5
@@ -6932,7 +6934,7 @@ MonoBehaviour:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
     m_FontSize: 22
     m_FontStyle: 1
-    m_BestFit: 0
+    m_BestFit: 1
     m_MinSize: 2
     m_MaxSize: 40
     m_Alignment: 5
@@ -9723,6 +9725,7 @@ MonoBehaviour:
   DialogInput: 101
   arcadeActive: 0
   outOfRange: 1
+  subgameNumber: 1
   arcadeNumber: 0
 --- !u!4 &2023442414
 Transform:
