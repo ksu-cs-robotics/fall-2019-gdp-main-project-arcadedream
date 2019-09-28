@@ -255,11 +255,7 @@ public class PlayerShip : MonoBehaviour
         }
 
         //shooting a homing laser
-<<<<<<< HEAD
-        if (Input.GetKeyDown("n") &&
-=======
         if(Input.GetKeyDown("e") &&
->>>>>>> e5774abfafd62769a55ada5989d531a93773f114
            hasHomingLaser_m == true)
         {
             GameObject HomingLaser = Instantiate(HOMINGPREFAB, transform.position + Vector3.right, HOMINGPREFAB.transform.rotation);
