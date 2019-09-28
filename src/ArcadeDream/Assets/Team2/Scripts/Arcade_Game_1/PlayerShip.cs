@@ -168,11 +168,11 @@ public class PlayerShip : MonoBehaviour
     {
         
         //calculates how much time has passed while holding down the fire button
-        if (Input.GetKeyDown("m"))
+        if (Input.GetKeyDown("q"))
         {
             startTime_m = Time.time;
         }
-        if (Input.GetKeyUp("m"))
+        if (Input.GetKeyUp("q"))
         {
             timeCharged_m = Time.time - startTime_m;
         }
@@ -240,7 +240,7 @@ public class PlayerShip : MonoBehaviour
         }
 
         //shooting a laser
-        if (Input.GetKeyUp("m") &&
+        if (Input.GetKeyUp("q") &&
             hasLaser_m == true && 
             ((1.0 / primaryWeapon_m.FireRate) <= weaponTimer_m))
         {
@@ -255,7 +255,11 @@ public class PlayerShip : MonoBehaviour
         }
 
         //shooting a homing laser
+<<<<<<< HEAD
         if (Input.GetKeyDown("n") &&
+=======
+        if(Input.GetKeyDown("e") &&
+>>>>>>> e5774abfafd62769a55ada5989d531a93773f114
            hasHomingLaser_m == true)
         {
             GameObject HomingLaser = Instantiate(HOMINGPREFAB, transform.position + Vector3.right, HOMINGPREFAB.transform.rotation);
