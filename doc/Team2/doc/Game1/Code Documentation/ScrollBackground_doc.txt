@@ -1,0 +1,9 @@
+SrollBackground - Lew
+
+Variables: Needs public variables x and y in order to set the scroll speed. 
+
+Awake(): Script will get the material that is applied to the background object.
+
+Start(): Private offset variable is initialized to a new vector with the x and y values.
+
+Update(): offsets the material by the x and y values specified, this will create the scrolling effect.
