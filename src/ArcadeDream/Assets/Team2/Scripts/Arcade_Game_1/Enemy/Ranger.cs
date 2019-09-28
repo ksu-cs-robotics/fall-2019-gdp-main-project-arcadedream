@@ -22,13 +22,8 @@ public class Ranger : Enemy
     {
         base.Update();
 
-
+        transform.Translate(Vector3.forward * (Time.deltaTime / 2));
     }
 
-    protected override void Shoot()
-    {
-        base.Shoot();
-
-        // This class does not have a weapon
-    }
+    protected override void Shoot() { }
 }

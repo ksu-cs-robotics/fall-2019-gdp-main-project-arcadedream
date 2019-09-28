@@ -130,8 +130,8 @@ public static class XIEnemyBehaviours
     (
         new List<EnemyAction>()
         {
-            new EnemyAction(Vector3.right, true),
-            new EnemyAction(Vector3.left, true)
+            new EnemyAction(new Vector3(1, 0, 0.5f), true),
+            new EnemyAction(new Vector3(-1, 0, 0.5f), true)
         }
     );
 
@@ -158,7 +158,8 @@ public static class XIEnemyBehaviours
     (
         new List<EnemyAction>()
         {
-            new EnemyAction(Vector3.zero, false)
+            new EnemyAction(Vector3.left, true),
+            new EnemyAction(Vector3.right, true)
             
             /*new EnemyAction
             (

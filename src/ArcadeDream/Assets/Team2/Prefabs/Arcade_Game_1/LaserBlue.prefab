@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1731730042022012433}
   - component: {fileID: 3093070882596711351}
   m_Layer: 0
-  m_Name: LaserStandard
+  m_Name: LaserBlue
   m_TagString: Laser
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -77,7 +77,7 @@ Transform:
   m_GameObject: {fileID: 4371599935249252358}
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.05, y: 1, z: 0.05}
+  m_LocalScale: {x: 0.05, y: 2, z: 0.05}
   m_Children: []
   m_Father: {fileID: 1731730042022012433}
   m_RootOrder: 0
@@ -107,7 +107,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 5c54ab52742e94147a09d9d898061820, type: 2}
+  - {fileID: 2100000, guid: 4609e715212bc8d44985ea3e0de8ac3c, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -151,7 +151,7 @@ Light:
   m_Enabled: 1
   serializedVersion: 8
   m_Type: 2
-  m_Color: {r: 1, g: 0.3726415, b: 0.3726415, a: 1}
+  m_Color: {r: 0.2971698, g: 0.35539258, b: 1, a: 1}
   m_Intensity: 0.25
   m_Range: 10
   m_SpotAngle: 30

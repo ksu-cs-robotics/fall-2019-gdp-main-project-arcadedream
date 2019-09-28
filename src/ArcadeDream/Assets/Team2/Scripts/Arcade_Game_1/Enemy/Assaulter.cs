@@ -23,6 +23,9 @@ public class Assaulter : Enemy
     {
         base.Update();
 
+        if (!IsActive)
+            return;
+
         // Fire the weapon if the enemy is supposed to attack in this interval; This is in here because it needs to call the derived function
         if (behaviourIterator_m.Current.IsAttacking && ((1.0 / primaryWeapon_m.FireRate) <= weaponTimer_m))
         {
