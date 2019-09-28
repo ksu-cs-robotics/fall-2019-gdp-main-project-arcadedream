@@ -34,6 +34,9 @@ public abstract class Enemy : MonoBehaviour
     protected EnemyBehaviour behaviour_m;
     protected IEnumerator<EnemyAction> behaviourIterator_m;
 
+    // When this is set to false, the enemy will not move or attack
+    public bool IsActive;
+
     // Stores the speed of the behaviour cycle in seconds, and keeps track of this in the timer
     [SerializeField] public float BEHAVIOURINTERVAL = 1.0f;
     protected float behaviourTimer_m;
@@ -46,11 +49,16 @@ public abstract class Enemy : MonoBehaviour
         // Starts up the iterator
         behaviourIterator_m.MoveNext();
         behaviourTimer_m = 0.0f;
+
+        IsActive = true;
     }
 
     // Update is called every frame
     protected virtual void Update()
     {
+        if (!IsActive)
+            return;
+
         weaponTimer_m += Time.deltaTime;
         behaviourTimer_m += Time.deltaTime;
 
@@ -73,4 +81,8 @@ public abstract class Enemy : MonoBehaviour
 
     // Will handle all the speciic things that have to do with a particular enemies weapon capabilities
     protected virtual void Shoot() { }
+
+    // A rough idea of what we talked about with disabling the enemies till on screen
+    private void OnBecameVisible() { IsActive = true; }
+    private void OnBecameInvisible() { IsActive = false; }
 }

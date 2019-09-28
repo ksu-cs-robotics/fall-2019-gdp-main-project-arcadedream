@@ -29,12 +29,20 @@ public class Striker : Enemy
     {
         base.Update();
 
-        // Fire the weapon if the enemy is supposed to attack in this interval; This is in here because it needs to call the derived function
-        if (behaviourIterator_m.Current.IsAttacking && ((1.0 / primaryWeapon_m.FireRate) <= weaponTimer_m))
+        if (!IsActive)
+            return;
+
+        try
         {
-            Shoot();
-            weaponTimer_m = 0.0f;
+            if (behaviourIterator_m.Current.IsAttacking && ((1.0 / primaryWeapon_m.FireRate) <= weaponTimer_m))
+            {
+                ChooseVictim(out victim_m);
+                Shoot();
+
+                weaponTimer_m = 0.0f;
+            }
         }
+        finally { }
     }
 
     protected override void Shoot()

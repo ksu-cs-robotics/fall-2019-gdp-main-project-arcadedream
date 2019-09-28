@@ -21,14 +21,7 @@ public class Flyer : Enemy
     protected override void Update()
     {
         base.Update();
-
-
     }
 
-    protected override void Shoot()
-    {
-        base.Shoot();
-
-        // This class does not have a weapon
-    }
+    protected override void Shoot() { }// This class does not have a weapon
 }
