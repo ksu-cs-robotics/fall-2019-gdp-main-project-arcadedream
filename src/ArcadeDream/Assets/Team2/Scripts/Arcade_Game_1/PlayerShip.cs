@@ -52,6 +52,7 @@ public class Weapon
         NumProjectiles = newNumProjectiles;
     }
     public Weapon(Weapon newWeapon) : this(newWeapon.Damage, newWeapon.FireRate, newWeapon.NumProjectiles) { }
+
 }
 
 /// <summary>
@@ -120,8 +121,22 @@ public class PlayerShip : MonoBehaviour
     /////HOMINGLASER POWERUP ///////////////////
     private bool hasHomingLaser_m = false;
     ////////////////////////////////////////////
-    
+
     //attributes for other powerups in the future
+
+    /// <summary>
+    /// ///////////////////////////////////////////////////
+    //Team 3 additons for audio
+    public AudioClip Gun;
+    public AudioClip laser;
+    // Reference to the audio source.
+    private AudioSource audioSource_m;
+    /// /////////////////////////////////////////////////
+    /// </summary>
+    void Awake()
+    {
+        audioSource_m = GetComponent<AudioSource>();
+    }
 
     // Events that may be useful for others using this class such as Team 1 for UI elements
     public event Action PointsChanged;
@@ -216,8 +231,12 @@ public class PlayerShip : MonoBehaviour
             bullet.transform.parent = gameObject.transform;         
             bullet.GetComponent<Rigidbody>().velocity = Vector3.right * BULLETSPEED;
             bullet.GetComponent<Bullet>().Shooter = gameObject;
-
             weaponTimer_m = 0.0f;
+
+            //team3///////////////////////
+            audioSource_m.clip = Gun;
+            audioSource_m.Play();
+            /////////////////////////////
         }
 
         //shooting a laser
@@ -228,15 +247,26 @@ public class PlayerShip : MonoBehaviour
             chargeLaser(timeCharged_m);     //calls chargeLaser to modify width based on charged time
             GameObject Laser = Instantiate(LASERPREFAB, transform.position + Vector3.right, LASERPREFAB.transform.rotation);
             weaponTimer_m = 0.0f;
+
+            //team3///////////////////////
+            audioSource_m.clip = laser;
+            audioSource_m.Play();
+            /////////////////////////////
         }
 
         //shooting a homing laser
-        if(Input.GetKeyDown("n") &&
+        if (Input.GetKeyDown("n") &&
            hasHomingLaser_m == true)
         {
             GameObject HomingLaser = Instantiate(HOMINGPREFAB, transform.position + Vector3.right, HOMINGPREFAB.transform.rotation);
             hasHomingLaser_m = false;
             StartCoroutine(HomingTimer());
+
+            //team3///////////////////////
+            audioSource_m.clip = laser;
+            audioSource_m.Play();
+            /////////////////////////////
+
         }
 
         // We may use this in the future if we decide to add secondarys/abilities
