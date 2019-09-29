@@ -10,7 +10,6 @@ using UnityEngine;
 public class Cancer : Enemy
 {
     protected List<GameObject> players_m;
-    protected Vector3 destination_m;
 
     protected GameObject victim_m;
     protected bool chargingLaser_m;
@@ -33,8 +32,6 @@ public class Cancer : Enemy
 
         players_m = new List<GameObject>(GameObject.FindGameObjectsWithTag("Player"));
 
-        // For now, cancer just picks the place where are about all the players are
-        GetPlayerPositionalAverage(out destination_m);
         ChooseVictim(out victim_m);
         armsAreOpen = false;
         armToggleTimer_m = 0.0f;
@@ -54,8 +51,7 @@ public class Cancer : Enemy
         // Move the boss into position, then do its normal behavior
         if (gameObject.transform.position.x > 0)
         {
-            GetPlayerPositionalAverage(out destination_m);
-            transform.position = Vector3.MoveTowards(transform.position, destination_m, SPEED * Time.deltaTime);
+            transform.Translate(Vector3.back * Time.deltaTime); // Vector3.MoveTowards(transform.position, destination_m, SPEED * Time.deltaTime);
         }
         else // Once the boss is in position, start the normal behavior pattern     
             base.Update();
@@ -88,16 +84,6 @@ public class Cancer : Enemy
         var targets = GameObject.FindGameObjectsWithTag("Player");
         System.Random random = new System.Random();
         victim = targets[random.Next(0, targets.Length)];
-    }
-
-    protected void GetPlayerPositionalAverage(out Vector3 input)
-    {
-        input = Vector3.zero;
-
-        foreach (var player in players_m)
-        {
-            input += player.gameObject.transform.position / players_m.Count;
-        }
     }
 
     protected void ToggleBladeArms()
