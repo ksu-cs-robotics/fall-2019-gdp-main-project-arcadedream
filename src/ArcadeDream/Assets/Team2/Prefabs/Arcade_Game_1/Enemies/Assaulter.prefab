@@ -96,6 +96,7 @@ GameObject:
   - component: {fileID: 8334102874522449435}
   - component: {fileID: 582969780348391150}
   - component: {fileID: 7826678576834946315}
+  - component: {fileID: 7806179187589105731}
   m_Layer: 0
   m_Name: Assaulter
   m_TagString: Enemy
@@ -282,6 +283,43 @@ MonoBehaviour:
   SCOREVALUE: 100
   DEATHCLIP: {fileID: 0}
   DEATHDURATION: 2
+--- !u!23 &7806179187589105731
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3782305883466288359}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 0
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
 --- !u!1 &3782305884048856000
 GameObject:
   m_ObjectHideFlags: 0
@@ -372,10 +410,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3782305883201694732}
     m_Modifications:
-    - target: {fileID: 100000, guid: 54c9f46022305d341ada37395cd9c987, type: 3}
-      propertyPath: m_Name
-      value: RealAssualter
-      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 54c9f46022305d341ada37395cd9c987, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.060874715
@@ -431,6 +465,10 @@ PrefabInstance:
     - target: {fileID: 400000, guid: 54c9f46022305d341ada37395cd9c987, type: 3}
       propertyPath: m_LocalScale.z
       value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 54c9f46022305d341ada37395cd9c987, type: 3}
+      propertyPath: m_Name
+      value: RealAssualter
       objectReference: {fileID: 0}
     - target: {fileID: 2300000, guid: 54c9f46022305d341ada37395cd9c987, type: 3}
       propertyPath: m_Materials.Array.data[0]

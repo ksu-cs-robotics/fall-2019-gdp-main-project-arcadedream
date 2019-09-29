@@ -10,7 +10,7 @@ using UnityEngine;
 /// </summary>
 public static class EnemyWeapons
 {
-    public static Weapon SingleShot = new Weapon((double)WeaponInfo.PlayerDamageStandard, 0.5, 1);
+    public static Weapon SingleShot = new Weapon((double)WeaponInfo.PlayerDamageStandard, 0.25, 1);
     // public static Weapon Laser = new Weapon((double)WeaponInfo.PlayerDamageIncreased, (int)WeaponInfo.EnemyFireRateSingleShot, 1);
 }
 
@@ -50,15 +50,12 @@ public abstract class Enemy : MonoBehaviour
         behaviourIterator_m.MoveNext();
         behaviourTimer_m = 0.0f;
 
-        IsActive = true;
+        IsActive = false;
     }
 
     // Update is called every frame
     protected virtual void Update()
     {
-        if (!IsActive)
-            return;
-
         weaponTimer_m += Time.deltaTime;
         behaviourTimer_m += Time.deltaTime;
 

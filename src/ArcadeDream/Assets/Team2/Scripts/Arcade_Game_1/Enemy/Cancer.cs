@@ -42,9 +42,6 @@ public class Cancer : Enemy
 
     protected override void Update()
     {
-        if (!IsActive)
-            return;
-
         armToggleTimer_m += Time.deltaTime;
 
         // Keep track of when to open and close the arms
@@ -66,7 +63,7 @@ public class Cancer : Enemy
         try
         {
             // This exits in a try block so ChooseVictim will be handled when there is no players left
-            if (((1.0 / primaryWeapon_m.FireRate) <= weaponTimer_m))
+            if (((1.0 / primaryWeapon_m.FireRate) <= weaponTimer_m) && IsActive)
             {
                 ChooseVictim(out victim_m);
                 Shoot();
