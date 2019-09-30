@@ -45,11 +45,15 @@ public class EnemyHealth : MonoBehaviour
         if (isDead_m)
             return;
 
-        audioSource_m.Play();
+        
         currentHealth_m--;
 
         if (currentHealth_m <= 0)
+        {
+            audioSource_m.clip = DEATHCLIP;
+            audioSource_m.Play();
             Die();
+        }
     }
 
     void Die()
@@ -58,8 +62,7 @@ public class EnemyHealth : MonoBehaviour
         // Trigger the death animation.
         //animator_m.SetTrigger("Dead");
         // Set the audio source to the death clip and play it.
-        audioSource_m.clip = DEATHCLIP;
-        audioSource_m.Play();
+        
         // Increase the player's score by the enemy's score value.
         // TODO: Implement score manager.
         // After the given amount of time, destroy the enemy object.
