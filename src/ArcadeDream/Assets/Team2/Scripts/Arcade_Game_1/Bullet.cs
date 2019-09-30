@@ -1,9 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
 [RequireComponent(typeof(Rigidbody))]
-public class Bullet : MonoBehaviour
+public class Bullet : NetworkBehaviour
 {
     public GameObject Shooter { get; set; }
     private bool isOnScreen_m = false;

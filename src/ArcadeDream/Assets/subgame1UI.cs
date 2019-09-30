@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
 
-public class subgame1UI : MonoBehaviour
+public class subgame1UI : NetworkBehaviour
 {
     GameObject player;
     PlayerShip playerShip;
@@ -35,23 +36,35 @@ public class subgame1UI : MonoBehaviour
 
     IEnumerator StartGame()
     {
-        yield return new WaitForSecondsRealtime(time);
         startScreenUI.SetActive(false);
         Time.timeScale = 1; //playing game
+        yield return new WaitForSecondsRealtime(time);
     }
 
 
     void Update()
     {
-        scoreText.text = "Score " + playerShip.Points.ToString();
-        livesText.text = "X " + playerShip.LIVES.ToString();
-
-        if (playerShip.LIVES <= 0 && !gameover)
+        if (player == null)
         {
-            gameOverUI.SetActive(true);
-            Time.timeScale = 0; 
-            gameover = true;
+            player = GameObject.Find("PlayerShip");
+            if (player != null)
+            {
+                playerShip = player.GetComponent<PlayerShip>();
+            }
         }
+        else
+        {
+            scoreText.text = "Score " + playerShip.Points.ToString();
+            livesText.text = "X " + playerShip.LIVES.ToString();
+
+            if (playerShip.LIVES <= 0 && !gameover)
+            {
+                gameOverUI.SetActive(true);
+                Time.timeScale = 0;
+                gameover = true;
+            }
+        }
+
     }
 
     //moving to highscore screen
