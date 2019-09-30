@@ -16,6 +16,9 @@ GameObject:
   - component: {fileID: 7835533028697767564}
   - component: {fileID: 1430916856609566037}
   - component: {fileID: 3739642682543885654}
+  - component: {fileID: 7578500447208189989}
+  - component: {fileID: 8329881838046761925}
+  - component: {fileID: 1273717367449443053}
   m_Layer: 0
   m_Name: Flyer
   m_TagString: Enemy
@@ -240,3 +243,160 @@ MonoBehaviour:
   SCOREVALUE: 100
   DEATHCLIP: {fileID: 0}
   DEATHDURATION: 2
+<<<<<<< Updated upstream
+=======
+--- !u!114 &7578500447208189989
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2854920551100909183}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 372142912, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SceneId:
+    m_Value: 0
+  m_AssetId:
+    i0: 0
+    i1: 0
+    i2: 0
+    i3: 0
+    i4: 0
+    i5: 0
+    i6: 0
+    i7: 0
+    i8: 0
+    i9: 0
+    i10: 0
+    i11: 0
+    i12: 0
+    i13: 0
+    i14: 0
+    i15: 0
+  m_ServerOnly: 1
+  m_LocalPlayerAuthority: 0
+--- !u!114 &8329881838046761925
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2854920551100909183}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1768714887, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_TransformSyncMode: 1
+  m_SendInterval: 0.1
+  m_SyncRotationAxis: 7
+  m_RotationSyncCompression: 0
+  m_SyncSpin: 0
+  m_MovementTheshold: 0.001
+  m_VelocityThreshold: 0.0001
+  m_SnapThreshold: 5
+  m_InterpolateRotation: 1
+  m_InterpolateMovement: 1
+--- !u!114 &1273717367449443053
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2854920551100909183}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1590678366, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Animator: {fileID: 2255750928962823937}
+  m_ParameterSendBits: 0
+  param0: 
+  param1: 
+  param2: 
+  param3: 
+  param4: 
+  param5: 
+--- !u!1001 &4556600194866262439
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 7294079060924277105}
+    m_Modifications:
+    - target: {fileID: 100000, guid: b53bbca647f0ca148bd4bc56ded66eb8, type: 3}
+      propertyPath: m_Name
+      value: FlyerV1
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: b53bbca647f0ca148bd4bc56ded66eb8, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.31920344
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: b53bbca647f0ca148bd4bc56ded66eb8, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.028685804
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: b53bbca647f0ca148bd4bc56ded66eb8, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.013002729
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: b53bbca647f0ca148bd4bc56ded66eb8, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.034504984
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: b53bbca647f0ca148bd4bc56ded66eb8, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.70626444
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: b53bbca647f0ca148bd4bc56ded66eb8, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.036957752
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: b53bbca647f0ca148bd4bc56ded66eb8, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.70614034
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: b53bbca647f0ca148bd4bc56ded66eb8, type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: b53bbca647f0ca148bd4bc56ded66eb8, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -5.793
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: b53bbca647f0ca148bd4bc56ded66eb8, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: b53bbca647f0ca148bd4bc56ded66eb8, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0.19900002
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: b53bbca647f0ca148bd4bc56ded66eb8, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: b53bbca647f0ca148bd4bc56ded66eb8, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: b53bbca647f0ca148bd4bc56ded66eb8, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 2300000, guid: b53bbca647f0ca148bd4bc56ded66eb8, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: e0b2d2faf17e12a4e8cc545c35560fcf, type: 2}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: b53bbca647f0ca148bd4bc56ded66eb8, type: 3}
+--- !u!4 &4556600194866391847 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 400000, guid: b53bbca647f0ca148bd4bc56ded66eb8,
+    type: 3}
+  m_PrefabInstance: {fileID: 4556600194866262439}
+  m_PrefabAsset: {fileID: 0}
+>>>>>>> Stashed changes
