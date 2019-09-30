@@ -30,12 +30,14 @@ public class subgame1UI : NetworkBehaviour
         gameover = false;
 
         Time.timeScale = 0; //pausing game
+        Debug.Log("Co");
         StartCoroutine(StartGame());
 
     }
 
     IEnumerator StartGame()
     {
+        Debug.Log("SCREEN GONE");
         startScreenUI.SetActive(false);
         Time.timeScale = 1; //playing game
         yield return new WaitForSecondsRealtime(time);
