@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 2697354242606323817}
   - component: {fileID: 5228732889723505591}
   - component: {fileID: 1804475949315610463}
-  - component: {fileID: 1114080484363575287}
   - component: {fileID: 9172196019777271119}
   - component: {fileID: 4916058587745623834}
   - component: {fileID: 4313370635952540571}
@@ -88,25 +87,6 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
---- !u!95 &1114080484363575287
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2061046539266995993}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!82 &9172196019777271119
 AudioSource:
   m_ObjectHideFlags: 0
@@ -236,7 +216,6 @@ MonoBehaviour:
   STARTINGHEALTH: 1
   SCOREVALUE: 100
   DEATHCLIP: {fileID: 0}
-  DEATHDURATION: 2
 --- !u!1001 &6262481655449843947
 PrefabInstance:
   m_ObjectHideFlags: 0

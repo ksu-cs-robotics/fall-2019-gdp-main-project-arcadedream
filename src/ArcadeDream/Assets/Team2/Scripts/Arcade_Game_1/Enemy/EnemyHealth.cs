@@ -16,14 +16,14 @@ public class EnemyHealth : MonoBehaviour
     //The sound to play when the enemy dies.
     public AudioClip DEATHCLIP;
     // Amount of time before enemy object is destroyed.
-    public float DEATHDURATION = 2f;
+    //public float DEATHDURATION = 2f;
 
     // Whether the enemy is dead.
     private bool isDead_m;
     // The amount of health the enemy currently has.
     private int currentHealth_m;
     // Reference to the animator.
-    private Animator animator_m;
+    //private Animator animator_m;
     // Reference to the audio source.
     private AudioSource audioSource_m;
 
@@ -35,7 +35,7 @@ public class EnemyHealth : MonoBehaviour
         currentHealth_m = STARTINGHEALTH;
 
         // Get references.
-        animator_m = GetComponent<Animator>();
+        //animator_m = GetComponent<Animator>();
         audioSource_m = GetComponent<AudioSource>(); 
     }
 
@@ -56,13 +56,13 @@ public class EnemyHealth : MonoBehaviour
     {
         isDead_m = true;
         // Trigger the death animation.
-        animator_m.SetTrigger("Dead");
+        //animator_m.SetTrigger("Dead");
         // Set the audio source to the death clip and play it.
         audioSource_m.clip = DEATHCLIP;
         audioSource_m.Play();
         // Increase the player's score by the enemy's score value.
         // TODO: Implement score manager.
         // After the given amount of time, destroy the enemy object.
-        Destroy(gameObject, DEATHDURATION);
+        Destroy(gameObject);
     }
 }
