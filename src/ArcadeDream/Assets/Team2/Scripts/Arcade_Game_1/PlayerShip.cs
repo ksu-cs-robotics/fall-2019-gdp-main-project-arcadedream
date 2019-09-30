@@ -129,13 +129,18 @@ public class PlayerShip : MonoBehaviour
     //Team 3 additons for audio
     public AudioClip Gun;
     public AudioClip laser;
+    public AudioClip destroyed;
+    public AudioClip loss;
     // Reference to the audio source.
     private AudioSource audioSource_m;
+    public AudioSource themeSource;
+    
     /// /////////////////////////////////////////////////
     /// </summary>
     void Awake()
     {
         audioSource_m = GetComponent<AudioSource>();
+        audioSource_m.volume = .3f;
     }
 
     // Events that may be useful for others using this class such as Team 1 for UI elements
@@ -236,6 +241,7 @@ public class PlayerShip : MonoBehaviour
             //team3///////////////////////
             audioSource_m.clip = Gun;
             audioSource_m.Play();
+ 
             /////////////////////////////
         }
 
@@ -385,6 +391,7 @@ public class PlayerShip : MonoBehaviour
                     // If the player did not just respawn...
                     if (!isInvulnerable_m)
                     {
+                        
                         hasLaser_m = false;
                         hasTopGun_m = false;
                         hasHomingLaser_m = false;
@@ -392,7 +399,12 @@ public class PlayerShip : MonoBehaviour
                         topGun.SetActive(false);
                         --LIVES;
 
-                        if (LIVES > 0)
+                        //team3///////////////////////
+                        audioSource_m.clip = destroyed;
+                        audioSource_m.Play();
+                        /////////////////////////////
+
+                            if (LIVES > 0)
                         {
                             StartCoroutine(Respawn());
                         }
@@ -400,7 +412,16 @@ public class PlayerShip : MonoBehaviour
                         {
                             isDead_m = true;
                             ScoreUnixTimestamp = ((DateTimeOffset)DateTime.UtcNow).ToUnixTimeSeconds();
+
+                            ///Team3///
+                            themeSource.volume = .5f;
+                            themeSource.clip = loss;
+                            themeSource.Play();
+
+
                             gameObject.SetActive(false);
+
+                            
                         }
                     }
 

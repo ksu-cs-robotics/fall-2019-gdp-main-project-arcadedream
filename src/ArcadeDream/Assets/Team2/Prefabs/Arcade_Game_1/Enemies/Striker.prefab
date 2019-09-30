@@ -164,7 +164,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.4
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -280,8 +280,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   STARTINGHEALTH: 1
   SCOREVALUE: 100
-  DEATHCLIP: {fileID: 0}
+  DEATHCLIP: {fileID: 8300000, guid: 981aaf0a9196f1e4194a79cc7257c814, type: 3}
   DEATHDURATION: 2
+  model: {fileID: 5422206983343710708}
 --- !u!23 &3339076191629610414
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -395,6 +396,12 @@ PrefabInstance:
 --- !u!4 &5422206983346135828 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: d57b3399fd67cdf498f0bba92f68b5be,
+    type: 3}
+  m_PrefabInstance: {fileID: 5422206983346010516}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &5422206983343710708 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 2300000, guid: d57b3399fd67cdf498f0bba92f68b5be,
     type: 3}
   m_PrefabInstance: {fileID: 5422206983346010516}
   m_PrefabAsset: {fileID: 0}

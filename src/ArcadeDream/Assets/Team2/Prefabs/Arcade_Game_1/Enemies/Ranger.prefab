@@ -119,7 +119,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.4
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -235,8 +235,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   STARTINGHEALTH: 1
   SCOREVALUE: 100
-  DEATHCLIP: {fileID: 0}
+  DEATHCLIP: {fileID: 8300000, guid: 981aaf0a9196f1e4194a79cc7257c814, type: 3}
   DEATHDURATION: 2
+  model: {fileID: 6262481655447937163}
 --- !u!1001 &6262481655449843947
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -244,10 +245,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2697354242606323817}
     m_Modifications:
-    - target: {fileID: 100000, guid: 7bfe7e5c77e34d146973b01be66024e9, type: 3}
-      propertyPath: m_Name
-      value: RangerV1
-      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 7bfe7e5c77e34d146973b01be66024e9, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.022967745
@@ -304,6 +301,10 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 20
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 7bfe7e5c77e34d146973b01be66024e9, type: 3}
+      propertyPath: m_Name
+      value: RangerV1
+      objectReference: {fileID: 0}
     - target: {fileID: 2300000, guid: 7bfe7e5c77e34d146973b01be66024e9, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
@@ -313,6 +314,12 @@ PrefabInstance:
 --- !u!4 &6262481655449707115 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: 7bfe7e5c77e34d146973b01be66024e9,
+    type: 3}
+  m_PrefabInstance: {fileID: 6262481655449843947}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &6262481655447937163 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 2300000, guid: 7bfe7e5c77e34d146973b01be66024e9,
     type: 3}
   m_PrefabInstance: {fileID: 6262481655449843947}
   m_PrefabAsset: {fileID: 0}
