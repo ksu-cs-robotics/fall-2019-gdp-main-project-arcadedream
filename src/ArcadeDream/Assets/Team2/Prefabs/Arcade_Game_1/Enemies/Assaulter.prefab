@@ -92,7 +92,6 @@ GameObject:
   m_Component:
   - component: {fileID: 3782305883201694732}
   - component: {fileID: 3610414403032207130}
-  - component: {fileID: 4514669004050458347}
   - component: {fileID: 8334102874522449435}
   - component: {fileID: 582969780348391150}
   - component: {fileID: 7826678576834946315}
@@ -134,25 +133,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 2, y: 1.4297239, z: 2}
   m_Center: {x: 0, y: 0.04226446, z: -0}
---- !u!95 &4514669004050458347
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3782305883466288359}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!82 &8334102874522449435
 AudioSource:
   m_ObjectHideFlags: 0
@@ -163,9 +143,15 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
+<<<<<<< HEAD
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
   m_Volume: 0.4
+=======
+  m_audioClip: {fileID: 8300000, guid: 5f1dbd09c47d71d47be43b73ec31d022, type: 3}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+>>>>>>> ab5b2bee80dac0eddc97bdcb236851cf1c5a66df
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -281,9 +267,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   STARTINGHEALTH: 1
   SCOREVALUE: 100
+<<<<<<< HEAD
   DEATHCLIP: {fileID: 8300000, guid: 981aaf0a9196f1e4194a79cc7257c814, type: 3}
   DEATHDURATION: 2
   model: {fileID: 3314664474138321489}
+=======
+  DEATHCLIP: {fileID: 8300000, guid: 5f1dbd09c47d71d47be43b73ec31d022, type: 3}
+>>>>>>> ab5b2bee80dac0eddc97bdcb236851cf1c5a66df
 --- !u!23 &7806179187589105731
 MeshRenderer:
   m_ObjectHideFlags: 0

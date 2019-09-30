@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 7294079060924277105}
   - component: {fileID: 3559414014972567876}
   - component: {fileID: 4662453474352884859}
-  - component: {fileID: 2255750928962823937}
   - component: {fileID: 7835533028697767564}
   - component: {fileID: 1430916856609566037}
   - component: {fileID: 3739642682543885654}
@@ -87,25 +86,6 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
---- !u!95 &2255750928962823937
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2854920551100909183}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!82 &7835533028697767564
 AudioSource:
   m_ObjectHideFlags: 0
@@ -233,9 +213,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   STARTINGHEALTH: 1
   SCOREVALUE: 100
+<<<<<<< HEAD
   DEATHCLIP: {fileID: 8300000, guid: ff9291f22d1e22c41b2b12ab25d07bb3, type: 3}
   DEATHDURATION: 2
   model: {fileID: 4556600194864097735}
+=======
+  DEATHCLIP: {fileID: 8300000, guid: 5f1dbd09c47d71d47be43b73ec31d022, type: 3}
+>>>>>>> ab5b2bee80dac0eddc97bdcb236851cf1c5a66df
 --- !u!1001 &4556600194866262439
 PrefabInstance:
   m_ObjectHideFlags: 0
