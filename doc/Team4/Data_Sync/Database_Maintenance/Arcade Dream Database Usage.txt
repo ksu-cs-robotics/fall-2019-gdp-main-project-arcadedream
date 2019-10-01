@@ -1,0 +1,20 @@
+Use of Player Database for Arcade Dream.
+
+--The Player List table will store the basic information of the player such as:
+	- The username which is to be unique for identificaiton purposes
+	- A randomly generated ID which is to be unqiue for additional identification purposes
+	- The users password which will be encrypted in storage
+	- The players Coins/tickets that they've earned/bought
+	- Total points which is updated at they end of a game.
+	- Gender which is stored as either M/F which will be sent to unity to use
+	- Skin Color which should be stored in hexadecimal and sent to unity to use 
+	- PantsID, ShirtID, and HatID which should be unique identifiers in unity for assets that
+	  the player avater will use. Must be uniform accross all instances of the game so that all 
+	  avatars have the same identifers for the same assets. If the ids are mismatched then one player
+	  will see a different asset then intended
+
+--The SubGame1-4 tables will be used to store the overall Highscores of the individual game. It will store as follows:
+	- The Time the highscore was achieved using C# Timestamp functions for identification purposes
+	- The Username of the player who made a new highscore stored as a foreign key
+	- The Highscore the player got.
+	

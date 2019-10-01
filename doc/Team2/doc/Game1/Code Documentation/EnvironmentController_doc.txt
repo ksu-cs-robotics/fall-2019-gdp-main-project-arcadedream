@@ -1,7 +1,0 @@
-EnvironmentController - Lew
-
-Variables: a timer in seconds, x, y, and z values for position, a vector for the spawn point, and a vector for the position
-
-getSpawnVector(): x and y values are hard set to a position off of the screen, the z value uses a random range of -4 to 4 (the bounds of the play area).  Sets the position to a new vector using the above values, this is returned and to be used in the SpawnRoutine() function.
-
-SpawnRoutine(): Every 3 seconds this function is executed (value from the timer variable). The spawn point is set by calling getSpawnVector() function, a new obstacle is spawned at that random location. This function is repeated until the game is over. 
