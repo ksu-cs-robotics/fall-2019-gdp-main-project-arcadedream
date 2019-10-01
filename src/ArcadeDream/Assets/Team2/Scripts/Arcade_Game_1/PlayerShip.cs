@@ -132,9 +132,12 @@ public class PlayerShip : NetworkBehaviour
     public AudioClip laser;
     public AudioClip destroyed;
     public AudioClip loss;
+    public AudioClip PU;
+    public AudioClip oneUp;
     // Reference to the audio source.
     private AudioSource audioSource_m;
     public AudioSource themeSource;
+    public AudioSource audioSource_pu;
     
     /// /////////////////////////////////////////////////
     /// </summary>
@@ -356,27 +359,38 @@ public class PlayerShip : NetworkBehaviour
                 case "LaserPowerup":
                 {
                     hasLaser_m = true;
+                    audioSource_pu.clip = PU;
+                    audioSource_pu.Play();
                     break;
                 }
                 case "1upPowerup":
                 {
                      ++LIVES;
+                     audioSource_pu.clip = oneUp;
+                     audioSource_pu.Play();
                      break;
                 }
                 case "TopGunPowerup":
                 {
                     topGun.SetActive(true);
                     hasTopGun_m = true;
+                    audioSource_pu.clip = PU;
+                    audioSource_pu.Play();
+                
                     break;
                 }
                 case "RapidFirePowerup":
                 {
                     hasRapidFire_m = true;
+                    audioSource_pu.clip = PU;
+                    audioSource_pu.Play();
                     break;
                 }
                 case "HomingPowerup":
                 {
                     hasHomingLaser_m = true;
+                    audioSource_pu.clip = PU;
+                    audioSource_pu.Play();
                     break;
                 }
                 default:
