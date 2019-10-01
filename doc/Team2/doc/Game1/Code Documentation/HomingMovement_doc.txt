@@ -1,0 +1,18 @@
+HomingMovement - Lew
+
+Variables: object to keep track of who shot the homing laser, the homing laser's speed.
+
+Update(): Calls the FindEnemy function.
+
+FindEnemy(): 
+Variables: store the distance to the closest enemy, store the closest enemy gameobject, store an array of
+all enemies found.
+
+For all of the enemies in the enemy array, check if the distance to the enemy is closer to you than the
+previous closest enemy. If it is, change the closest distance to the new distance, and set that enemy as the new closest. 
+
+Once the closest enemy is found, the homing laser will move toward the enemy position by its specified speed.
+
+OnTriggerEnter(): If the homing laser collides with the player, do nothing. Prevents the player from being
+destroyed by their own homing laser. If the homing laser collides with an enemy, destroy the homing laser and get the health component of the enemy, and call the takeDamage function. The shooter of the homing laser is then awarded with points and that is added to their total score.
+

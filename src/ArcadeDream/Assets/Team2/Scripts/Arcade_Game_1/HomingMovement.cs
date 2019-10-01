@@ -11,7 +11,7 @@ using UnityEngine;
 public class HomingMovement : MonoBehaviour
 {
     public GameObject Shooter { get; set; }
-    private float laserSpeed_m = 20.0f;
+    private float laserSpeed_m = 10.0f;
 
     private void Start()
     {
@@ -62,11 +62,10 @@ public class HomingMovement : MonoBehaviour
                 }
             case "Enemy":
                 {
+                    Destroy(gameObject);
                     var healthComponent = other.gameObject.GetComponent<EnemyHealth>();
-
                     healthComponent.TakeDamage();
                     Shooter.GetComponent<PlayerShip>().Points += healthComponent.SCOREVALUE;
-                    Destroy(gameObject);
 
                     break;
                 }

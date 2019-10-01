@@ -14,8 +14,8 @@ GameObject:
   - component: {fileID: 8822071994537012968}
   - component: {fileID: 2249271718712083637}
   - component: {fileID: 961781745556676279}
-  - component: {fileID: 2764184410127441618}
-  - component: {fileID: 4050573962766898357}
+  - component: {fileID: 6913461475008945681}
+  - component: {fileID: 7933724977039421437}
   m_Layer: 0
   m_Name: PowerupObstacle
   m_TagString: PowerupObstacle
@@ -125,7 +125,7 @@ MonoBehaviour:
   - {fileID: 1551422663243942631, guid: 3d67a488179a5ff4691baf274a65dcfb, type: 3}
   - {fileID: 5356489828909977464, guid: d770384fbf6df1a4f89c15ef0ab78e80, type: 3}
   - {fileID: 167983688104298244, guid: 135001a78e7d66c41a6de2df35fd85d8, type: 3}
---- !u!114 &2764184410127441618
+--- !u!114 &6913461475008945681
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -158,7 +158,7 @@ MonoBehaviour:
     i15: 0
   m_ServerOnly: 1
   m_LocalPlayerAuthority: 0
---- !u!114 &4050573962766898357
+--- !u!114 &7933724977039421437
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -170,7 +170,7 @@ MonoBehaviour:
   m_Script: {fileID: -1768714887, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_TransformSyncMode: 1
+  m_TransformSyncMode: 0
   m_SendInterval: 0.1
   m_SyncRotationAxis: 7
   m_RotationSyncCompression: 0

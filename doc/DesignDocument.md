@@ -1,5 +1,3 @@
-https://docs.google.com/document/d/1Fh1FsN2_J-OcjyJvD1ss-3hdCnPutHxBKkPFkc85DL4/edit?usp=sharing
-
 Story:
 
 This game takes place in a small town where a new arcade just opened up. As one of select lucky winners, you get to test out games at this arcade before it opens up. The owner seems nice enough, but you’re more focused on the games at this point. Maybe just look over your shoulder every once in a while…

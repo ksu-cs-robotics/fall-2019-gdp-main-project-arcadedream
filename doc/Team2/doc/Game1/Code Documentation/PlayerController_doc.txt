@@ -1,0 +1,29 @@
+Player Controller - Josh Dotson
+
+PlayerController controls all player mechanics within the arcade itself. This includes soliciting interactions, moving, jumping, and running.
+
+Awake() - Runs before the script even runs, and makes sure that the parent gameobject is not destroyed on scene change so the player remains
+in the arcade while they are playing a subgame in another scene.
+
+Start() - Runs before the first frame of the update function, and serves to initialize all values to their default states before the real
+action can begin. This includes initializing lists to default, and getting references to the player UI for plotting InteractText
+
+FixedUpdate() - Runs a fixed amount of times per second, and houses all the movement functionality, as it is tied to rigidbody physics.
+If the player is not interacting with an object already, this script will take raw input data from the user and allow them to move through
+the arcade using either a keyboard or a controller on console. If the sprint input is also present, this funciton will adjust the movement 
+to running pace. The parent gameobject will also be rotated to face the direction that it is heading in order to smoothly integrate with the
+parent gameobjects character model. If jumping input is present, an impulse force will be applied to the players feet causing them to leap 
+off the floor to a predefined height.
+
+Update() - Runs every frame. Plots interact text of the currentInteractableObject on screen. If the player clicks on a gameobject in the arcade
+and that object is interactable, that object will then be set to the currentInteractableObject until the user has either mouse clicked another
+or clicked a non interactable object in which case it would default to the proximity, priority method of finding interactable objects. Processes
+any interact input from either keyboard or console, and disables movement and calls 
+currentInteractableObject.GetComponent<InteractController>().Interact(this.gameObject). Has built in loop protection to prevent quickly entering
+and exiting interactions by holding down the interact key.
+
+OnTriggerEnter() - If a new object is in contact with the player and it is also interactable, add it to the list of interactable objects 
+nearby and run the sorting algorithm to update the currentInteractableObject.
+
+OnTriggerExit() - When an object exits the range of the player, if it was the currentInteractableObject, re run the sorting algorithm to choose
+a new currentInteractableObject. In either case, remove the exiting collider from the list of nearby interactable colliders

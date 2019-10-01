@@ -1,0 +1,20 @@
+Risk: Enemies do not behave in the correct way according to design document.
+Impact: Possibility that enemies could be too easy/hard to kill.
+
+Risk: Damage of player ship weapons and enemy ship weapons are not well balanced.
+Impact: The game could be too easy or too hard depending on the power of player ship vs enemy ship weapons in relation to each other.
+
+Risk: Powerups do not behave in the intended way
+Impact: Inconsistency / unexpected behavior from power-ups could leave players confused/frustrated.
+
+Risk: Limited playership movement space will limit their ability to get away from melee/close range enemies.
+Impact: Melee bosses (Cancer) could become incredibly hard to beat, and sometimes impossible to beat as they can attack from all angles, and the player can only shoot straight with their standard weapon.
+
+Risk: Gameobject tag inflation could make handling tags in OnTriggerEnter in the entity OnTriggerEnter() function incredibly confusing and dirty with a mile long switch statement.
+Impact: Potentially lots and lots of incredibly stupid but seriously annoying bugs to work out with collisions, and also poor overall performance.
+
+Risk: They way bullet’s are built into the program as of now is a messed up mixed of 2 conflicting ideas about how to handle projectiles.
+Impact: Bullets could get so bogged down in there own unneeded lengthy switch statements, it could impact performance, and therefore playability, especially in the later levels when there is a lot of bullets on the screen.
+
+Risk: Current strategy for defining enemy behaviors could prove to be too limiting in the future for other more complex enemies.
+Impact: Enemies could be limited by the framework and a slight overhaul and/or more additions to it could be required making it more complex, harder to understand, and more bugs.

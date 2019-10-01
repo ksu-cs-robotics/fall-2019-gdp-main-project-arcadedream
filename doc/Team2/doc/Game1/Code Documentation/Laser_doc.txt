@@ -1,0 +1,18 @@
+Laser - Lew
+
+Variables: object to keep track of who shot the laser, the laser's speed, and a variable to keep track of
+whether it is on screen or not.
+
+Start(): sets the shooter to the parent of the current instance of the laser.
+
+Update(): Moves the laser across the screen at the specified speed.
+
+OnBecameVisible(): Sets the visible variable to true
+
+OnBecameInvisible(): Once the objects goes offscreen, it will be destroyed and visible variable will
+be set back to false.  This is to prevent unnecessary memory usage.
+
+OnTriggerEnter(): If the laser collides with the player, do nothing. Prevents the player from being
+destroyed by their own laser. If the laser collides with an enemy, get the health component of the enemy,
+and call the takeDamage function. The shooter of the laser is then awarded with points and that is added
+to their total score.

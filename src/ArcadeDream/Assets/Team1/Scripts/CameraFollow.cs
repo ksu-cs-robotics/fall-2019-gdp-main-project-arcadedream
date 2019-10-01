@@ -6,11 +6,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Networking;
 
-public class CameraFollow : NetworkBehaviour
+public class CameraFollow : MonoBehaviour
 {
-
+    public Animator anim;
     public Transform target;
     public float smoothing = 5f;
 
@@ -18,17 +17,14 @@ public class CameraFollow : NetworkBehaviour
 
     void Start()
     {
+
+        anim = GetComponent<Animator>();
         offset = transform.position - target.position;
     }
+
     private void FixedUpdate()
     {
         Vector3 targetCamPos = target.position + offset;
         transform.position = Vector3.Lerp(transform.position, targetCamPos, smoothing * Time.deltaTime);
     }
-
-    public void SetTarget(Transform transform)
-    {
-        target = transform;
-    }
-
 }

@@ -9,7 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1835326128146280706}
-  - component: {fileID: 1835326128146280709}
   - component: {fileID: 1835326128146280708}
   - component: {fileID: 1835326128146280707}
   m_Layer: 0
@@ -33,14 +32,6 @@ Transform:
   m_Father: {fileID: 1835326128249044247}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &1835326128146280709
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1835326128146280705}
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!23 &1835326128146280708
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -105,13 +96,9 @@ GameObject:
   - component: {fileID: 5998258166595665812}
   - component: {fileID: 3431681308804771618}
   - component: {fileID: 6326647552295282847}
-<<<<<<< Updated upstream
-=======
   - component: {fileID: 3339076191629610414}
-  - component: {fileID: 2641745171991189921}
-  - component: {fileID: 2356866864696298731}
-  - component: {fileID: 7706577781453374742}
->>>>>>> Stashed changes
+  - component: {fileID: 13068203201041812}
+  - component: {fileID: 9031187749351941398}
   m_Layer: 0
   m_Name: Striker
   m_TagString: Enemy
@@ -131,6 +118,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1835326128146280706}
+  - {fileID: 5422206983346135828}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
@@ -145,8 +133,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.5, y: 0.2, z: 1.5}
-  m_Center: {x: 0, y: 0, z: 0.2}
+  m_Size: {x: 1.5, y: 2.0712051, z: 1.6181277}
+  m_Center: {x: -1.2880576e-16, y: 0.33255666, z: 0.25906384}
 --- !u!95 &4296994948488312839
 Animator:
   serializedVersion: 3
@@ -178,7 +166,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.4
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -274,7 +262,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 402e4bb7d5e29db4996157f059e67f5d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SPEED: 1
+  SPEED: 3
+  BULLETSPEED: 10
+  PROJECTILE: {fileID: 3628271577816838328, guid: 6bf911c874be37349adc4f70ecd2dd5f,
+    type: 3}
+  IsActive: 0
   BEHAVIOURINTERVAL: 1
 --- !u!114 &6326647552295282847
 MonoBehaviour:
@@ -290,10 +282,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   STARTINGHEALTH: 1
   SCOREVALUE: 100
-  DEATHCLIP: {fileID: 0}
+  DEATHCLIP: {fileID: 8300000, guid: 981aaf0a9196f1e4194a79cc7257c814, type: 3}
   DEATHDURATION: 2
-<<<<<<< Updated upstream
-=======
+  model: {fileID: 5422206983343710708}
 --- !u!23 &3339076191629610414
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -331,7 +322,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!114 &2641745171991189921
+--- !u!114 &13068203201041812
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -364,7 +355,7 @@ MonoBehaviour:
     i15: 0
   m_ServerOnly: 1
   m_LocalPlayerAuthority: 0
---- !u!114 &2356866864696298731
+--- !u!114 &9031187749351941398
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -376,7 +367,7 @@ MonoBehaviour:
   m_Script: {fileID: -1768714887, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_TransformSyncMode: 1
+  m_TransformSyncMode: 0
   m_SendInterval: 0.1
   m_SyncRotationAxis: 7
   m_RotationSyncCompression: 0
@@ -386,26 +377,6 @@ MonoBehaviour:
   m_SnapThreshold: 5
   m_InterpolateRotation: 1
   m_InterpolateMovement: 1
---- !u!114 &7706577781453374742
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1835326128743341564}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 1590678366, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Animator: {fileID: 0}
-  m_ParameterSendBits: 0
-  param0: 
-  param1: 
-  param2: 
-  param3: 
-  param4: 
-  param5: 
 --- !u!1001 &5422206983346010516
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -485,4 +456,9 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 5422206983346010516}
   m_PrefabAsset: {fileID: 0}
->>>>>>> Stashed changes
+--- !u!23 &5422206983343710708 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 2300000, guid: d57b3399fd67cdf498f0bba92f68b5be,
+    type: 3}
+  m_PrefabInstance: {fileID: 5422206983346010516}
+  m_PrefabAsset: {fileID: 0}

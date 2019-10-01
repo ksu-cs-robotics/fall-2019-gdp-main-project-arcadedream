@@ -9,16 +9,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2697354242606323817}
-  - component: {fileID: 4130563305629023037}
   - component: {fileID: 5228732889723505591}
   - component: {fileID: 1804475949315610463}
   - component: {fileID: 1114080484363575287}
   - component: {fileID: 9172196019777271119}
   - component: {fileID: 4916058587745623834}
   - component: {fileID: 4313370635952540571}
-  - component: {fileID: 1696917059241736488}
-  - component: {fileID: 8087857948209202608}
-  - component: {fileID: 6314909049239375702}
+  - component: {fileID: 7292005762575626470}
+  - component: {fileID: 5262984625332173986}
   m_Layer: 0
   m_Name: Ranger
   m_TagString: Enemy
@@ -36,18 +34,11 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0.2, z: 0}
   m_LocalScale: {x: 1, y: 0.2, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 6262481655449707115}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &4130563305629023037
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2061046539266995993}
-  m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!23 &5228732889723505591
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -130,7 +121,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.4
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -226,8 +217,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 52dba42662be3604e98cf131ac525661, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SPEED: 10
-  BEHAVIOURINTERVAL: 1
+  SPEED: 6
+  BULLETSPEED: 3
+  PROJECTILE: {fileID: 6565133877976343921, guid: 3f321bc9967ced940b6a0bed3fb46606,
+    type: 3}
+  IsActive: 0
+  BEHAVIOURINTERVAL: 2
 --- !u!114 &4313370635952540571
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -242,11 +237,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   STARTINGHEALTH: 1
   SCOREVALUE: 100
-  DEATHCLIP: {fileID: 0}
+  DEATHCLIP: {fileID: 8300000, guid: 981aaf0a9196f1e4194a79cc7257c814, type: 3}
   DEATHDURATION: 2
-<<<<<<< Updated upstream
-=======
---- !u!114 &1696917059241736488
+  model: {fileID: 6262481655447937163}
+--- !u!114 &7292005762575626470
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -279,7 +273,7 @@ MonoBehaviour:
     i15: 0
   m_ServerOnly: 1
   m_LocalPlayerAuthority: 0
---- !u!114 &8087857948209202608
+--- !u!114 &5262984625332173986
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -291,7 +285,7 @@ MonoBehaviour:
   m_Script: {fileID: -1768714887, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_TransformSyncMode: 1
+  m_TransformSyncMode: 0
   m_SendInterval: 0.1
   m_SyncRotationAxis: 7
   m_RotationSyncCompression: 0
@@ -301,26 +295,6 @@ MonoBehaviour:
   m_SnapThreshold: 5
   m_InterpolateRotation: 1
   m_InterpolateMovement: 1
---- !u!114 &6314909049239375702
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2061046539266995993}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 1590678366, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Animator: {fileID: 1114080484363575287}
-  m_ParameterSendBits: 0
-  param0: 
-  param1: 
-  param2: 
-  param3: 
-  param4: 
-  param5: 
 --- !u!1001 &6262481655449843947
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -328,6 +302,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2697354242606323817}
     m_Modifications:
+    - target: {fileID: 100000, guid: 7bfe7e5c77e34d146973b01be66024e9, type: 3}
+      propertyPath: m_Name
+      value: RangerV1
+      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 7bfe7e5c77e34d146973b01be66024e9, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.022967745
@@ -384,10 +362,6 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 20
       objectReference: {fileID: 0}
-    - target: {fileID: 100000, guid: 7bfe7e5c77e34d146973b01be66024e9, type: 3}
-      propertyPath: m_Name
-      value: RangerV1
-      objectReference: {fileID: 0}
     - target: {fileID: 2300000, guid: 7bfe7e5c77e34d146973b01be66024e9, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
@@ -400,4 +374,9 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 6262481655449843947}
   m_PrefabAsset: {fileID: 0}
->>>>>>> Stashed changes
+--- !u!23 &6262481655447937163 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 2300000, guid: 7bfe7e5c77e34d146973b01be66024e9,
+    type: 3}
+  m_PrefabInstance: {fileID: 6262481655449843947}
+  m_PrefabAsset: {fileID: 0}

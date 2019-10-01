@@ -13,8 +13,8 @@ GameObject:
   - component: {fileID: 5917870122478135707}
   - component: {fileID: 670909489904819989}
   - component: {fileID: 2545793624032099396}
-  - component: {fileID: 3398907977115516992}
-  - component: {fileID: 7204056502965406210}
+  - component: {fileID: 8782872745899213718}
+  - component: {fileID: 683266879010362997}
   m_Layer: 0
   m_Name: RapidFirePowerup
   m_TagString: RapidFirePowerup
@@ -106,7 +106,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce2c393bf6e588d49bde014867b982f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &3398907977115516992
+--- !u!114 &8782872745899213718
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -139,7 +139,7 @@ MonoBehaviour:
     i15: 0
   m_ServerOnly: 1
   m_LocalPlayerAuthority: 0
---- !u!114 &7204056502965406210
+--- !u!114 &683266879010362997
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -151,7 +151,7 @@ MonoBehaviour:
   m_Script: {fileID: -1768714887, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_TransformSyncMode: 1
+  m_TransformSyncMode: 0
   m_SendInterval: 0.1
   m_SyncRotationAxis: 7
   m_RotationSyncCompression: 0

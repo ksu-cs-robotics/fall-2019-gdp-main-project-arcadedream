@@ -13,8 +13,8 @@ GameObject:
   - component: {fileID: 6280601412388071682}
   - component: {fileID: 7279557611787317104}
   - component: {fileID: 5630861424776582864}
-  - component: {fileID: 5166008112745696190}
-  - component: {fileID: 8676828222936594692}
+  - component: {fileID: 1900430784932855909}
+  - component: {fileID: 4229691765001292843}
   m_Layer: 0
   m_Name: HomingPowerup
   m_TagString: HomingPowerup
@@ -106,7 +106,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce2c393bf6e588d49bde014867b982f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &5166008112745696190
+--- !u!114 &1900430784932855909
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -139,7 +139,7 @@ MonoBehaviour:
     i15: 0
   m_ServerOnly: 1
   m_LocalPlayerAuthority: 0
---- !u!114 &8676828222936594692
+--- !u!114 &4229691765001292843
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -151,7 +151,7 @@ MonoBehaviour:
   m_Script: {fileID: -1768714887, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_TransformSyncMode: 1
+  m_TransformSyncMode: 0
   m_SendInterval: 0.1
   m_SyncRotationAxis: 7
   m_RotationSyncCompression: 0

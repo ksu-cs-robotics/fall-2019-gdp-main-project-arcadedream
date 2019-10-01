@@ -1,0 +1,50 @@
+PlayerShip - Josh Dotson
+
+Implements the basic mechanics and attributes associated with any player's ship, whether that be weaponry, powerups, special abilities,
+speeds, etc.. PlayerShip is able to take in a set of predefined parameters for a Player's ship from the editor and adjust the backend 
+behavior accordingly. 
+
+PlayerUsername - Stores online username for LAN type things
+
+MOVEMENTSPEED - Defines speed of PlayerShip in m/s
+BULLETSPEED - Defines speed of shot bullets in m/s
+
+...PREFAB - Take references to their respective prefabs to allow to in script instantiations
+
+HEALTH - Stores a players health in HP points.
+LIVES - Stores the amount of lives a player has before death
+
+Points - Stores amount of points player has at any one point in time
+
+primaryWeapon_m - Stores predefined weapon configuration for this ship
+weaponTimer_m - Times the amount of time since the last firing to check if the weapon is allowed to fire again based on 
+1.0 / primaryWeapon_m.FireRate
+
+rigidbody_m - gets a reference to the players rigidbody component
+
+.
+.
+.
+.
+
+Start() - Intializes start values for all above the variables. Intializes certain components to be active or inactive on startup
+
+Update() - Runs every frame. Check wether or not a player has just respawned according to the respawn timer and adjust invulnerability
+appropriately
+
+FixedUpdate() - Runs a fixed number of times per second. Allows the player to proceed to move if they are not dead.
+
+Movement() - Take raw input data from the keyboard/controller and sets rigidbody movement accordingly
+
+Attack() - Processes player attack input from either a keyboard or controller. This is where weaponTimer_m comes in. When the attack control
+is held down, weaponTimer_m keeps track based on the firerate when a weapon is allowed to fire. 
+-When firing a homing laser, checks to make sure that the player has collected the powerup, and starts a timer to prevent the homing laser from being fired more quickly than detailed in the design document.
+-When firing a laser, checks to make sure the player has collected the powerup, and calls the chargeLaser funtion, uses the timeCharged_m variable (this checks how long the fire key has been held down). The chargeLaser function will change the scale of the laser based on the amount of time that you have been charging the laser (holding down fire key).
+.
+.
+
+Respawn() - Temporarly moves the player to a save non playerable area for 3 seconds, and then respawns them at the spawn point with 3 seconds
+of invulnerability to prevent spawn killing.
+
+OnTriggerEnter() - Processes many possible collisions a ship may have and determines teh course of action based on what the player ran into.
+

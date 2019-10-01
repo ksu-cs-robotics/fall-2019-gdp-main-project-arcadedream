@@ -197,9 +197,8 @@ GameObject:
   - component: {fileID: 3161597257308393995}
   - component: {fileID: 7543722352600039086}
   - component: {fileID: 8159544782553597904}
-  - component: {fileID: 6377883633549115660}
-  - component: {fileID: 3720471480672547297}
-  - component: {fileID: 1950421498889074123}
+  - component: {fileID: 750255838379311375}
+  - component: {fileID: 7657238422531281185}
   m_Layer: 0
   m_Name: CANCERBOSS
   m_TagString: Enemy
@@ -414,8 +413,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   STARTINGHEALTH: 400
   SCOREVALUE: 100
-  DEATHCLIP: {fileID: 0}
+  DEATHCLIP: {fileID: 8300000, guid: a47a0a585d65e46438a4f7b27544537f, type: 3}
   DEATHDURATION: 2
+  model: {fileID: 3106375077697526562}
 --- !u!65 &8159544782553597904
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -429,7 +429,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.152408, y: 29.248081, z: 1.0738552}
   m_Center: {x: 0.004077494, y: 1.9259415, z: -0.036927342}
---- !u!114 &6377883633549115660
+--- !u!114 &750255838379311375
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -462,7 +462,7 @@ MonoBehaviour:
     i15: 0
   m_ServerOnly: 1
   m_LocalPlayerAuthority: 0
---- !u!114 &3720471480672547297
+--- !u!114 &7657238422531281185
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -474,7 +474,7 @@ MonoBehaviour:
   m_Script: {fileID: -1768714887, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_TransformSyncMode: 1
+  m_TransformSyncMode: 0
   m_SendInterval: 0.1
   m_SyncRotationAxis: 7
   m_RotationSyncCompression: 0
@@ -484,26 +484,6 @@ MonoBehaviour:
   m_SnapThreshold: 5
   m_InterpolateRotation: 1
   m_InterpolateMovement: 1
---- !u!114 &1950421498889074123
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4988636998550787344}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 1590678366, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Animator: {fileID: 775988474857385850}
-  m_ParameterSendBits: 0
-  param0: 
-  param1: 
-  param2: 
-  param3: 
-  param4: 
-  param5: 
 --- !u!1 &5693351932556731283
 GameObject:
   m_ObjectHideFlags: 0
@@ -1036,6 +1016,12 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 60ee8ae8788fd8f46ad9fb87cd9604c8, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 50a66810ac6a7604cae5496d88ef1e68, type: 3}
+--- !u!23 &3106375077697526562 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 2300010, guid: 50a66810ac6a7604cae5496d88ef1e68,
+    type: 3}
+  m_PrefabInstance: {fileID: 3106375077699683144}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &3106375077699819976 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: 50a66810ac6a7604cae5496d88ef1e68,

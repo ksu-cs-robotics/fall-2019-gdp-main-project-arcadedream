@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
 /// <summary>
 /// Defines various predefined weapon property configurations
@@ -14,6 +15,7 @@ public enum WeaponInfo : int
     PlayerDamageStandard = 5,
     PlayerDamageIncreased = 20,
 
+    EnemyFireRateSingleShot = 1,
     PlayerFireRateStandard = 5,
     PlayerFireRateIncreased = 20,
 
@@ -29,28 +31,29 @@ public enum WeaponInfo : int
 public class Weapon
 {
     public double Damage { get; set; }
-    public int FireRate { get; set; }
+    public double FireRate { get; set; }
     public int NumProjectiles { get; set; }
 
     public Weapon()
     {
-        Damage = (int)WeaponInfo.PlayerDamageStandard;
-        FireRate = (int)WeaponInfo.PlayerFireRateStandard;
+        Damage = (double)WeaponInfo.PlayerDamageStandard;
+        FireRate = (double)WeaponInfo.PlayerFireRateStandard;
         NumProjectiles = (int)WeaponInfo.PlayerNumProjectilesStandard;
     }
     public Weapon(double newDamage) : this()
     {
         Damage = newDamage;
     }
-    public Weapon(double newDamage, int newFireRate) : this(newDamage)
+    public Weapon(double newDamage, double newFireRate) : this(newDamage)
     {
         FireRate = newFireRate;
     }
-    public Weapon(double newDamage, int newFireRate, int newNumProjectiles) : this(newDamage, newFireRate)
+    public Weapon(double newDamage, double newFireRate, int newNumProjectiles) : this(newDamage, newFireRate)
     {
         NumProjectiles = newNumProjectiles;
     }
     public Weapon(Weapon newWeapon) : this(newWeapon.Damage, newWeapon.FireRate, newWeapon.NumProjectiles) { }
+
 }
 
 /// <summary>
@@ -71,7 +74,7 @@ public static class PlayerWeapons
 /// Author: Josh Dotson, Lew Fortwangler
 /// Version: 3
 /// </summary>
-public class PlayerShip : MonoBehaviour
+public class PlayerShip : NetworkBehaviour
 {
     // Will store the player's username when multiplayer is a thing...
     public string PlayerUsername;
@@ -119,8 +122,27 @@ public class PlayerShip : MonoBehaviour
     /////HOMINGLASER POWERUP ///////////////////
     private bool hasHomingLaser_m = false;
     ////////////////////////////////////////////
-    
+
     //attributes for other powerups in the future
+
+    /// <summary>
+    /// ///////////////////////////////////////////////////
+    //Team 3 additons for audio
+    public AudioClip Gun;
+    public AudioClip laser;
+    public AudioClip destroyed;
+    public AudioClip loss;
+    // Reference to the audio source.
+    private AudioSource audioSource_m;
+    public AudioSource themeSource;
+    
+    /// /////////////////////////////////////////////////
+    /// </summary>
+    void Awake()
+    {
+        audioSource_m = GetComponent<AudioSource>();
+        audioSource_m.volume = .3f;
+    }
 
     // Events that may be useful for others using this class such as Team 1 for UI elements
     public event Action PointsChanged;
@@ -152,11 +174,11 @@ public class PlayerShip : MonoBehaviour
     {
         
         //calculates how much time has passed while holding down the fire button
-        if (Input.GetKeyDown("m"))
+        if (Input.GetKeyDown("q"))
         {
             startTime_m = Time.time;
         }
-        if (Input.GetKeyUp("m"))
+        if (Input.GetKeyUp("q"))
         {
             timeCharged_m = Time.time - startTime_m;
         }
@@ -215,27 +237,43 @@ public class PlayerShip : MonoBehaviour
             bullet.transform.parent = gameObject.transform;         
             bullet.GetComponent<Rigidbody>().velocity = Vector3.right * BULLETSPEED;
             bullet.GetComponent<Bullet>().Shooter = gameObject;
-
             weaponTimer_m = 0.0f;
+
+            //team3///////////////////////
+            audioSource_m.clip = Gun;
+            audioSource_m.Play();
+ 
+            /////////////////////////////
         }
 
         //shooting a laser
-        if (Input.GetKeyUp("m") &&
+        if (Input.GetKeyUp("q") &&
             hasLaser_m == true && 
             ((1.0 / primaryWeapon_m.FireRate) <= weaponTimer_m))
         {
             chargeLaser(timeCharged_m);     //calls chargeLaser to modify width based on charged time
             GameObject Laser = Instantiate(LASERPREFAB, transform.position + Vector3.right, LASERPREFAB.transform.rotation);
             weaponTimer_m = 0.0f;
+
+            //team3///////////////////////
+            audioSource_m.clip = laser;
+            audioSource_m.Play();
+            /////////////////////////////
         }
 
         //shooting a homing laser
-        if(Input.GetKeyDown("n") &&
+        if(Input.GetKeyDown("e") &&
            hasHomingLaser_m == true)
         {
             GameObject HomingLaser = Instantiate(HOMINGPREFAB, transform.position + Vector3.right, HOMINGPREFAB.transform.rotation);
             hasHomingLaser_m = false;
             StartCoroutine(HomingTimer());
+
+            //team3///////////////////////
+            audioSource_m.clip = laser;
+            audioSource_m.Play();
+            /////////////////////////////
+
         }
 
         // We may use this in the future if we decide to add secondarys/abilities
@@ -346,13 +384,15 @@ public class PlayerShip : MonoBehaviour
                     // This line, at least for now, will make sure the neither the player or other players can kill each other
                     if ((other.gameObject.tag == "Bullet" || 
                         other.gameObject.tag == "Laser" ||
-                        other.gameObject.tag == "HomingLaser") &&
+                        other.gameObject.tag == "HomingLaser" ||
+                        other.gameObject.tag == "Boundary") &&
                         other.gameObject.GetComponent<Bullet>().Shooter.gameObject.tag == "Player")
                         return;
 
                     // If the player did not just respawn...
                     if (!isInvulnerable_m)
                     {
+                        
                         hasLaser_m = false;
                         hasTopGun_m = false;
                         hasHomingLaser_m = false;
@@ -360,7 +400,12 @@ public class PlayerShip : MonoBehaviour
                         topGun.SetActive(false);
                         --LIVES;
 
-                        if (LIVES > 0)
+                        //team3///////////////////////
+                        audioSource_m.clip = destroyed;
+                        audioSource_m.Play();
+                        /////////////////////////////
+
+                            if (LIVES > 0)
                         {
                             StartCoroutine(Respawn());
                         }
@@ -368,7 +413,16 @@ public class PlayerShip : MonoBehaviour
                         {
                             isDead_m = true;
                             ScoreUnixTimestamp = ((DateTimeOffset)DateTime.UtcNow).ToUnixTimeSeconds();
+
+                            ///Team3///
+                            themeSource.volume = .5f;
+                            themeSource.clip = loss;
+                            themeSource.Play();
+
+
                             gameObject.SetActive(false);
+
+                            
                         }
                     }
 
