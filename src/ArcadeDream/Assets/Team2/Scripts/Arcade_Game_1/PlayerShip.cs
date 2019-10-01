@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
 /// <summary>
 /// Defines various predefined weapon property configurations
@@ -73,7 +74,7 @@ public static class PlayerWeapons
 /// Author: Josh Dotson, Lew Fortwangler
 /// Version: 3
 /// </summary>
-public class PlayerShip : MonoBehaviour
+public class PlayerShip : NetworkBehaviour
 {
     // Will store the player's username when multiplayer is a thing...
     public string PlayerUsername;

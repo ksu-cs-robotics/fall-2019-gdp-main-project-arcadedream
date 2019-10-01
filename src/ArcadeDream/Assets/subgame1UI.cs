@@ -1,10 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-public class subgame1UI : MonoBehaviour
+public class subgame1UI : NetworkBehaviour
 {
     GameObject player;
     PlayerShip playerShip;
@@ -24,8 +25,12 @@ public class subgame1UI : MonoBehaviour
 
     void Start()
     {
+        Debug.Log("START");
         player = GameObject.Find("PlayerShip");
-        playerShip = player.GetComponent<PlayerShip>();
+        if (player != null)
+        {
+            playerShip = player.GetComponent<PlayerShip>();
+        }
         gameover = false;
 
         Time.timeScale = 0; //pausing game
@@ -35,6 +40,7 @@ public class subgame1UI : MonoBehaviour
 
     IEnumerator StartGame()
     {
+        Debug.Log("STARTGAME");
         yield return new WaitForSecondsRealtime(time);
         startScreenUI.SetActive(false);
         Time.timeScale = 1; //playing game
@@ -43,14 +49,25 @@ public class subgame1UI : MonoBehaviour
 
     void Update()
     {
-        scoreText.text = "Score " + playerShip.Points.ToString();
-        livesText.text = "X " + playerShip.LIVES.ToString();
-
-        if (playerShip.LIVES <= 0 && !gameover)
+        if (player != null)
         {
-            gameOverUI.SetActive(true);
-            Time.timeScale = 0; 
-            gameover = true;
+            scoreText.text = "Score " + playerShip.Points.ToString();
+            livesText.text = "X " + playerShip.LIVES.ToString();
+
+            if (playerShip.LIVES <= 0 && !gameover)
+            {
+                gameOverUI.SetActive(true);
+                Time.timeScale = 0;
+                gameover = true;
+            }
+        }
+        else
+        {
+            player = GameObject.FindGameObjectWithTag("Player");
+            if (player != null)
+            {
+                playerShip = player.GetComponent<PlayerShip>();
+            }
         }
     }
 

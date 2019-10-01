@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 using UnityEngine.UI;
 
 /// <summary>
@@ -11,7 +12,7 @@ using UnityEngine.UI;
 /// Version: 3
 /// </summary>
 [RequireComponent(typeof(Rigidbody))]
-public class PlayerController : MonoBehaviour // NetworkBehaviour
+public class PlayerController : NetworkBehaviour // NetworkBehaviour
 {
     [SerializeField] public float WALKSPEED = 3.0f;
     [SerializeField] public float RUNSPEED = 5.0f;
@@ -66,42 +67,43 @@ public class PlayerController : MonoBehaviour // NetworkBehaviour
     {
         var movement = new Vector3();
         var jump = new Vector3();
-
-        // If the character is interacting with a game, ignore movement input so they don't act out there actions in the subgame
-        if (!IsInteracting)
+        if (isLocalPlayer)
         {
-            movement.Set(Input.GetAxisRaw("Horizontal"), 0f, Input.GetAxisRaw("Vertical"));
-            movement = movement.normalized * Time.deltaTime;
-            jump.Set(0f, Input.GetAxisRaw("Jump"), 0f);
-
-            // Choose movement multiplier based on whether or not the sprint input is used
-            if (!Input.GetAxisRaw("Sprint").Equals(0)) { movement *= RUNSPEED; }
-            else { movement *= WALKSPEED; }
-        }
-
-        // Process user movement input...
-        if (!movement.Equals(Vector3.zero))
-        {
-            Vector3 newPosition = transform.position + movement;
-            Vector3 newPositionVector = newPosition - transform.position;
-            newPositionVector.y = 0f;
-
-            var newRotation = Quaternion.LookRotation(newPositionVector, Vector3.up);
-            var interpolatedRotation = Quaternion.Slerp(newRotation, transform.rotation, Time.deltaTime * 30);
-
-            rigidbody_m.MovePosition(transform.position + movement);
-            rigidbody_m.MoveRotation(interpolatedRotation);
-        }
-
-        // Process jumping input
-        if (!jump.Equals(Vector3.zero))
-        {
-            if (rigidbody_m.velocity.y == 0)
+            // If the character is interacting with a game, ignore movement input so they don't act out there actions in the subgame
+            if (!IsInteracting)
             {
-                rigidbody_m.AddRelativeForce(Vector3.up * JUMPSPEED, ForceMode.Impulse);
+                movement.Set(Input.GetAxisRaw("Horizontal"), 0f, Input.GetAxisRaw("Vertical"));
+                movement = movement.normalized * Time.deltaTime;
+                jump.Set(0f, Input.GetAxisRaw("Jump"), 0f);
+
+                // Choose movement multiplier based on whether or not the sprint input is used
+                if (!Input.GetAxisRaw("Sprint").Equals(0)) { movement *= RUNSPEED; }
+                else { movement *= WALKSPEED; }
+            }
+
+            // Process user movement input...
+            if (!movement.Equals(Vector3.zero))
+            {
+                Vector3 newPosition = transform.position + movement;
+                Vector3 newPositionVector = newPosition - transform.position;
+                newPositionVector.y = 0f;
+
+                var newRotation = Quaternion.LookRotation(newPositionVector, Vector3.up);
+                var interpolatedRotation = Quaternion.Slerp(newRotation, transform.rotation, Time.deltaTime * 30);
+
+                rigidbody_m.MovePosition(transform.position + movement);
+                rigidbody_m.MoveRotation(interpolatedRotation);
+            }
+
+            // Process jumping input
+            if (!jump.Equals(Vector3.zero))
+            {
+                if (rigidbody_m.velocity.y == 0)
+                {
+                    rigidbody_m.AddRelativeForce(Vector3.up * JUMPSPEED, ForceMode.Impulse);
+                }
             }
         }
-
         /*if(Input.GetKeyDown("x") && talkFlag_m == true)     //display canvas that houses all NPC dialogue is displayed if
         {                                                   //the player is in the tigger area (talkFlag_m is set to true) and
             DIALOGUECANVAS.SetActive(true);                 //the player pushes "x" and wants to talk

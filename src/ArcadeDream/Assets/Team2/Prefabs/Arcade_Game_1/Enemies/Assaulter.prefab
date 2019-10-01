@@ -97,6 +97,8 @@ GameObject:
   - component: {fileID: 582969780348391150}
   - component: {fileID: 7826678576834946315}
   - component: {fileID: 7806179187589105731}
+  - component: {fileID: 2674564751757253970}
+  - component: {fileID: 8456944037856958613}
   m_Layer: 0
   m_Name: Assaulter
   m_TagString: Enemy
@@ -321,6 +323,61 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!114 &2674564751757253970
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3782305883466288359}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 372142912, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SceneId:
+    m_Value: 0
+  m_AssetId:
+    i0: 0
+    i1: 0
+    i2: 0
+    i3: 0
+    i4: 0
+    i5: 0
+    i6: 0
+    i7: 0
+    i8: 0
+    i9: 0
+    i10: 0
+    i11: 0
+    i12: 0
+    i13: 0
+    i14: 0
+    i15: 0
+  m_ServerOnly: 1
+  m_LocalPlayerAuthority: 0
+--- !u!114 &8456944037856958613
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3782305883466288359}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1768714887, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_TransformSyncMode: 0
+  m_SendInterval: 0.1
+  m_SyncRotationAxis: 7
+  m_RotationSyncCompression: 0
+  m_SyncSpin: 0
+  m_MovementTheshold: 0.001
+  m_VelocityThreshold: 0.0001
+  m_SnapThreshold: 5
+  m_InterpolateRotation: 1
+  m_InterpolateMovement: 1
 --- !u!1 &3782305884048856000
 GameObject:
   m_ObjectHideFlags: 0
@@ -411,6 +468,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3782305883201694732}
     m_Modifications:
+    - target: {fileID: 100000, guid: 54c9f46022305d341ada37395cd9c987, type: 3}
+      propertyPath: m_Name
+      value: RealAssualter
+      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 54c9f46022305d341ada37395cd9c987, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.060874715
@@ -466,10 +527,6 @@ PrefabInstance:
     - target: {fileID: 400000, guid: 54c9f46022305d341ada37395cd9c987, type: 3}
       propertyPath: m_LocalScale.z
       value: 20
-      objectReference: {fileID: 0}
-    - target: {fileID: 100000, guid: 54c9f46022305d341ada37395cd9c987, type: 3}
-      propertyPath: m_Name
-      value: RealAssualter
       objectReference: {fileID: 0}
     - target: {fileID: 2300000, guid: 54c9f46022305d341ada37395cd9c987, type: 3}
       propertyPath: m_Materials.Array.data[0]
