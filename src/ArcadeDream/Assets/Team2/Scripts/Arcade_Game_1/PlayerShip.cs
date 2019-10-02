@@ -134,7 +134,10 @@ public class PlayerShip : NetworkBehaviour
     public AudioClip loss;
     // Reference to the audio source.
     private AudioSource audioSource_m;
-    public AudioSource themeSource;
+
+
+    //Theme source and all related operations commented out as they don't work with current build
+   // public AudioSource themeSource;
     
     /// /////////////////////////////////////////////////
     /// </summary>
@@ -415,9 +418,11 @@ public class PlayerShip : NetworkBehaviour
                             ScoreUnixTimestamp = ((DateTimeOffset)DateTime.UtcNow).ToUnixTimeSeconds();
 
                             ///Team3///
-                            themeSource.volume = .5f;
-                            themeSource.clip = loss;
-                            themeSource.Play();
+                            
+                                
+                            //themeSource.volume = .5f;
+                            //themeSource.clip = loss;
+                            //themeSource.Play();
 
 
                             gameObject.SetActive(false);
