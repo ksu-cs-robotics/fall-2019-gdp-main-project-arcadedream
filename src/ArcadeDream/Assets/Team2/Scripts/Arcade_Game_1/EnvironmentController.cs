@@ -34,7 +34,7 @@ public class EnvironmentController : MonoBehaviour
     }
 
     //randomly creates a vector to spawn an obstacle in within some bounds
-    private Vector3 getSpawnVector() //fix this hard coding spawn location later, couldn't figure out how to implement, moved on temporarily.
+    private Vector3 getSpawnVector() 
     {
         x_m = 15;
         y_m = 0;
@@ -42,13 +42,4 @@ public class EnvironmentController : MonoBehaviour
         position_m = new Vector3(x_m, y_m, z_m);
         return position_m;
     }
-
-    //To be implemented later:
-
-    //make an array of obstacles to spawn
-    //make an array of powerups to spawn from powerup obstacle
-
-    //if powerup obstacle is destroyed, then randomly pick a powerup to spawn 
-    //if powerup obstacle destroyed by colliding with player
-    //then do not spawn powerup, award player with random one
 }

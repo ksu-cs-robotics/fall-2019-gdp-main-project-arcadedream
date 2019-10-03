@@ -23,45 +23,40 @@ public class InteractController : MonoBehaviour
 {
     // Assigned via editor references to prefabs
     [SerializeField] public string INTERACTTEXT = "";
-    [SerializeField] private GameObject UIMenuPrefab;
+    [SerializeField] private GameObject UIGameObject;
 
     // Stores a list of players in the current session that interact requests should be ignored
     private List<GameObject> blacklist_m;
 
     // Event that will be executed when player interacts, and this can be changed at runtime
-    public event Func<GameObject, GameObject> OnInteract;
+    public event Action OnInteract;
 
     // Defines default behaviour of the InteractController
     public InteractController()
     {
         blacklist_m = new List<GameObject>();
 
-        Func<GameObject, GameObject> genericInteractHandler = (caller) =>
+        // Initialize default behaviour
+        Action genericInteractHandler = () =>
         {
-            var newUIMenu = Instantiate(UIMenuPrefab, caller.transform.Find("UI").gameObject.transform) as GameObject;
-            var newUIMenuController = newUIMenu.GetComponent<InteractControllerUI>();
-
-            // Here, the InteractController gives the new menu the gameObject its working with, and returns the menu
-            newUIMenuController.InteractableObject = gameObject;
-            newUIMenuController.InteractingObject = caller;
-
-            return newUIMenu;
+            // Toggle whether or not UIGameObject is enabled
+            UIGameObject.SetActive(!UIGameObject.activeSelf);
         };
 
         OnInteract += genericInteractHandler;
     }
-    public InteractController(Func<GameObject, GameObject> interactHandler) : this()
+    public InteractController(Action interactHandler) : this()
     {
         OnInteract += interactHandler;
     }
 
-    public GameObject Interact(GameObject caller)
+    public void Interact(GameObject caller)
     {
         // If this caller is muted, dont return anything
         if (blacklist_m.Exists((c) => c == caller))
             throw new Exception("User Refused!"); // return default(GameObject);
 
         // If everything check out, invoke the assigned interact handler of this instance
-        return OnInteract.Invoke(caller);
+        OnInteract.Invoke();
     }
 }

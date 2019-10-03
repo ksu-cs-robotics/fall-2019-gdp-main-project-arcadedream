@@ -1,11 +1,12 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
 /// Implements enemy spawning
-/// Author: Jared Anderson
-/// Version: 1
+/// Author: Jared Anderson, and to a much lesser extent, Josh Dotson
+/// Version: 2
 /// </summary>
 public class EnemyController : MonoBehaviour
 {

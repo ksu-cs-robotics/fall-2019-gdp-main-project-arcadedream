@@ -17,7 +17,8 @@ public class PowerupSpawn : MonoBehaviour
     {
         if (other.gameObject.tag == "Player" ||
             other.gameObject.tag == "Bullet" ||
-            other.gameObject.tag == "Laser")
+            other.gameObject.tag == "Laser" ||
+            other.gameObject.tag == "HomingLaser") ;
         {
             GameObject chosenPowerup = Instantiate(powerupArray[Random.Range(0, powerupArray.Length)],
                                        this.transform.position,

@@ -2,43 +2,87 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-/// <summary>
-/// Implements basic generic functionality of a bullet. Can be used by any gameobject
-/// Author(s): Josh Dotson
-/// Version: 1
-/// </summary>
 [RequireComponent(typeof(Rigidbody))]
 public class Bullet : MonoBehaviour
 {
-    // Stores a reference to the gameobject that shot the bullet
-    GameObject Shooter { get; set; }
+    public GameObject Shooter { get; set; }
+    private bool isOnScreen_m = false;
 
-    void OnTriggerEnter(Collider other)
+    private void Start()
     {
-        // This will ensure enemies cannot damager other enemies, and players cannot damage each other
+        Shooter = gameObject.transform.parent.gameObject;
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
         if (Shooter.gameObject.tag == other.gameObject.tag)
             return;
 
         switch (other.gameObject.tag)
         {
-            case "Player":
+            case "Player" :
                 {
+                    // other.gameObject.GetComponent<PlayerShip>().HEALTH 
+                    Destroy(gameObject);
                     break;
                 }
             case "Enemy":
                 {
-                    other.gameObject.GetComponent<EnemyHealth>().TakeDamage(); 
+                    var healthComponent = other.gameObject.GetComponent<EnemyHealth>();
+
+                    healthComponent.TakeDamage();
+                    Shooter.GetComponent<PlayerShip>().Points += healthComponent.SCOREVALUE;
+                    Destroy(gameObject);
+
                     break;
                 }
-            case "Obstacle":
+            case "PowerupObstacle":
                 {
                     // other.gameObject.GetComponent<Obstacle>().HEALTH 
+                    Destroy(gameObject);
+                    break;
+                }
+            case "1upPowerup":
+                {
+                    Destroy(gameObject);
+                    break;
+                }
+            case "LaserPowerup":
+                {
+                    Destroy(gameObject);
+                    break;
+                }
+            case "RapidFirePowerup":
+                {
+                    Destroy(gameObject);
+                    break;
+                }
+            case "TopGunPowerup":
+                {
+                    Destroy(gameObject);
                     break;
                 }
             default:
                 {
                     break;
                 }
+        }
+    }
+
+    //If the obstacle is visible on screen, set variable to true
+    private void OnBecameVisible()
+    {
+        isOnScreen_m = true;
+    }
+
+    //If the obstacle is not visible on screen (but it was previously)
+    //Then destroy object and set on screen variable to false
+    private void OnBecameInvisible()
+    {
+        if (isOnScreen_m == true)
+        {
+            Destroy(gameObject);
+            isOnScreen_m = false;
         }
     }
 }
