@@ -269,7 +269,7 @@ MonoBehaviour:
     i13: 0
     i14: 0
     i15: 0
-  m_ServerOnly: 1
+  m_ServerOnly: 0
   m_LocalPlayerAuthority: 0
 --- !u!114 &171344016090605644
 MonoBehaviour:
@@ -283,7 +283,7 @@ MonoBehaviour:
   m_Script: {fileID: -1768714887, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_TransformSyncMode: 0
+  m_TransformSyncMode: 1
   m_SendInterval: 0.1
   m_SyncRotationAxis: 7
   m_RotationSyncCompression: 0
@@ -300,6 +300,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7294079060924277105}
     m_Modifications:
+    - target: {fileID: 2300000, guid: b53bbca647f0ca148bd4bc56ded66eb8, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: e0b2d2faf17e12a4e8cc545c35560fcf, type: 2}
     - target: {fileID: 100000, guid: b53bbca647f0ca148bd4bc56ded66eb8, type: 3}
       propertyPath: m_Name
       value: FlyerV1
@@ -360,10 +364,6 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 20
       objectReference: {fileID: 0}
-    - target: {fileID: 2300000, guid: b53bbca647f0ca148bd4bc56ded66eb8, type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: e0b2d2faf17e12a4e8cc545c35560fcf, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b53bbca647f0ca148bd4bc56ded66eb8, type: 3}
 --- !u!4 &4556600194866391847 stripped

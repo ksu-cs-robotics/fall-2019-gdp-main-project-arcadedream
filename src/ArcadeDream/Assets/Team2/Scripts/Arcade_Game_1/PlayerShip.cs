@@ -81,7 +81,7 @@ public class PlayerShip : NetworkBehaviour
 
     [SerializeField] public float MOVEMENTSPEED = 1.0f;
     [SerializeField] public float BULLETSPEED = 5.0f;
-    [SerializeField] public GameObject BULLETPREFAB;
+    [SyncVar] public GameObject BULLETPREFAB;
     [SerializeField] public GameObject LASERPREFAB;
     [SerializeField] public GameObject HOMINGPREFAB;
 
@@ -230,6 +230,7 @@ public class PlayerShip : NetworkBehaviour
             if (hasTopGun_m == true)
             {
                 GameObject topBullet = Instantiate(BULLETPREFAB, topGun.transform.position + Vector3.right, transform.rotation);
+                NetworkServer.SpawnWithClientAuthority(topBullet, this.gameObject);
                 topBullet.transform.parent = gameObject.transform;
                 topBullet.GetComponent<Rigidbody>().velocity = Vector3.right * BULLETSPEED;
                 topBullet.GetComponent<Bullet>().Shooter = gameObject;
