@@ -9,16 +9,32 @@ Secondary Duty: Programming
 
 
 Main Game Goals:
-Overarching storyline
+Overarching storyline (how the storyline will translate into gameplay)
 Chat system UI
 Owner Shop system working
+import art team's assets into main scene
+Join lobby UI
+Complete and ensure all UI is working (Title screen, settings options, character creation, login/setup, etc)
 
 Sub-Game Goals:
-(more to come with Code Crusher's design doc)
+Complete Extreme Pong Subgame (broken down into tickets)
+(more goals/tickets to come with Code Crusher's design doc)
 
 Main Game Risks:
 UI buttons not working properly
+(test all cases)
 highscores not working properly
+(highscores need to appear for each specific game)
 shop system not working properly
+(make sure it is taking the money from the player, only can buy it you have the money,
+ can't buy it if you already own it, etc )
+Playing an arcade game in multiplayer 
+(Need to work with multiplayer and choose how many players then wait for those players to also be ready to play before you enter the scene)
 
 Sub-Game Risks:
+movement risks (don't want to be able to move of screen like what happened in Xeonic Fleet)
+ball risks (physics of the ball)
+(more risks to come with Code Crusher's design doc)
+
+Yo Alfred:
+yo Alfred I got a question about the scope of what we can do with the story
