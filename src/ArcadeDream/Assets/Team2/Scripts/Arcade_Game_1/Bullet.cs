@@ -15,58 +15,20 @@ public class Bullet : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (Shooter.gameObject.tag == other.gameObject.tag)
+        if (Shooter.gameObject.tag == other.gameObject.tag || 
+            other.gameObject.tag == "Background" ||
+            other.gameObject.tag == "Boundary")
             return;
 
-        switch (other.gameObject.tag)
+        else if (other.gameObject.tag == "Enemy")
         {
-            case "Player" :
-                {
-                    // other.gameObject.GetComponent<PlayerShip>().HEALTH 
-                    Destroy(gameObject);
-                    break;
-                }
-            case "Enemy":
-                {
-                    var healthComponent = other.gameObject.GetComponent<EnemyHealth>();
+            var healthComponent = other.gameObject.GetComponent<EnemyHealth>();
 
-                    healthComponent.TakeDamage();
-                    Shooter.GetComponent<PlayerShip>().Points += healthComponent.SCOREVALUE;
-                    Destroy(gameObject);
-
-                    break;
-                }
-            case "PowerupObstacle":
-                {
-                    // other.gameObject.GetComponent<Obstacle>().HEALTH 
-                    Destroy(gameObject);
-                    break;
-                }
-            case "1upPowerup":
-                {
-                    Destroy(gameObject);
-                    break;
-                }
-            case "LaserPowerup":
-                {
-                    Destroy(gameObject);
-                    break;
-                }
-            case "RapidFirePowerup":
-                {
-                    Destroy(gameObject);
-                    break;
-                }
-            case "TopGunPowerup":
-                {
-                    Destroy(gameObject);
-                    break;
-                }
-            default:
-                {
-                    break;
-                }
+            healthComponent.TakeDamage();
+            Shooter.GetComponent<PlayerShip>().Points += healthComponent.SCOREVALUE;
         }
+
+        Destroy(gameObject);
     }
 
     //If the obstacle is visible on screen, set variable to true

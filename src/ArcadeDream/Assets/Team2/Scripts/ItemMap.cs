@@ -33,9 +33,8 @@ public class Item
 public class ItemMap : MonoBehaviour
 {
     public List<Item> IDMap;
-    private static readonly uint MapSize = 32;
+    private static readonly uint _mapSize = 32;
 
-    // Can't comma these to make them neater, as the editor doesn't like that
     [TextArea] public string Description1;
     [SerializeField] GameObject ID0, ID1, ID2, ID3, ID4, ID5, ID6, ID7;
 
@@ -79,7 +78,7 @@ public class ItemMap : MonoBehaviour
         IDMap = new List<Item>();
 
         // This uses reflection to avoid typing out all of the variable names
-        for (var i = 0; i <= MapSize - 1; ++i)
+        for (var i = 0; i <= _mapSize - 1; ++i)
         {
             Item item = new Item(i); // Create a new Item with an ID
             item.item = (GameObject)typeof(ItemMap).GetField($"ID{i}").GetValue(this); // Using reflection, set the item reference

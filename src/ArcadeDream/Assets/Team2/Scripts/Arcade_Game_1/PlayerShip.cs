@@ -349,14 +349,9 @@ public class PlayerShip : NetworkBehaviour
         {
             switch (other.gameObject.tag)
             {
-                case "Player":
-                {
-                    break;
-                }
-                case "Background":
-                {
-                    break;
-                }
+                case "Player": break;
+                case "Background": break;
+                case "Boundry": break;
                 case "LaserPowerup":
                 {
                     hasLaser_m = true;
@@ -409,7 +404,7 @@ public class PlayerShip : NetworkBehaviour
                         audioSource_m.Play();
                         /////////////////////////////
 
-                            if (LIVES > 0)
+                        if (LIVES > 0)
                         {
                             StartCoroutine(Respawn());
                         }
