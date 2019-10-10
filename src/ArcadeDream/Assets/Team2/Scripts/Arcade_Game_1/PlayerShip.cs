@@ -200,7 +200,7 @@ public class PlayerShip : NetworkBehaviour
         if (hasRapidFire_m == true)
             primaryWeapon_m = PlayerWeapons.IncreasedFireRate;
 
-        Attack();
+        CmdAttack();
     }
     void FixedUpdate()
     {
@@ -223,7 +223,8 @@ public class PlayerShip : NetworkBehaviour
             }
         }
     }
-    private void Attack()
+    [Command]
+    private void CmdAttack()
     {
         if (isLocalPlayer)
         {
@@ -235,7 +236,7 @@ public class PlayerShip : NetworkBehaviour
                 if (hasTopGun_m == true)
                 {
                     GameObject topBullet = Instantiate(BULLETPREFAB, topGun.transform.position + Vector3.right, transform.rotation);
-                    NetworkServer.SpawnWithClientAuthority(topBullet, this.gameObject);
+                    NetworkServer.Spawn(topBullet);
                     topBullet.transform.parent = gameObject.transform;
                     topBullet.GetComponent<Rigidbody>().velocity = Vector3.right * BULLETSPEED;
                     topBullet.GetComponent<Bullet>().Shooter = gameObject;

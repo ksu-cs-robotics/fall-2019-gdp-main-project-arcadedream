@@ -25,7 +25,6 @@ public class subgame1UI : NetworkBehaviour
 
     void Start()
     {
-        Debug.Log("START");
         player = GameObject.Find("PlayerShip");
         if (player != null)
         {
@@ -40,7 +39,6 @@ public class subgame1UI : NetworkBehaviour
 
     IEnumerator StartGame()
     {
-        Debug.Log("STARTGAME");
         yield return new WaitForSecondsRealtime(time);
         startScreenUI.SetActive(false);
         Time.timeScale = 1; //playing game

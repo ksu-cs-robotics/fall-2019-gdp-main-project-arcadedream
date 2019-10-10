@@ -20,6 +20,6 @@ public class EnemyController : MonoBehaviour
     void Start()
     {
         position_m = GetComponent<Transform>();
-        Instantiate(ENEMYPREFAB, position_m.position, position_m.rotation);
+        //Instantiate(ENEMYPREFAB, position_m.position, position_m.rotation);
     }
 }
