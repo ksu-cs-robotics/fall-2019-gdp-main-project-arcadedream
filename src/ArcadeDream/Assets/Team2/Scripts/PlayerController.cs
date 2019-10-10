@@ -67,7 +67,7 @@ public class PlayerController : NetworkBehaviour // NetworkBehaviour
     {
         var movement = new Vector3();
         var jump = new Vector3();
-        if (isLocalPlayer)
+        if (true || isLocalPlayer)
         {
             // If the character is interacting with a game, ignore movement input so they don't act out there actions in the subgame
             if (!IsInteracting)
