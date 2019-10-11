@@ -3,8 +3,15 @@ using UnityEngine;
 
 public class TitleButtons : MonoBehaviour
 {
-    public string levelToLoad = "Main";
+    string levelToLoad = "CharacterCreation";
+    public GameObject titleScreenUI;
+    public GameObject settingsUI;
 
+    private void Start()
+    {
+        titleScreenUI.SetActive(true);
+        settingsUI.SetActive(false);
+    }
 
     public void Play()
     {
@@ -14,9 +21,9 @@ public class TitleButtons : MonoBehaviour
     public void Settings()
     {
         Debug.Log("Opening Setting");
-        //
         //make setting UI visable 
-        //
+        titleScreenUI.SetActive(false);
+        settingsUI.SetActive(true);
     }
 
     public void Quit()
@@ -25,5 +32,12 @@ public class TitleButtons : MonoBehaviour
         Application.Quit();
     }
 
+    //Settings Buttons
+
+    public void SettingsBack()
+    {
+        titleScreenUI.SetActive(true);
+        settingsUI.SetActive(false);
+    }
 
 }
