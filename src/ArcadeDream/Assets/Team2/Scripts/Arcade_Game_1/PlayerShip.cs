@@ -196,9 +196,16 @@ public class PlayerShip : NetworkBehaviour
                 isInvulnerable_m = false;
             }
         }
-        
+
+        if(hasLaser_m == true || hasRapidFire_m == true)
+        {
+            StartCoroutine(DeactivatePowerups());
+        }
+
         if (hasRapidFire_m == true)
             primaryWeapon_m = PlayerWeapons.IncreasedFireRate;
+        else
+            primaryWeapon_m = PlayerWeapons.Standard;
 
         Attack();
     }
@@ -302,6 +309,14 @@ public class PlayerShip : NetworkBehaviour
         hasHomingLaser_m = true;
     }
 
+    //laser and rapid fire are too OP, these powerups will only be active for 10 seconds
+    private IEnumerator DeactivatePowerups()
+    {
+        yield return new WaitForSeconds(10);
+        hasLaser_m = false;
+        hasRapidFire_m = false;
+    }
+
     private IEnumerator Respawn()
     {
         gameObject.transform.position = new Vector3(-100, 0, 0);
@@ -396,11 +411,10 @@ public class PlayerShip : NetworkBehaviour
                     // If the player did not just respawn...
                     if (!isInvulnerable_m)
                     {
-                        
+                        hasRapidFire_m = false;
                         hasLaser_m = false;
                         hasTopGun_m = false;
                         hasHomingLaser_m = false;
-                        hasRapidFire_m = false;
                         topGun.SetActive(false);
                         --LIVES;
 
