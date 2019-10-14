@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class LoginSystem : MonoBehaviour
 {
@@ -43,5 +44,12 @@ public class LoginSystem : MonoBehaviour
     public void ForgotPassword()
     {
         Debug.Log("Forgot password...");
+    }
+
+    public void BackButton()
+    {
+        //Back to main level
+        SceneManager.LoadScene("Main");
+
     }
 }
