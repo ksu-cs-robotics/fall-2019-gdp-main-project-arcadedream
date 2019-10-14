@@ -199,8 +199,11 @@ public class PlayerShip : NetworkBehaviour
         
         if (hasRapidFire_m == true)
             primaryWeapon_m = PlayerWeapons.IncreasedFireRate;
-
-        CmdAttack();
+        if (isLocalPlayer)
+        {
+            Debug.Log("LOCAL");
+            CmdAttack();
+        }
     }
     void FixedUpdate()
     {
@@ -224,8 +227,11 @@ public class PlayerShip : NetworkBehaviour
         }
     }
     [Command]
-    private void CmdAttack()
+    void CmdAttack()
     {
+
+        Debug.Log("TACO");
+
         if (isLocalPlayer)
         {
             weaponTimer_m += Time.deltaTime;
@@ -233,6 +239,7 @@ public class PlayerShip : NetworkBehaviour
             //shooting the default weapon
             if ((!Input.GetAxis("Fire1").Equals(0)) && ((1.0 / primaryWeapon_m.FireRate) <= weaponTimer_m))
             {
+                Debug.Log("Fire Weapons");
                 if (hasTopGun_m == true)
                 {
                     GameObject topBullet = Instantiate(BULLETPREFAB, topGun.transform.position + Vector3.right, transform.rotation);
