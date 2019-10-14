@@ -244,6 +244,7 @@ public class PlayerShip : NetworkBehaviour
 
                 // Make the bullet assigned to the player gameObject
                 GameObject bullet = Instantiate(BULLETPREFAB, transform.position + Vector3.right, transform.rotation);
+                NetworkServer.Spawn(bullet);
                 bullet.transform.parent = gameObject.transform;
                 bullet.GetComponent<Rigidbody>().velocity = Vector3.right * BULLETSPEED;
                 bullet.GetComponent<Bullet>().Shooter = gameObject;
