@@ -28,24 +28,31 @@ public class Item
 /// Maps database ids to actual gameObjects in game. Useful for equipable items.
 /// Author: Josh Dotson
 /// Version: 1
-/// Notes: Inherits from MonoBehaviour to allow for more predictable behaviour in game...
+/// Notes: Inherits from MonoBehaviour to allow for more predictable behaviour in game, however may make static in future...
 /// </summary>
 public class ItemMap : MonoBehaviour
 {
     public List<Item> IDMap;
-    private static readonly uint _mapSize = 32;
+    private static readonly uint _mapSize = 64; // BITS
 
-    [TextArea] public string Description1;
-    [SerializeField] GameObject ID0, ID1, ID2, ID3, ID4, ID5, ID6, ID7;
+    // Tells ItemMap where to segment a _mapSize bit hash for the resulting sub-hashs to encompass exactly 1 type of item
+    private static readonly uint[] _typeBitShiftMap =
+    {
+        // By default, there are 4 sections (types) in ItemMap, each having 8 items in total. These may be changed here...
+        0x0008, 0x000f, 0x0018, 0x001f
+    };
 
-    [TextArea] public string Description2;
-    [SerializeField] GameObject ID8, ID9, ID10, ID11, ID12, ID13, ID14, ID15;
+    [TextArea] public string ItemType1Description;
+    [SerializeField] GameObject ID0, ID1, ID2, ID3, ID4, ID5, ID6, ID7, ID8, ID9, ID10, ID11, ID12, ID13, ID14, ID15;
 
-    [TextArea] public string Description3;
-    [SerializeField] GameObject ID16, ID17, ID18, ID19, ID20, ID21, ID22, ID23;
+    [TextArea] public string ItemType2Description;
+    [SerializeField] GameObject ID16, ID17, ID18, ID19, ID20, ID21, ID22, ID23, ID24, ID25, ID26, ID27, ID28, ID29, ID30, ID31;
 
-    [TextArea] public string Description4;
-    [SerializeField] GameObject ID24, ID25, ID26, ID27, ID28, ID29, ID30, ID31;
+    [TextArea] public string ItemType3Description;
+    [SerializeField] GameObject ID32, ID33, ID34, ID35, ID36, ID37, ID38, ID39, ID40, ID41, ID42, ID43, ID44, ID45, ID46, ID47;
+
+    [TextArea] public string ItemType4Description;
+    [SerializeField] GameObject ID48, ID49, ID50, ID51, ID52, ID53, ID54, ID55, ID56, ID57, ID58, ID59, ID60, ID61, ID62, ID63;
 
     #region ** Bitwise Method Implementations **
     /// <summary>
@@ -54,10 +61,10 @@ public class ItemMap : MonoBehaviour
     /// Version: 2
     /// Notes: Was previously "GetPermission()"
     /// </summary>
-    /// <param name="hash">Unsigned 32 Bit int from Database</param>
+    /// <param name="hash">Unsigned 64 Bit int from Database</param>
     /// <param name="itemID">ID of the Item in Question</param>
     /// <returns>Result of a & operation between hash and itemID, casted as a boolean</returns>
-    public static bool PopBit(uint hash, uint itemID) { return Convert.ToBoolean(hash & ((uint)Math.Pow(2, itemID))); }
+    public static bool PopBit(ulong hash, uint itemID) { return Convert.ToBoolean(hash & ((ulong)Math.Pow(2, itemID))); }
 
     /// <summary>
     /// Takes in both a full db hash, and an 2^item ID, Logical OR's them, and returns the resulting value.
@@ -67,7 +74,7 @@ public class ItemMap : MonoBehaviour
     /// <param name="hash"></param>
     /// <param name="itemID"></param>
     /// <returns>The resulting int of itemID being OR'd into permissionsHash</returns>
-    public static int PushBit(uint hash, uint itemID) { return hash | ((uint)Math.Pow(2, itemID)) }
+    public static ulong PushBit(ulong hash, uint itemID) { return hash | ((ulong)Math.Pow(2, itemID)); }
 
     /// <summary>
     /// Takes in both a full db hash, and an 2^item ID, Logical XOR's them, and returns the resulting value.
@@ -77,7 +84,38 @@ public class ItemMap : MonoBehaviour
     /// <param name="hash"></param>
     /// <param name="itemID"></param>
     /// <returns>The resulting int of itemID being OR'd into permissionsHash</returns>
-    public static int FlipBit(uint hash, uint itemID) { return hash ^ ((uint)Math.Pow(2, itemID)) }
+    public static ulong FlipBit(ulong hash, uint itemID) { return hash ^ ((ulong)Math.Pow(2, itemID)); }
+    #endregion
+
+    #region ** Helpful Functions **
+    /// <summary>
+    /// Returns a list of all items that the user is allowed to use based on a database hash
+    /// Author: Josh Dotson
+    /// Version: 1
+    /// Notes: Untested work in progress
+    /// </summary>
+    /// <param name="permissionsHash">Unsigned 64 Bit int from the database</param>
+    /// <returns></returns>
+    public List<Item> HasUnlocked(ulong permissionsHash)
+    {
+        List<Item> unlockedItems = new List<Item>();
+
+        for (int i = 0; i < _mapSize; ++i)
+        {
+            // If the i'th bit in the permissionHash is 1
+            if (((permissionsHash >> i) & 1) == 1)
+            {
+                try // In case some of the ID#s don't hold references to anything
+                {
+                    unlockedItems.Add(new Item(i));
+                    unlockedItems[i].item = (GameObject)typeof(ItemMap).GetField($"ID{i}").GetValue(this); // Using reflection, set the item reference
+                }
+                catch { continue; }
+            }
+        }
+
+        return unlockedItems;
+    }
     #endregion
 
     /// <summary>
@@ -100,7 +138,7 @@ public class ItemMap : MonoBehaviour
         IDMap = new List<Item>();
 
         // This uses reflection to avoid typing out all of the variable names
-        for (var i = 0; i <= _mapSize - 1; ++i)
+        for (var i = 0; i < _mapSize; ++i)
         {
             try // In case some of the ID#s don't hold references to anything
             {
