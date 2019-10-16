@@ -45,11 +45,11 @@ public class Jukebox : MonoBehaviour
         {
             if(Music[pos_m - 1] == null) //check to see if a previous song exists
             {
-                pos_m = Music.Length - 1; //if no set position to last song
+                pos_m = Music.Length - 1; //if yes set position to last song
             }
             else
             {
-                pos_m -= 1; //if yes decrement position
+                pos_m -= 1; //if no decrement position
             }
             currentSong_m = Music[pos_m]; //set the new song
             songName.text = currentSong_m.name; //display the new song name
@@ -61,11 +61,11 @@ public class Jukebox : MonoBehaviour
         {
             if(Music[pos_m + 1] == null) //check to see if a next song exists
             {
-                pos_m = 0; //if no set position to first song
+                pos_m = 0; //if yes set position to first song
             }
             else
             {
-                pos_m += 1; //if yes increment position
+                pos_m += 1; //if no increment position
             }
             currentSong_m = Music[pos_m]; //set the new song
             songName.text = currentSong_m.name; //display the new song name
