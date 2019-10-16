@@ -19,13 +19,16 @@ public class Jukebox : MonoBehaviour
     public GameObject UI;
     public Text songName;
 
+    private int pos_m;
 
     private void Start()
     {
         currentSong_m = Music[0]; //sets the current song to the first item in array as default
         songName.text = currentSong_m.name; //displays the current song text
+        Audio = GetComponent<AudioSource>();
         Audio.clip = currentSong_m;
         Audio.Play();
+        pos_m = findPostion();
     }
 
     private void Update()
@@ -38,8 +41,6 @@ public class Jukebox : MonoBehaviour
 
     private void changeMusic()
     {
-        int pos_m = findPostion();
-
         if (Input.GetKeyDown(KeyCode.LeftArrow)) //change to previous song
         {
             if(Music[pos_m - 1] == null) //check to see if a previous song exists
@@ -52,6 +53,9 @@ public class Jukebox : MonoBehaviour
             }
             currentSong_m = Music[pos_m]; //set the new song
             songName.text = currentSong_m.name; //display the new song name
+            Audio = GetComponent<AudioSource>();
+            Audio.clip = currentSong_m;
+            Audio.Play();
         }
         else if (Input.GetKeyDown(KeyCode.RightArrow)) //change to next song
         {
@@ -65,6 +69,9 @@ public class Jukebox : MonoBehaviour
             }
             currentSong_m = Music[pos_m]; //set the new song
             songName.text = currentSong_m.name; //display the new song name
+            Audio = GetComponent<AudioSource>();
+            Audio.clip = currentSong_m;
+            Audio.Play();
         }
     }
 
