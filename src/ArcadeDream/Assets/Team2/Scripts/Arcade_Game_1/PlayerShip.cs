@@ -199,10 +199,12 @@ public class PlayerShip : NetworkBehaviour
         
         if (hasRapidFire_m == true)
             primaryWeapon_m = PlayerWeapons.IncreasedFireRate;
-        if (isLocalPlayer)
+
+
+        weaponTimer_m += Time.deltaTime;
+        if ((!Input.GetAxis("Fire1").Equals(0)) && ((1.0 / primaryWeapon_m.FireRate) <= weaponTimer_m) && isLocalPlayer)
         {
-            Debug.Log("LOCAL");
-            CmdAttack();
+            CmdAttack(weaponTimer_m);
         }
     }
     void FixedUpdate()
@@ -227,88 +229,81 @@ public class PlayerShip : NetworkBehaviour
         }
     }
     [Command]
-    void CmdAttack()
+    void CmdAttack(float weaponTime)
     {
-
-        Debug.Log("TACO");
-
-        if (isLocalPlayer)
+        weaponTimer_m = weaponTime;
+        //shooting the default weapon
+            
+        Debug.Log("Fire Weapons");
+        if (hasTopGun_m == true)
         {
-            weaponTimer_m += Time.deltaTime;
-
-            //shooting the default weapon
-            if ((!Input.GetAxis("Fire1").Equals(0)) && ((1.0 / primaryWeapon_m.FireRate) <= weaponTimer_m))
-            {
-                Debug.Log("Fire Weapons");
-                if (hasTopGun_m == true)
-                {
-                    GameObject topBullet = Instantiate(BULLETPREFAB, topGun.transform.position + Vector3.right, transform.rotation);
-                    NetworkServer.Spawn(topBullet);
-                    topBullet.transform.parent = gameObject.transform;
-                    topBullet.GetComponent<Rigidbody>().velocity = Vector3.right * BULLETSPEED;
-                    topBullet.GetComponent<Bullet>().Shooter = gameObject;
-                }
-
-                // Make the bullet assigned to the player gameObject
-                GameObject bullet = Instantiate(BULLETPREFAB, transform.position + Vector3.right, transform.rotation);
-                NetworkServer.Spawn(bullet);
-                bullet.transform.parent = gameObject.transform;
-                bullet.GetComponent<Rigidbody>().velocity = Vector3.right * BULLETSPEED;
-                bullet.GetComponent<Bullet>().Shooter = gameObject;
-                weaponTimer_m = 0.0f;
-
-                //team3///////////////////////
-                audioSource_m.clip = Gun;
-                audioSource_m.Play();
-
-                /////////////////////////////
-            }
-
-            //shooting a laser
-            if (Input.GetKeyUp("q") &&
-                hasLaser_m == true &&
-                ((1.0 / primaryWeapon_m.FireRate) <= weaponTimer_m))
-            {
-                chargeLaser(timeCharged_m);     //calls chargeLaser to modify width based on charged time
-                GameObject Laser = Instantiate(LASERPREFAB, transform.position + Vector3.right, LASERPREFAB.transform.rotation);
-                weaponTimer_m = 0.0f;
-
-                //team3///////////////////////
-                audioSource_m.clip = laser;
-                audioSource_m.Play();
-                /////////////////////////////
-            }
-
-            //shooting a homing laser
-            if (Input.GetKeyDown("e") &&
-               hasHomingLaser_m == true)
-            {
-                GameObject HomingLaser = Instantiate(HOMINGPREFAB, transform.position + Vector3.right, HOMINGPREFAB.transform.rotation);
-                hasHomingLaser_m = false;
-                StartCoroutine(HomingTimer());
-
-                //team3///////////////////////
-                audioSource_m.clip = laser;
-                audioSource_m.Play();
-                /////////////////////////////
-
-            }
-
-            // We may use this in the future if we decide to add secondarys/abilities
-            /*if (!Input.GetAxis("Submit").Equals(0))
-            {
-                var game = colliders_m.Find((c) => c.gameObject.tag == "Game");
-
-                if (game.Equals(default(Collider)))
-                {
-                    //colliders_m[0].gameObject.GetComponent<>
-                }
-                else
-                {
-                    //game.gameObject.GetComponent<>
-                }
-            }*/
+            GameObject topBullet = Instantiate(BULLETPREFAB, topGun.transform.position + Vector3.right, transform.rotation);
+            NetworkServer.Spawn(topBullet);
+            topBullet.transform.parent = gameObject.transform;
+            topBullet.GetComponent<Rigidbody>().velocity = Vector3.right * BULLETSPEED;
+            topBullet.GetComponent<Bullet>().Shooter = gameObject;
         }
+
+        // Make the bullet assigned to the player gameObject
+        GameObject bullet = Instantiate(BULLETPREFAB, transform.position + Vector3.right, transform.rotation);
+        NetworkServer.Spawn(bullet);
+        bullet.transform.parent = gameObject.transform;
+        bullet.GetComponent<Rigidbody>().velocity = Vector3.right * BULLETSPEED;
+        bullet.GetComponent<Bullet>().Shooter = gameObject;
+        weaponTimer_m = 0.0f;
+
+        //team3///////////////////////
+        audioSource_m.clip = Gun;
+        audioSource_m.Play();
+
+        /////////////////////////////
+            
+
+        //shooting a laser
+        if (Input.GetKeyUp("q") &&
+            hasLaser_m == true &&
+            ((1.0 / primaryWeapon_m.FireRate) <= weaponTimer_m))
+        {
+            chargeLaser(timeCharged_m);     //calls chargeLaser to modify width based on charged time
+            GameObject Laser = Instantiate(LASERPREFAB, transform.position + Vector3.right, LASERPREFAB.transform.rotation);
+            weaponTimer_m = 0.0f;
+
+            //team3///////////////////////
+            audioSource_m.clip = laser;
+            audioSource_m.Play();
+            /////////////////////////////
+        }
+
+        //shooting a homing laser
+        if (Input.GetKeyDown("e") &&
+            hasHomingLaser_m == true)
+        {
+            GameObject HomingLaser = Instantiate(HOMINGPREFAB, transform.position + Vector3.right, HOMINGPREFAB.transform.rotation);
+            hasHomingLaser_m = false;
+            StartCoroutine(HomingTimer());
+
+            //team3///////////////////////
+            audioSource_m.clip = laser;
+            audioSource_m.Play();
+            /////////////////////////////
+
+        }
+
+        // We may use this in the future if we decide to add secondarys/abilities
+        /*if (!Input.GetAxis("Submit").Equals(0))
+        {
+            var game = colliders_m.Find((c) => c.gameObject.tag == "Game");
+
+            if (game.Equals(default(Collider)))
+            {
+                //colliders_m[0].gameObject.GetComponent<>
+            }
+            else
+            {
+                //game.gameObject.GetComponent<>
+            }
+        }*/
+        
     }
 
     private IEnumerator HomingTimer()
