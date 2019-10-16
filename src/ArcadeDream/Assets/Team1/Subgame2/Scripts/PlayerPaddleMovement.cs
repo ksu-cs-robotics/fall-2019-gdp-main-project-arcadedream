@@ -125,4 +125,15 @@ public class PlayerPaddleMovement : MonoBehaviour
 
     }
 
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.tag == "powerup")
+        {
+            Debug.Log("Player powerup");
+            //Changes the color of the ball based on the last player to hit it last
+            Destroy(collision.gameObject);
+        }
+
+    }
+
 }
