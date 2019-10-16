@@ -43,7 +43,7 @@ public class Jukebox : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.LeftArrow)) //change to previous song
         {
-            if(Music[pos_m - 1] == null) //check to see if a previous song exists
+            if (pos_m <= 0) //check to see if a previous song exists
             {
                 pos_m = Music.Length - 1; //if yes set position to last song
             }
@@ -51,6 +51,7 @@ public class Jukebox : MonoBehaviour
             {
                 pos_m -= 1; //if no decrement position
             }
+
             currentSong_m = Music[pos_m]; //set the new song
             songName.text = currentSong_m.name; //display the new song name
             Audio = GetComponent<AudioSource>();
@@ -59,7 +60,7 @@ public class Jukebox : MonoBehaviour
         }
         else if (Input.GetKeyDown(KeyCode.RightArrow)) //change to next song
         {
-            if(Music[pos_m + 1] == null) //check to see if a next song exists
+            if(pos_m >= Music.Length - 1) //check to see if a next song exists
             {
                 pos_m = 0; //if yes set position to first song
             }
