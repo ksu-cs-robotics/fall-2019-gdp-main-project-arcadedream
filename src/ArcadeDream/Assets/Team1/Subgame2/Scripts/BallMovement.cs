@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class BallMovement : MonoBehaviour
 {
-    [SerializeField] float speed;
+    float speed = .05f;
     float radius;
     Vector2 direction;
     Rigidbody2D _rigidbody;
@@ -26,7 +26,7 @@ public class BallMovement : MonoBehaviour
         if (_rigidbody.velocity == Vector2.zero)
         {
             Vector2 randomDir = new Vector2(Random.Range(-1, 1), Random.Range(-1, 1));
-            _rigidbody.AddForce(randomDir * 0.05f);
+            _rigidbody.AddForce(randomDir * speed);
         }
         /*
         //Ball movement
@@ -60,6 +60,7 @@ public class BallMovement : MonoBehaviour
             Debug.Log("Player Bounce");
             //Changes the color of the ball based on the last player to hit it last
             GetComponent<SpriteRenderer>().color = collision.GetComponent<SpriteRenderer>().color;
+            speed += 0.01f;
         }
 
         if (collision.tag == "GoalZone")
