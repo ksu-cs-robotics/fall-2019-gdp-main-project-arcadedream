@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.Networking;
 /// <summary>
 /// Behavior for Cancer boss
 /// Author: Jared Anderson, Josh Dotson
@@ -62,15 +62,15 @@ public class Cancer : Enemy
             if (((1.0 / primaryWeapon_m.FireRate) <= weaponTimer_m) && IsActive)
             {
                 ChooseVictim(out victim_m);
-                Shoot();
+               RpcShoot();
 
                 weaponTimer_m = 0.0f;
             }
         }
         finally { }
     }
-
-    protected override void Shoot()
+    [ClientRpc]
+    protected override void RpcShoot()
     {
         // This class does have a weapon (Laser)
         GameObject bullet = Instantiate(PROJECTILE, transform.position + Vector3.left, Quaternion.identity);

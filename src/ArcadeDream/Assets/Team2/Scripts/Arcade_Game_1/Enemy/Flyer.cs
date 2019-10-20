@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.Networking;
 /// <summary>
 /// Behavior for Flyer enemy
 /// Author: Jared Anderson, Josh Dotson
@@ -22,8 +22,8 @@ public class Flyer : Enemy
     {
         base.Update();
     }
-
-    protected override void Shoot() { }// This class does not have a weapon
+    [ClientRpc]
+    protected override void RpcShoot() { }// This class does not have a weapon
 
     // A rough idea of what we talked about with disabling the enemies till on screen
     private void OnBecameVisible() { IsActive = true; }

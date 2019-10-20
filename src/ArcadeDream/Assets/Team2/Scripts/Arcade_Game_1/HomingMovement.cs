@@ -1,14 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.Networking;
 /// <summary>
 /// Homing laser functionality, moves directly toward an enemy
 /// Author: Lew Fortwangler
 /// Version: 1
 /// </summary>
 
-public class HomingMovement : MonoBehaviour
+public class HomingMovement : NetworkBehaviour
 {
     public GameObject Shooter { get; set; }
     private float laserSpeed_m = 10.0f;
@@ -29,10 +29,10 @@ public class HomingMovement : MonoBehaviour
 
     private void Update()
     {
-        FindEnemy();
+        CmdFindEnemy();
     }
-
-    private void FindEnemy()
+    [Command]
+    private void CmdFindEnemy()
     {
         float distClosestEnemy_m = Mathf.Infinity;
         Enemy closestEnemy_m = null;

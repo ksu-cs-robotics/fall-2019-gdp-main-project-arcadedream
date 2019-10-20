@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.Networking;
 /// <summary>
 /// Behavior for Striker enemy
 /// Author: Jared Anderson, Josh Dotson
@@ -34,15 +34,15 @@ public class Striker : Enemy
             if (behaviourIterator_m.Current.IsAttacking && ((1.0 / primaryWeapon_m.FireRate) <= weaponTimer_m) && IsActive)
             {
                 ChooseVictim(out victim_m);
-                Shoot();
+                RpcShoot();
 
                 weaponTimer_m = 0.0f;
             }
         }
         finally { }
     }
-
-    protected override void Shoot()
+    [ClientRpc]
+    protected override void RpcShoot()
     {
         // base.Shoot();
 

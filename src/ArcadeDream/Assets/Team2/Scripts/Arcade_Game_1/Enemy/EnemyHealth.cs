@@ -1,13 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.Networking;
 /// <summary>
 /// Implements enemy health and damage functions
 /// Author: Jared Anderson
 /// Version: 1
 /// </summary>
-public class EnemyHealth : MonoBehaviour
+public class EnemyHealth : NetworkBehaviour
 {
     // The amount of health the enemy starts the game with.
     public int STARTINGHEALTH = 1;
@@ -43,9 +43,10 @@ public class EnemyHealth : MonoBehaviour
         audioSource_m = GetComponent<AudioSource>();
         hb = GetComponent<Collider>();
     }
-
+   
     public void TakeDamage()
     {
+        Debug.Log("In cmdTakeDamage");
         // If the enemy is dead, exit the function.
         if (isDead_m)
             return;
@@ -56,7 +57,6 @@ public class EnemyHealth : MonoBehaviour
         if (currentHealth_m <= 0)
             Die();
     }
-
     void Die()
     {
         isDead_m = true;

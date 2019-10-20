@@ -33,7 +33,7 @@ public class Bullet : NetworkBehaviour
 
                     healthComponent.TakeDamage();
                     Shooter.GetComponent<PlayerShip>().Points += healthComponent.SCOREVALUE;
-                    Destroy(gameObject);
+                    NetworkServer.Destroy(gameObject);
 
                     break;
                 }

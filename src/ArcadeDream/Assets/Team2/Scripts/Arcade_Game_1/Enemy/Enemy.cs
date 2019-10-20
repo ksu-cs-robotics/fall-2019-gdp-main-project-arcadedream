@@ -2,10 +2,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.Networking;
 /// <summary>
 /// Holds various weapon configurations and data about enemy weapon limitations. May be optional
 /// Author: Josh Dotson
+/// Edited by Bryce Chalfant
 /// Version: 0.5
 /// </summary>
 public static class EnemyWeapons
@@ -19,7 +20,7 @@ public static class EnemyWeapons
 /// Author: Jared Anderson, Josh Dotson
 /// Version: 1
 /// </summary>
-public abstract class Enemy : MonoBehaviour
+public abstract class Enemy : NetworkBehaviour
 {
     // The speed of this enemy.
     [SerializeField] public float SPEED = 1f;
@@ -77,9 +78,12 @@ public abstract class Enemy : MonoBehaviour
     }
 
     // Will handle all the speciic things that have to do with a particular enemies weapon capabilities
-    protected virtual void Shoot() { }
+    [ClientRpc]
+    protected virtual void RpcShoot() { }
 
     // A rough idea of what we talked about with disabling the enemies till on screen
+    
     private void OnBecameVisible() { IsActive = true; }
+    
     private void OnBecameInvisible() { IsActive = false; }
 }

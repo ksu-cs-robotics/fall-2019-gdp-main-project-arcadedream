@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.Networking;
 /// <summary>
 /// Behavior for Assaulter enemy
 /// Author: Jared Anderson, Josh Dotson
@@ -26,12 +26,12 @@ public class Assaulter : Enemy
         // Fire the weapon if the enemy is supposed to attack in this interval; This is in here because it needs to call the derived function
         if (behaviourIterator_m.Current.IsAttacking && ((1.0 / primaryWeapon_m.FireRate) <= weaponTimer_m) && IsActive)
         {
-            Shoot();
+            RpcShoot();
             weaponTimer_m = 0.0f;
         }
     }
-
-    protected override void Shoot()
+    [ClientRpc]
+    protected override void RpcShoot()
     {
         // base.Shoot();
 
