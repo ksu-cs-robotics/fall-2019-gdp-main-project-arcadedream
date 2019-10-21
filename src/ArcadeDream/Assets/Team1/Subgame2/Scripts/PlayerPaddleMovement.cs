@@ -10,6 +10,7 @@ public class PlayerPaddleMovement : MonoBehaviour
     float width;
 
     string input;
+   
 
     [SerializeField] bool mouseControl;
 
@@ -127,10 +128,33 @@ public class PlayerPaddleMovement : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        if (collision.tag == "GrowPowerup")
+        {
+           
+                Vector3 scale = new Vector3(.5f, 2, 1f);
+                transform.localScale = scale;
+           
+            
+            
+            Debug.Log("Player powerup Grow");
+            //Changes the color of the ball based on the last player to hit it last
+            Destroy(collision.gameObject);
+        }
+        if (collision.tag == "ShrinkPowerup")
+        {
+
+            Vector3 scale = new Vector3(.25f, 1, 1f);
+            transform.localScale = scale;
+
+
+
+            Debug.Log("Player powerup Shrink");
+            //Changes the color of the ball based on the last player to hit it last
+            Destroy(collision.gameObject);
+        }
         if (collision.tag == "powerup")
         {
             Debug.Log("Player powerup");
-            //Changes the color of the ball based on the last player to hit it last
             Destroy(collision.gameObject);
         }
 

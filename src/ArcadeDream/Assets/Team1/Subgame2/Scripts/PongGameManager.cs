@@ -53,13 +53,37 @@ public class PongGameManager : MonoBehaviour
 
         InvokeRepeating("SpawnPowerUp", spawnPowerups, spawnPowerups); // Starting in (spawnPowerups) seconds.
                                                                 // a powerup will be spawned every (spawnPowerup) seconds
+
+   
+        PlayerPaddleMovement player1paddle = Instantiate(playerPaddle) as PlayerPaddleMovement;
+        PlayerPaddleMovement player2paddle = Instantiate(playerPaddle) as PlayerPaddleMovement;
+        player1paddle.Init(1);
+        player2paddle.Init(2);
+        GoalieMovement player1goalie = Instantiate(goalie) as GoalieMovement;
+        GoalieMovement player2goalie = Instantiate(goalie) as GoalieMovement;
+        player1goalie.Init(1);
+        player2goalie.Init(2);
+        goals[0].SetActive(true);
+        goals[1].SetActive(true);
+  
+        PlayerPaddleMovement player3paddle = Instantiate(playerPaddle) as PlayerPaddleMovement;
+        PlayerPaddleMovement player4paddle = Instantiate(playerPaddle) as PlayerPaddleMovement;
+        player3paddle.Init(3);
+        player4paddle.Init(4);
+        GoalieMovement player3goalie = Instantiate(goalie) as GoalieMovement;
+        GoalieMovement player4goalie = Instantiate(goalie) as GoalieMovement;
+        player3goalie.Init(3);
+        player4goalie.Init(4);
+        goals[2].SetActive(true);
+        goals[3].SetActive(true);
     }
 
     void Update()
     {
-
+        /*
         if (!spawned)
         {
+        
 
             //Create 2 Paddle / Goal / Goalie
             PlayerPaddleMovement player1paddle = Instantiate(playerPaddle) as PlayerPaddleMovement;
@@ -88,12 +112,13 @@ public class PongGameManager : MonoBehaviour
             }
             spawned = true;
         }
+        */
     }
 
     void SpawnPowerUp()
     {
-        powerupChosen = Random.Range(0, 7); // random number 0-6
-        spawnPointChosen = Random.Range(0, 8); // random number 0-7
+        powerupChosen = Random.Range(0, 8); // random number 0-6
+        spawnPointChosen = Random.Range(1, 2); // random number 0-7
         Debug.Log(powerupChosen);
         //spawn random powerup at random spawn point
         Instantiate(powerup[powerupChosen], spawnPoint[spawnPointChosen].position, spawnPoint[spawnPointChosen].rotation);
