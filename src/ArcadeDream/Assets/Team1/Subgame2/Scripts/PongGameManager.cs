@@ -32,6 +32,11 @@ public class PongGameManager : MonoBehaviour
     public static Vector2 GreenSpawn;
     public static Vector2 YellowSpawn;
 
+    public static Vector2 RedPaddleSpawn; //Screen points for players
+    public static Vector2 BluePaddleSpawn;
+    public static Vector2 GreenPaddleSpawn;
+    public static Vector2 YellowPaddleSpawn;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -42,11 +47,17 @@ public class PongGameManager : MonoBehaviour
         topRight = GameObject.Find("TopRight").GetComponent<Transform>().position;
         topLeft = GameObject.Find("TopLeft").GetComponent<Transform>().position;
 
-        //Get spawn points
+        //Get spawn points for goalies
         RedSpawn = GameObject.Find("RedGoalie").GetComponent<Transform>().position;
         BlueSpawn = GameObject.Find("BlueGoalie").GetComponent<Transform>().position;
         GreenSpawn = GameObject.Find("GreenGoalie").GetComponent<Transform>().position;
         YellowSpawn = GameObject.Find("YellowGoalie").GetComponent<Transform>().position;
+
+        //Get spawn points for players
+        RedPaddleSpawn = GameObject.Find("RedPaddlePoint").GetComponent<Transform>().position;
+        BluePaddleSpawn = GameObject.Find("BluePaddlePoint").GetComponent<Transform>().position;
+        GreenPaddleSpawn = GameObject.Find("GreenPaddlePoint").GetComponent<Transform>().position;
+        YellowPaddleSpawn = GameObject.Find("YellowPaddlePoint").GetComponent<Transform>().position;
 
         //Create ball
         Instantiate(ball);
@@ -54,7 +65,7 @@ public class PongGameManager : MonoBehaviour
         InvokeRepeating("SpawnPowerUp", spawnPowerups, spawnPowerups); // Starting in (spawnPowerups) seconds.
                                                                 // a powerup will be spawned every (spawnPowerup) seconds
 
-   
+        /*
         PlayerPaddleMovement player1paddle = Instantiate(playerPaddle) as PlayerPaddleMovement;
         PlayerPaddleMovement player2paddle = Instantiate(playerPaddle) as PlayerPaddleMovement;
         player1paddle.Init(1);
@@ -76,11 +87,12 @@ public class PongGameManager : MonoBehaviour
         player4goalie.Init(4);
         goals[2].SetActive(true);
         goals[3].SetActive(true);
+        */
     }
 
     void Update()
     {
-        /*
+        
         if (!spawned)
         {
         
@@ -112,13 +124,13 @@ public class PongGameManager : MonoBehaviour
             }
             spawned = true;
         }
-        */
+        
     }
 
     void SpawnPowerUp()
     {
-        powerupChosen = Random.Range(0, 8); // random number 0-6
-        spawnPointChosen = Random.Range(1, 2); // random number 0-7
+        powerupChosen = Random.Range(0, 7); // random number 0-6
+        spawnPointChosen = Random.Range(0, 8); // random number 0-7
         Debug.Log(powerupChosen);
         //spawn random powerup at random spawn point
         Instantiate(powerup[powerupChosen], spawnPoint[spawnPointChosen].position, spawnPoint[spawnPointChosen].rotation);

@@ -6,8 +6,6 @@ public class PlayerPaddleMovement : MonoBehaviour
 {
     [SerializeField] float speed;
     [SerializeField] float rotationSpeed;
-    float height;
-    float width;
 
     string input;
    
@@ -18,8 +16,6 @@ public class PlayerPaddleMovement : MonoBehaviour
     //Initialization
     void Start()
     {
-        height = transform.localScale.y;
-        width = transform.localScale.x;
     }
 
     //Initializes each player paddle based on the player number 1-4 
@@ -30,25 +26,24 @@ public class PlayerPaddleMovement : MonoBehaviour
         {
             case 1:
                 // init player 1 (red)
-                pos = new Vector2(PongGameManager.topRight.x, 0);
-                pos += Vector2.left * width; //Move a bit to the left
+                pos = new Vector2(PongGameManager.RedPaddleSpawn.x, PongGameManager.RedPaddleSpawn.y);
+                transform.Rotate(0f, 0f, -45f);
                 input = "Player1Paddle";
                 //Assign Color
                 gameObject.GetComponent<SpriteRenderer>().color = Color.red;
                 break;
             case 2:
                 // Init player 2 (blue)
-                pos = new Vector2(PongGameManager.bottomLeft.x, 0);
-                pos += Vector2.right * width; //Move a bit to the right
+                pos = new Vector2(PongGameManager.BluePaddleSpawn.x, PongGameManager.BluePaddleSpawn.y);
+                transform.Rotate(0f, 0f, -45f);
                 input = "Player2Paddle";
                 //Assign Color
                 gameObject.GetComponent<SpriteRenderer>().color = Color.blue;
                 break;
             case 3:
                 // Init player 3 (green)
-                pos = new Vector2(0, PongGameManager.bottomLeft.y);
-                transform.Rotate(0f, 0f, 90f);
-                pos += Vector2.up * width; //Move a bit up
+                pos = new Vector2(PongGameManager.GreenPaddleSpawn.x, PongGameManager.GreenPaddleSpawn.y);
+                transform.Rotate(0f, 0f, 45f);
                 input = "Player3Paddle";
                 //Assign Color 
                 gameObject.GetComponent<SpriteRenderer>().color = Color.green;
@@ -56,9 +51,8 @@ public class PlayerPaddleMovement : MonoBehaviour
                 break;
             case 4:
                 // Init player 4 (Yellow)
-                pos = new Vector2(0, PongGameManager.topLeft.y);
-                transform.Rotate(0f, 0f, 90f);
-                pos += Vector2.down * width; //Move a bit up
+                pos = new Vector2(PongGameManager.YellowPaddleSpawn.x, PongGameManager.YellowPaddleSpawn.y);
+                transform.Rotate(0f, 0f, 45f);
                 input = "Player4Paddle";
                 //Assign Color
                 gameObject.GetComponent<SpriteRenderer>().color = Color.yellow;
