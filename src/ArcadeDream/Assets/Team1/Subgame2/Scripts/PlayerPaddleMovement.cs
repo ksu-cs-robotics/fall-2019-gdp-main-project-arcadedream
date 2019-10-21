@@ -8,7 +8,6 @@ public class PlayerPaddleMovement : MonoBehaviour
     [SerializeField] float rotationSpeed;
 
     string input;
-   
 
     [SerializeField] bool mouseControl;
 
@@ -136,9 +135,17 @@ public class PlayerPaddleMovement : MonoBehaviour
         }
         if (collision.tag == "ShrinkPowerup")
         {
-
             Vector3 scale = new Vector3(.25f, 1, 1f);
-            transform.localScale = scale;
+            GameObject[] paddles;
+            paddles = GameObject.FindGameObjectsWithTag("Player");
+            foreach (GameObject paddler in paddles)
+            {
+                paddler.transform.localScale = scale;
+            }
+            
+
+            Vector3 scale2 = new Vector3(.5f, 1.5f, 1f);
+            transform.localScale = scale2;
 
 
 
