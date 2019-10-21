@@ -15,10 +15,10 @@ public class PowerupSpawn : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "Player" ||
-            other.gameObject.tag == "Bullet" ||
-            other.gameObject.tag == "Laser" ||
-            other.gameObject.tag == "HomingLaser") ;
+        if (other.gameObject.tag == "Player" || 
+            (other.gameObject.tag == "Bullet" && other.gameObject.GetComponent<Bullet>().Shooter.gameObject.tag != "Enemy") || 
+            (other.gameObject.tag == "Laser" && other.gameObject.GetComponent<Laser>()) || 
+            other.gameObject.tag == "HomingLaser")
         {
             GameObject chosenPowerup = Instantiate(powerupArray[Random.Range(0, powerupArray.Length)],
                                        this.transform.position,

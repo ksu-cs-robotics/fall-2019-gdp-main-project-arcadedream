@@ -29,12 +29,9 @@ public class Striker : Enemy
     {
         base.Update();
 
-        if (!IsActive)
-            return;
-
         try
         {
-            if (behaviourIterator_m.Current.IsAttacking && ((1.0 / primaryWeapon_m.FireRate) <= weaponTimer_m))
+            if (behaviourIterator_m.Current.IsAttacking && ((1.0 / primaryWeapon_m.FireRate) <= weaponTimer_m) && IsActive)
             {
                 ChooseVictim(out victim_m);
                 Shoot();

@@ -1,8 +1,37 @@
 ﻿using System;
+using System.IO;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 using UnityEngine.UI;
+
+/// <summary>
+/// Maps to respective fields in the Player table in the database
+/// Author: Josh Dotson
+/// Version: 1
+/// </summary>
+public class ADDBPlayerList
+{
+    public int ID { get; set; }
+    public string Username { get; set; }
+    public string UserPassword { get; set; }
+    public int Coins { get; set; }
+    public int Total_Points { get; set; }
+    public ulong PermissionsHash { get; set; }
+    public ulong EquipmentHash { get; set; }
+
+    public ADDBPlayerList()
+    {
+        ID = -1;
+        Username = "NULL";
+        UserPassword = "NULL";
+        Coins = 0;
+        Total_Points = 0;
+        PermissionsHash = 0;
+        EquipmentHash = 0;
+    }
+}
 
 /// <summary>
 /// Implements basics controls for WASD, and jumping movements
@@ -11,8 +40,11 @@ using UnityEngine.UI;
 /// Version: 3
 /// </summary>
 [RequireComponent(typeof(Rigidbody))]
-public class PlayerController : MonoBehaviour // NetworkBehaviour
+public class PlayerController : NetworkBehaviour // NetworkBehaviour
 {
+    // This will likely be set from a local config file
+    public string PlayerUsername;
+
     [SerializeField] public float WALKSPEED = 3.0f;
     [SerializeField] public float RUNSPEED = 5.0f;
     [SerializeField] public float JUMPSPEED = 5.0f;
@@ -21,8 +53,16 @@ public class PlayerController : MonoBehaviour // NetworkBehaviour
 
     // Stores references to both the Players UI canvas, as well as the text element regarding interact text
     protected GameObject playerUICanvas_m;
-    protected GameObject playerDialogMenu_m;
+    protected GameObject playerDialogMenu_m; // Probably no longer needed as of Version 3 of InteractController...
     protected Text playerUIInteractText_m;
+
+    // Reference stream to the local player.config file
+    protected FileStream _configStream;
+    protected static readonly string _configFilePath = $@"{Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)}\Arcade Dream\player.config";
+
+    // Contain information regarding currently equipped items, and unlocked items
+    protected ulong _permissions;
+    protected ulong _equipment;
 
     // Containers that store references to all colliders, as well as which one is active for interaction
     protected List<Collider> nearbyInteractableObjects_m;
@@ -30,16 +70,42 @@ public class PlayerController : MonoBehaviour // NetworkBehaviour
     public bool IsUsingMouseInteract;
     public bool IsInteracting;
 
-    // protected bool talkFlag_m = false;       //flag to keep track of whether or not the player wants to talk to NPC
-    // public GameObject DIALOGUECANVAS;
-
     // This acts as a buffer to prevent a interact loop from occuring when the sumbit key is held down
     protected bool SubmitKeyDown;
 
     void Awake()
     {
         // This will prevent the playerObject from being destroyed when they enter or exit another subgame scene
-        DontDestroyOnLoad(transform.gameObject);
+        // DontDestroyOnLoad(transform.gameObject);
+
+        if (File.Exists(_configFilePath))
+        {
+            // Open config file
+            _configStream = File.Open
+            (
+                path: _configFilePath,
+                mode: FileMode.Open,
+                access: FileAccess.ReadWrite,
+                share: FileShare.None
+            );
+
+            // Serialize, and decrypt config file contents here...
+        }
+        else { /* Create new empty config file, and use the next step to sync it to the server */ }
+
+        try
+        {
+            // Attempt to connect, and sync to the database. Sync database to config file if it existed, or vice versa if it didn't...
+            /* using (ADDBConnection connection = new ADDBConnection)
+            {
+                connection.Open();
+            
+                var playerTuple = connection.Query<ADDBPlayerList>($"SELECT * FROM playerlist WHERE Username = '{PlayerUsername}'");
+                _permissions = playerTuple.permissionsHash;
+                _equipment = playerTuple.equipmentHash;
+            */
+        }
+        catch { /* Could not open database connection! */ }
     }
 
     // Start is called before the first frame update
@@ -56,10 +122,7 @@ public class PlayerController : MonoBehaviour // NetworkBehaviour
 
         // Stores whether or not a character is already interacting with someone, and if so, ignore interact input
         IsUsingMouseInteract = false;
-        IsInteracting = false;
-
-        // DIALOGUECANVAS.SetActive(false);    //doesnt need to be in player, can be moved to an enviroment start script at a later time
-        //implemented here for now for clariy
+        IsInteracting = false;      
     }
 
     void FixedUpdate()
@@ -67,45 +130,43 @@ public class PlayerController : MonoBehaviour // NetworkBehaviour
         var movement = new Vector3();
         var jump = new Vector3();
 
-        // If the character is interacting with a game, ignore movement input so they don't act out there actions in the subgame
-        if (!IsInteracting)
+        if (true || isLocalPlayer)
         {
-            movement.Set(Input.GetAxisRaw("Horizontal"), 0f, Input.GetAxisRaw("Vertical"));
-            movement = movement.normalized * Time.deltaTime;
-            jump.Set(0f, Input.GetAxisRaw("Jump"), 0f);
-
-            // Choose movement multiplier based on whether or not the sprint input is used
-            if (!Input.GetAxisRaw("Sprint").Equals(0)) { movement *= RUNSPEED; }
-            else { movement *= WALKSPEED; }
-        }
-
-        // Process user movement input...
-        if (!movement.Equals(Vector3.zero))
-        {
-            Vector3 newPosition = transform.position + movement;
-            Vector3 newPositionVector = newPosition - transform.position;
-            newPositionVector.y = 0f;
-
-            var newRotation = Quaternion.LookRotation(newPositionVector, Vector3.up);
-            var interpolatedRotation = Quaternion.Slerp(newRotation, transform.rotation, Time.deltaTime * 30);
-
-            rigidbody_m.MovePosition(transform.position + movement);
-            rigidbody_m.MoveRotation(interpolatedRotation);
-        }
-
-        // Process jumping input
-        if (!jump.Equals(Vector3.zero))
-        {
-            if (rigidbody_m.velocity.y == 0)
+            // If the character is interacting with a game, ignore movement input so they don't act out there actions in the subgame
+            if (!IsInteracting)
             {
-                rigidbody_m.AddRelativeForce(Vector3.up * JUMPSPEED, ForceMode.Impulse);
+                movement.Set(Input.GetAxisRaw("Horizontal"), 0f, Input.GetAxisRaw("Vertical"));
+                movement = movement.normalized * Time.deltaTime;
+                jump.Set(0f, Input.GetAxisRaw("Jump"), 0f);
+
+                // Choose movement multiplier based on whether or not the sprint input is used
+                if (!Input.GetAxisRaw("Sprint").Equals(0)) { movement *= RUNSPEED; }
+                else { movement *= WALKSPEED; }
+            }
+
+            // Process user movement input...
+            if (!movement.Equals(Vector3.zero))
+            {
+                Vector3 newPosition = transform.position + movement;
+                Vector3 newPositionVector = newPosition - transform.position;
+                newPositionVector.y = 0f;
+
+                var newRotation = Quaternion.LookRotation(newPositionVector, Vector3.up);
+                var interpolatedRotation = Quaternion.Slerp(newRotation, transform.rotation, Time.deltaTime * 30);
+
+                rigidbody_m.MovePosition(transform.position + movement);
+                rigidbody_m.MoveRotation(interpolatedRotation);
+            }
+
+            // Process jumping input
+            if (!jump.Equals(Vector3.zero))
+            {
+                if (rigidbody_m.velocity.y == 0)
+                {
+                    rigidbody_m.AddRelativeForce(Vector3.up * JUMPSPEED, ForceMode.Impulse);
+                }
             }
         }
-
-        /*if(Input.GetKeyDown("x") && talkFlag_m == true)     //display canvas that houses all NPC dialogue is displayed if
-        {                                                   //the player is in the tigger area (talkFlag_m is set to true) and
-            DIALOGUECANVAS.SetActive(true);                 //the player pushes "x" and wants to talk
-        }*/
     }
 
     // Update is called once per frame
@@ -180,11 +241,6 @@ public class PlayerController : MonoBehaviour // NetworkBehaviour
     // When object comes in contact with the player, add it to the list of nearby objects
     private void OnTriggerEnter(Collider other)
     {
-        /*if (other.gameObject.tag == "NPC")
-        {
-            talkFlag_m = true;
-        }*/
-
         // If other is not interactable, just forget it
         if (!other.GetComponent<InteractController>())
             return;
@@ -208,11 +264,7 @@ public class PlayerController : MonoBehaviour // NetworkBehaviour
 
     // When object leaves the proximity of the player, remove it from the list of nearby objects
     private void OnTriggerExit(Collider other)
-    {
-        /*if(other.gameObject.tag == "NPC")
-        talkFlag_m = false;
-        DIALOGUECANVAS.SetActive(false); */
-        
+    {      
         // Remove other, as it just moved out of range
         nearbyInteractableObjects_m.Remove(other);
 

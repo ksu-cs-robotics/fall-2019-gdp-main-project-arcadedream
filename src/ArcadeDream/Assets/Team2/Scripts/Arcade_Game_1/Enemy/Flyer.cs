@@ -24,4 +24,8 @@ public class Flyer : Enemy
     }
 
     protected override void Shoot() { }// This class does not have a weapon
+
+    // A rough idea of what we talked about with disabling the enemies till on screen
+    private void OnBecameVisible() { IsActive = true; }
+    private void OnBecameInvisible() { IsActive = false; }
 }

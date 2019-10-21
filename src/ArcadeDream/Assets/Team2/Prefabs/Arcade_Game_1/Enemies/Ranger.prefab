@@ -15,6 +15,8 @@ GameObject:
   - component: {fileID: 9172196019777271119}
   - component: {fileID: 4916058587745623834}
   - component: {fileID: 4313370635952540571}
+  - component: {fileID: 7292005762575626470}
+  - component: {fileID: 5262984625332173986}
   m_Layer: 0
   m_Name: Ranger
   m_TagString: Enemy
@@ -119,7 +121,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.4
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -219,6 +221,7 @@ MonoBehaviour:
   BULLETSPEED: 3
   PROJECTILE: {fileID: 6565133877976343921, guid: 3f321bc9967ced940b6a0bed3fb46606,
     type: 3}
+  IsActive: 0
   BEHAVIOURINTERVAL: 2
 --- !u!114 &4313370635952540571
 MonoBehaviour:
@@ -234,8 +237,64 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   STARTINGHEALTH: 1
   SCOREVALUE: 100
-  DEATHCLIP: {fileID: 0}
+  DEATHCLIP: {fileID: 8300000, guid: 981aaf0a9196f1e4194a79cc7257c814, type: 3}
   DEATHDURATION: 2
+  model: {fileID: 6262481655447937163}
+--- !u!114 &7292005762575626470
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2061046539266995993}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 372142912, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SceneId:
+    m_Value: 0
+  m_AssetId:
+    i0: 0
+    i1: 0
+    i2: 0
+    i3: 0
+    i4: 0
+    i5: 0
+    i6: 0
+    i7: 0
+    i8: 0
+    i9: 0
+    i10: 0
+    i11: 0
+    i12: 0
+    i13: 0
+    i14: 0
+    i15: 0
+  m_ServerOnly: 1
+  m_LocalPlayerAuthority: 0
+--- !u!114 &5262984625332173986
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2061046539266995993}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1768714887, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_TransformSyncMode: 0
+  m_SendInterval: 0.1
+  m_SyncRotationAxis: 7
+  m_RotationSyncCompression: 0
+  m_SyncSpin: 0
+  m_MovementTheshold: 0.001
+  m_VelocityThreshold: 0.0001
+  m_SnapThreshold: 5
+  m_InterpolateRotation: 1
+  m_InterpolateMovement: 1
 --- !u!1001 &6262481655449843947
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -261,19 +320,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 7bfe7e5c77e34d146973b01be66024e9, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.025865212
+      value: 0.47807825
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 7bfe7e5c77e34d146973b01be66024e9, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.034838602
+      value: 0.5210002
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 7bfe7e5c77e34d146973b01be66024e9, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.7066336
+      value: 0.5210002
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 7bfe7e5c77e34d146973b01be66024e9, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.706248
+      value: 0.47807822
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 7bfe7e5c77e34d146973b01be66024e9, type: 3}
       propertyPath: m_RootOrder
@@ -285,7 +344,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 7bfe7e5c77e34d146973b01be66024e9, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 0.72800004
+      value: 90
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 7bfe7e5c77e34d146973b01be66024e9, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
@@ -312,6 +371,12 @@ PrefabInstance:
 --- !u!4 &6262481655449707115 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400000, guid: 7bfe7e5c77e34d146973b01be66024e9,
+    type: 3}
+  m_PrefabInstance: {fileID: 6262481655449843947}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &6262481655447937163 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 2300000, guid: 7bfe7e5c77e34d146973b01be66024e9,
     type: 3}
   m_PrefabInstance: {fileID: 6262481655449843947}
   m_PrefabAsset: {fileID: 0}

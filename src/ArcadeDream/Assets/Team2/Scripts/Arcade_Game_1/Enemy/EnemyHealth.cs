@@ -22,10 +22,15 @@ public class EnemyHealth : MonoBehaviour
     private bool isDead_m;
     // The amount of health the enemy currently has.
     private int currentHealth_m;
-    // Reference to the animator.
-    private Animator animator_m;
-    // Reference to the audio source.
+
     private AudioSource audioSource_m;
+
+    /// <summary>
+    /// Added by team3 to allow for death sound effect while still destroying the model
+    /// </summary>
+    public MeshRenderer model;
+    private Collider hb;
+    
 
     void Awake()
     {
@@ -35,8 +40,8 @@ public class EnemyHealth : MonoBehaviour
         currentHealth_m = STARTINGHEALTH;
 
         // Get references.
-        animator_m = GetComponent<Animator>();
-        audioSource_m = GetComponent<AudioSource>(); 
+        audioSource_m = GetComponent<AudioSource>();
+        hb = GetComponent<Collider>();
     }
 
     public void TakeDamage()
@@ -45,8 +50,8 @@ public class EnemyHealth : MonoBehaviour
         if (isDead_m)
             return;
 
-        audioSource_m.Play();
-        currentHealth_m--;
+     //   audioSource_m.Play();
+          currentHealth_m--;
 
         if (currentHealth_m <= 0)
             Die();
@@ -55,11 +60,15 @@ public class EnemyHealth : MonoBehaviour
     void Die()
     {
         isDead_m = true;
-        // Trigger the death animation.
-        animator_m.SetTrigger("Dead");
+
         // Set the audio source to the death clip and play it.
         audioSource_m.clip = DEATHCLIP;
         audioSource_m.Play();
+
+        model.enabled = false;
+        hb.enabled = false;
+        this.enabled = false;
+        
         // Increase the player's score by the enemy's score value.
         // TODO: Implement score manager.
         // After the given amount of time, destroy the enemy object.

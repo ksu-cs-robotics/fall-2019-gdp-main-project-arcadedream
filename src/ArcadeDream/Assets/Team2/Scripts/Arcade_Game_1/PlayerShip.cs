@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
 /// <summary>
 /// Defines various predefined weapon property configurations
@@ -73,14 +74,14 @@ public static class PlayerWeapons
 /// Author: Josh Dotson, Lew Fortwangler
 /// Version: 3
 /// </summary>
-public class PlayerShip : MonoBehaviour
+public class PlayerShip : NetworkBehaviour
 {
     // Will store the player's username when multiplayer is a thing...
     public string PlayerUsername;
 
     [SerializeField] public float MOVEMENTSPEED = 1.0f;
     [SerializeField] public float BULLETSPEED = 5.0f;
-    [SerializeField] public GameObject BULLETPREFAB;
+    [SyncVar] public GameObject BULLETPREFAB;
     [SerializeField] public GameObject LASERPREFAB;
     [SerializeField] public GameObject HOMINGPREFAB;
 
@@ -129,13 +130,21 @@ public class PlayerShip : MonoBehaviour
     //Team 3 additons for audio
     public AudioClip Gun;
     public AudioClip laser;
+    public AudioClip destroyed;
+    public AudioClip loss;
     // Reference to the audio source.
     private AudioSource audioSource_m;
+
+
+    //Theme source and all related operations commented out as they don't work with current build
+   // public AudioSource themeSource;
+    
     /// /////////////////////////////////////////////////
     /// </summary>
     void Awake()
     {
         audioSource_m = GetComponent<AudioSource>();
+        audioSource_m.volume = .3f;
     }
 
     // Events that may be useful for others using this class such as Team 1 for UI elements
@@ -221,6 +230,7 @@ public class PlayerShip : MonoBehaviour
             if (hasTopGun_m == true)
             {
                 GameObject topBullet = Instantiate(BULLETPREFAB, topGun.transform.position + Vector3.right, transform.rotation);
+                NetworkServer.SpawnWithClientAuthority(topBullet, this.gameObject);
                 topBullet.transform.parent = gameObject.transform;
                 topBullet.GetComponent<Rigidbody>().velocity = Vector3.right * BULLETSPEED;
                 topBullet.GetComponent<Bullet>().Shooter = gameObject;
@@ -236,6 +246,7 @@ public class PlayerShip : MonoBehaviour
             //team3///////////////////////
             audioSource_m.clip = Gun;
             audioSource_m.Play();
+ 
             /////////////////////////////
         }
 
@@ -338,14 +349,9 @@ public class PlayerShip : MonoBehaviour
         {
             switch (other.gameObject.tag)
             {
-                case "Player":
-                {
-                    break;
-                }
-                case "Background":
-                {
-                    break;
-                }
+                case "Player": break;
+                case "Background": break;
+                case "Boundry": break;
                 case "LaserPowerup":
                 {
                     hasLaser_m = true;
@@ -385,12 +391,18 @@ public class PlayerShip : MonoBehaviour
                     // If the player did not just respawn...
                     if (!isInvulnerable_m)
                     {
+                        
                         hasLaser_m = false;
                         hasTopGun_m = false;
                         hasHomingLaser_m = false;
                         hasRapidFire_m = false;
                         topGun.SetActive(false);
                         --LIVES;
+
+                        //team3///////////////////////
+                        audioSource_m.clip = destroyed;
+                        audioSource_m.Play();
+                        /////////////////////////////
 
                         if (LIVES > 0)
                         {
@@ -400,7 +412,18 @@ public class PlayerShip : MonoBehaviour
                         {
                             isDead_m = true;
                             ScoreUnixTimestamp = ((DateTimeOffset)DateTime.UtcNow).ToUnixTimeSeconds();
+
+                            ///Team3///
+                            
+                                
+                            //themeSource.volume = .5f;
+                            //themeSource.clip = loss;
+                            //themeSource.Play();
+
+
                             gameObject.SetActive(false);
+
+                            
                         }
                     }
 

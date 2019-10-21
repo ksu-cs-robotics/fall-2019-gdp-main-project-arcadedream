@@ -44,9 +44,21 @@ public class ObstacleMovement : MonoBehaviour
     //destroy object if collides with the player, bullet, or laser
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "HomingLaser") Destroy(gameObject);
-        if (other.gameObject.tag == "Laser") Destroy(gameObject);
-        if (other.gameObject.tag == "Player") Destroy(gameObject);
-        if (other.gameObject.tag == "Bullet") Destroy(gameObject);
+        if (other.gameObject.tag == "HomingLaser" || other.gameObject.tag == "Player")
+        {
+            Destroy(gameObject);
+        } 
+        else if (other.gameObject.tag == "Bullet" && other.gameObject.GetComponent<Bullet>().Shooter.gameObject.tag != "Enemy")
+        {
+            Destroy(gameObject);
+        }
+        else if (other.gameObject.tag == "Laser" && other.gameObject.GetComponent<Laser>())
+        {
+            Destroy(gameObject);
+        }
+        else
+        {
+            return;
+        }
     }
 }
