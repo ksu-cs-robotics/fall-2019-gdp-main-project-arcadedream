@@ -26,4 +26,8 @@ public class Ranger : Enemy
     }
 
     protected override void Shoot() { }
+
+    // A rough idea of what we talked about with disabling the enemies till on screen
+    private void OnBecameVisible() { IsActive = true; }
+    private void OnBecameInvisible() { IsActive = false; }
 }
