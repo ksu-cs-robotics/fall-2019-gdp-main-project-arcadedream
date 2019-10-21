@@ -11,10 +11,12 @@ using UnityEngine.UI;
 public class StartScreen : MonoBehaviour
 {
     public GameObject startUI;
+    public GameObject gameplayUI;
 
     private void Start()
     {
         startUI.SetActive(true);
+        gameplayUI.SetActive(false);
     }
 
     private void Update()
@@ -22,6 +24,7 @@ public class StartScreen : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
             startUI.SetActive(false);
+            gameplayUI.SetActive(true);
 
             //
             // code to take away required amount of coins from player
