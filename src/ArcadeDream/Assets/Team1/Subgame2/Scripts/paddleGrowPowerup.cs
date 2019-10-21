@@ -20,7 +20,7 @@ public class paddleGrowPowerup : MonoBehaviour
 
     void OnCollisionEnter (Collision col){
         Vector3 scale = new Vector3(2,2, 1f);                                    
-        if(col.transform.gameObject.name == "PlayerPaddle")
+        if(col.gameObject.name == "PlayerPaddle")
         {
              paddleToGrow.gameObject.transform.localScale = scale;
         }

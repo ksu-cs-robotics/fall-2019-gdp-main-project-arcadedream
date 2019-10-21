@@ -137,7 +137,7 @@ public class PlayerPaddleMovement : MonoBehaviour
             
             
             Debug.Log("Player powerup Grow");
-            //Changes the color of the ball based on the last player to hit it last
+           
             Destroy(collision.gameObject);
         }
         if (collision.tag == "ShrinkPowerup")
@@ -149,7 +149,7 @@ public class PlayerPaddleMovement : MonoBehaviour
 
 
             Debug.Log("Player powerup Shrink");
-            //Changes the color of the ball based on the last player to hit it last
+          
             Destroy(collision.gameObject);
         }
         if (collision.tag == "powerup")
