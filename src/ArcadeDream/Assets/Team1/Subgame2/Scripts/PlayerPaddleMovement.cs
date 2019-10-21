@@ -8,7 +8,9 @@ public class PlayerPaddleMovement : MonoBehaviour
     [SerializeField] float rotationSpeed;
 
     string input;
-
+    bool waiting = false;
+    private IEnumerator coroutine;
+    private IEnumerator coroutine2; 
     [SerializeField] bool mouseControl;
 
     // Start is called before the first frame update
@@ -105,6 +107,7 @@ public class PlayerPaddleMovement : MonoBehaviour
             transform.Rotate(-Vector3.forward * rotationSpeed * Time.deltaTime); //rotate z axis
         }
 
+       
 
     }
 
@@ -126,8 +129,9 @@ public class PlayerPaddleMovement : MonoBehaviour
            
                 Vector3 scale = new Vector3(.5f, 2, 1f);
                 transform.localScale = scale;
-           
-            
+
+                coroutine2 = WaitandScale2(3f);
+                StartCoroutine(coroutine2);
             
             Debug.Log("Player powerup Grow");
            
@@ -136,15 +140,20 @@ public class PlayerPaddleMovement : MonoBehaviour
         if (collision.tag == "ShrinkPowerup")
         {
             Vector3 scale = new Vector3(.25f, 1, 1f);
+            Vector3 scale2 = new Vector3(.5f, 1.5f, 1f);
             GameObject[] paddles;
             paddles = GameObject.FindGameObjectsWithTag("Player");
             foreach (GameObject paddler in paddles)
             {
                 paddler.transform.localScale = scale;
+
+                coroutine = WaitandScale(3f);
+                StartCoroutine(coroutine);
+
             }
             
 
-            Vector3 scale2 = new Vector3(.5f, 1.5f, 1f);
+           
             transform.localScale = scale2;
 
 
@@ -160,5 +169,29 @@ public class PlayerPaddleMovement : MonoBehaviour
         }
 
     }
+    IEnumerator WaitandScale2(float waitTime)
+    {
+        yield return new WaitForSeconds(waitTime);
+        Vector3 scale2 = new Vector3(.5f, 1.5f, 1f);
+        transform.localScale = scale2;
+    }
+    
+     IEnumerator WaitandScale(float waitTime)
+    {
+      //  waiting = true;
+        yield return new WaitForSeconds(waitTime);
 
+        Vector3 scale2 = new Vector3(.5f, 1.5f, 1f);
+        GameObject[] paddles;
+        paddles = GameObject.FindGameObjectsWithTag("Player");
+        foreach (GameObject paddler in paddles)
+        {
+            // paddler.transform.localScale = scale;
+
+            paddler.transform.localScale = scale2;
+
+        }
+      //  waiting = false;
+
+    }
 }
