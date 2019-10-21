@@ -21,7 +21,7 @@ if (!$result) {
 }
 if ($result->num_rows > 0) {
 	while($row = $result->fetch_assoc()) {
-		if (password_verify('hi', $row["UserPassword"])) echo "Login Successful";
+		if (password_verify($loginPassword, $row["UserPassword"])) echo "Login Successful";
 		else echo "Wrong Password";
 	}
 }
