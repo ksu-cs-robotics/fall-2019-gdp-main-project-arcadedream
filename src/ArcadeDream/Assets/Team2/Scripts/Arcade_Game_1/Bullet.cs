@@ -9,22 +9,25 @@ public class Bullet : NetworkBehaviour
     public GameObject Shooter { get; set; }
     private bool isOnScreen_m = false;
 
-    private void Start()
-    {
-        Shooter = gameObject.transform.parent.gameObject;
-    }
-
     private void OnTriggerEnter(Collider other)
     {
-        if (Shooter.gameObject.tag == other.gameObject.tag)
+        if (!isServer || other == null || Shooter.gameObject.tag == other.gameObject.tag)
+        {
+            if (Shooter == null)
+            {
+                Debug.Log("Null");
+            }
             return;
+        }
 
         switch (other.gameObject.tag)
         {
             case "Player" :
                 {
                     // other.gameObject.GetComponent<PlayerShip>().HEALTH 
-                    Destroy(gameObject);
+                   
+                    NetworkServer.Destroy(gameObject);
+                
                     break;
                 }
             case "Enemy":
@@ -40,27 +43,27 @@ public class Bullet : NetworkBehaviour
             case "PowerupObstacle":
                 {
                     // other.gameObject.GetComponent<Obstacle>().HEALTH 
-                    Destroy(gameObject);
+                    NetworkServer.Destroy(gameObject);
                     break;
                 }
             case "1upPowerup":
                 {
-                    Destroy(gameObject);
+                    NetworkServer.Destroy(gameObject);
                     break;
                 }
             case "LaserPowerup":
                 {
-                    Destroy(gameObject);
+                    NetworkServer.Destroy(gameObject);
                     break;
                 }
             case "RapidFirePowerup":
                 {
-                    Destroy(gameObject);
+                    NetworkServer.Destroy(gameObject);
                     break;
                 }
             case "TopGunPowerup":
                 {
-                    Destroy(gameObject);
+                    NetworkServer.Destroy(gameObject);
                     break;
                 }
             default:
@@ -82,7 +85,7 @@ public class Bullet : NetworkBehaviour
     {
         if (isOnScreen_m == true)
         {
-            Destroy(gameObject);
+            NetworkServer.Destroy(gameObject);
             isOnScreen_m = false;
         }
     }

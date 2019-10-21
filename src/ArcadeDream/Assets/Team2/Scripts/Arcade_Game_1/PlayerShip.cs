@@ -87,7 +87,7 @@ public class PlayerShip : NetworkBehaviour
 
     // These are serialized for debugging purposes
     [SerializeField] public double HEALTH = 100.0f;
-    [SerializeField] public int LIVES = 3;
+    [SerializeField] [SyncVar] public int LIVES = 3;
 
     private bool isInvulnerable_m;
     private bool isDead_m;
@@ -99,7 +99,7 @@ public class PlayerShip : NetworkBehaviour
 
     protected Rigidbody rigidbody_m;
     protected Weapon primaryWeapon_m;
-    protected float weaponTimer_m;
+    [SyncVar] protected float weaponTimer_m;
 
     //whether or not the user can fire powerups
 
@@ -201,10 +201,13 @@ public class PlayerShip : NetworkBehaviour
             primaryWeapon_m = PlayerWeapons.IncreasedFireRate;
 
 
-        weaponTimer_m += Time.deltaTime;
+        if (isServer)
+        {
+            weaponTimer_m += Time.deltaTime;
+        }
         if ((!Input.GetAxis("Fire1").Equals(0)) && ((1.0 / primaryWeapon_m.FireRate) <= weaponTimer_m) && isLocalPlayer)
         {
-            CmdAttack(weaponTimer_m);
+            CmdAttack();
         }
     }
     void FixedUpdate()
@@ -229,12 +232,9 @@ public class PlayerShip : NetworkBehaviour
         }
     }
     [Command]
-    void CmdAttack(float weaponTime)
+    void CmdAttack()
     {
-        weaponTimer_m = weaponTime;
         //shooting the default weapon
-            
-        Debug.Log("Fire Weapons");
         if (hasTopGun_m == true)
         {
             GameObject topBullet = Instantiate(BULLETPREFAB, topGun.transform.position + Vector3.right, transform.rotation);
@@ -354,6 +354,10 @@ public class PlayerShip : NetworkBehaviour
         // if it is an enemy object ie tagged enemy, destory the player object and decrement the lives
         // TookDamage.Invoke();
         // if it is a powerup, delete it, and apply the effects
+        if (!isServer)
+        {
+            return;
+        }
 
         if (other.gameObject.tag != gameObject.tag)
         {
@@ -419,7 +423,7 @@ public class PlayerShip : NetworkBehaviour
                         audioSource_m.Play();
                         /////////////////////////////
 
-                            if (LIVES > 0)
+                        if (LIVES > 0)
                         {
                             StartCoroutine(Respawn());
                         }

@@ -284,7 +284,7 @@ MonoBehaviour:
   STARTINGHEALTH: 1
   SCOREVALUE: 100
   DEATHCLIP: {fileID: 8300000, guid: 981aaf0a9196f1e4194a79cc7257c814, type: 3}
-  DEATHDURATION: 2
+  DEATHDURATION: 0
   model: {fileID: 3314664474138321489}
 --- !u!23 &7806179187589105731
 MeshRenderer:
@@ -354,7 +354,7 @@ MonoBehaviour:
     i13: 0
     i14: 0
     i15: 0
-  m_ServerOnly: 1
+  m_ServerOnly: 0
   m_LocalPlayerAuthority: 0
 --- !u!114 &8456944037856958613
 MonoBehaviour:
@@ -368,7 +368,7 @@ MonoBehaviour:
   m_Script: {fileID: -1768714887, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_TransformSyncMode: 0
+  m_TransformSyncMode: 1
   m_SendInterval: 0.1
   m_SyncRotationAxis: 7
   m_RotationSyncCompression: 0
@@ -472,6 +472,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: RealAssualter
       objectReference: {fileID: 0}
+    - target: {fileID: 2300000, guid: 54c9f46022305d341ada37395cd9c987, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 8dfbd50cca776c14caac2c55e7594178, type: 2}
     - target: {fileID: 400000, guid: 54c9f46022305d341ada37395cd9c987, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.060874715
@@ -528,10 +532,6 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 20
       objectReference: {fileID: 0}
-    - target: {fileID: 2300000, guid: 54c9f46022305d341ada37395cd9c987, type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: 8dfbd50cca776c14caac2c55e7594178, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 54c9f46022305d341ada37395cd9c987, type: 3}
 --- !u!4 &3314664474140090545 stripped

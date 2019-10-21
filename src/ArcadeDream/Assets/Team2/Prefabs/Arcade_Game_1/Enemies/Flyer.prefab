@@ -236,7 +236,7 @@ MonoBehaviour:
   STARTINGHEALTH: 1
   SCOREVALUE: 100
   DEATHCLIP: {fileID: 8300000, guid: ff9291f22d1e22c41b2b12ab25d07bb3, type: 3}
-  DEATHDURATION: 2
+  DEATHDURATION: 0
   model: {fileID: 4556600194864097735}
 --- !u!114 &6271164807012897852
 MonoBehaviour:
@@ -269,7 +269,7 @@ MonoBehaviour:
     i13: 0
     i14: 0
     i15: 0
-  m_ServerOnly: 1
+  m_ServerOnly: 0
   m_LocalPlayerAuthority: 0
 --- !u!114 &171344016090605644
 MonoBehaviour:
@@ -300,14 +300,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7294079060924277105}
     m_Modifications:
-    - target: {fileID: 100000, guid: b53bbca647f0ca148bd4bc56ded66eb8, type: 3}
-      propertyPath: m_Name
-      value: FlyerV1
-      objectReference: {fileID: 0}
     - target: {fileID: 2300000, guid: b53bbca647f0ca148bd4bc56ded66eb8, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: e0b2d2faf17e12a4e8cc545c35560fcf, type: 2}
+    - target: {fileID: 100000, guid: b53bbca647f0ca148bd4bc56ded66eb8, type: 3}
+      propertyPath: m_Name
+      value: FlyerV1
+      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: b53bbca647f0ca148bd4bc56ded66eb8, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.31920344

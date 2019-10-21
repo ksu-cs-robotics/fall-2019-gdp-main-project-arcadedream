@@ -414,7 +414,7 @@ MonoBehaviour:
   STARTINGHEALTH: 400
   SCOREVALUE: 100
   DEATHCLIP: {fileID: 8300000, guid: a47a0a585d65e46438a4f7b27544537f, type: 3}
-  DEATHDURATION: 2
+  DEATHDURATION: 0
   model: {fileID: 3106375077697526562}
 --- !u!65 &8159544782553597904
 BoxCollider:
@@ -460,7 +460,7 @@ MonoBehaviour:
     i13: 0
     i14: 0
     i15: 0
-  m_ServerOnly: 1
+  m_ServerOnly: 0
   m_LocalPlayerAuthority: 0
 --- !u!114 &7657238422531281185
 MonoBehaviour:
@@ -474,7 +474,7 @@ MonoBehaviour:
   m_Script: {fileID: -1768714887, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_TransformSyncMode: 0
+  m_TransformSyncMode: 1
   m_SendInterval: 0.1
   m_SyncRotationAxis: 7
   m_RotationSyncCompression: 0
@@ -934,6 +934,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: CrabFinal
       objectReference: {fileID: 0}
+    - target: {fileID: 2300010, guid: 50a66810ac6a7604cae5496d88ef1e68, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: a0bc09aafe1d70846add1114b6525dfa, type: 2}
     - target: {fileID: 400000, guid: 50a66810ac6a7604cae5496d88ef1e68, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -994,10 +998,6 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 60ee8ae8788fd8f46ad9fb87cd9604c8, type: 2}
-    - target: {fileID: 2300010, guid: 50a66810ac6a7604cae5496d88ef1e68, type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: a0bc09aafe1d70846add1114b6525dfa, type: 2}
     - target: {fileID: 2300000, guid: 50a66810ac6a7604cae5496d88ef1e68, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 

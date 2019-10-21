@@ -238,7 +238,7 @@ MonoBehaviour:
   STARTINGHEALTH: 1
   SCOREVALUE: 100
   DEATHCLIP: {fileID: 8300000, guid: 981aaf0a9196f1e4194a79cc7257c814, type: 3}
-  DEATHDURATION: 2
+  DEATHDURATION: 0
   model: {fileID: 6262481655447937163}
 --- !u!114 &7292005762575626470
 MonoBehaviour:
@@ -271,7 +271,7 @@ MonoBehaviour:
     i13: 0
     i14: 0
     i15: 0
-  m_ServerOnly: 1
+  m_ServerOnly: 0
   m_LocalPlayerAuthority: 0
 --- !u!114 &5262984625332173986
 MonoBehaviour:
@@ -285,7 +285,7 @@ MonoBehaviour:
   m_Script: {fileID: -1768714887, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_TransformSyncMode: 0
+  m_TransformSyncMode: 1
   m_SendInterval: 0.1
   m_SyncRotationAxis: 7
   m_RotationSyncCompression: 0
@@ -306,6 +306,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: RangerV1
       objectReference: {fileID: 0}
+    - target: {fileID: 2300000, guid: 7bfe7e5c77e34d146973b01be66024e9, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 8a970202bfd6c1e40a417385a666194c, type: 2}
     - target: {fileID: 400000, guid: 7bfe7e5c77e34d146973b01be66024e9, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.022967745
@@ -362,10 +366,6 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 20
       objectReference: {fileID: 0}
-    - target: {fileID: 2300000, guid: 7bfe7e5c77e34d146973b01be66024e9, type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: 8a970202bfd6c1e40a417385a666194c, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7bfe7e5c77e34d146973b01be66024e9, type: 3}
 --- !u!4 &6262481655449707115 stripped

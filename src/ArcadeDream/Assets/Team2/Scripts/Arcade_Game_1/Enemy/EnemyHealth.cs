@@ -16,7 +16,7 @@ public class EnemyHealth : NetworkBehaviour
     //The sound to play when the enemy dies.
     public AudioClip DEATHCLIP;
     // Amount of time before enemy object is destroyed.
-    public float DEATHDURATION = 2f;
+    public float DEATHDURATION = 0f;
 
     // Whether the enemy is dead.
     private bool isDead_m;
@@ -68,10 +68,11 @@ public class EnemyHealth : NetworkBehaviour
         model.enabled = false;
         hb.enabled = false;
         this.enabled = false;
-        
+
         // Increase the player's score by the enemy's score value.
         // TODO: Implement score manager.
         // After the given amount of time, destroy the enemy object.
-        Destroy(gameObject, DEATHDURATION);
+        NetworkServer.Destroy(gameObject);
+        
     }
 }
