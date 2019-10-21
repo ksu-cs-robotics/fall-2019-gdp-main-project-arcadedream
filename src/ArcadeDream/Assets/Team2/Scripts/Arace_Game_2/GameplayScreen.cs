@@ -40,6 +40,8 @@ public class GameplayScreen : MonoBehaviour
 
         if (secondsLeft_m == 60)
             countdownSec.text = "\n00";
+        else if (secondsLeft_m < 10)
+            countdownSec.text = "\n0" + secondsLeft_m;
         else
             countdownSec.text = "\n" + secondsLeft_m;
 
@@ -56,7 +58,7 @@ public class GameplayScreen : MonoBehaviour
 
     IEnumerator Countdown()
     {
-        while (secondsLeft_m != 0 && minutesLeft_m != 0)
+        while (secondsLeft_m != 0 || minutesLeft_m != 0)
         {
             yield return new WaitForSeconds(1);
             if (secondsLeft_m == 60)

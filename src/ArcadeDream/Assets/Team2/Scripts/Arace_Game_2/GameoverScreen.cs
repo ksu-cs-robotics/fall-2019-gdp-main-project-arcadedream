@@ -20,10 +20,11 @@ public class GameoverScreen : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (gameoverUI.activeInHierarchy == true && Input.GetKeyDown(KeyCode.Escape))
         {
             //Change scene back to main arade
         }
+
         if(gameoverUI.activeInHierarchy == true)
         {
             setValues();
