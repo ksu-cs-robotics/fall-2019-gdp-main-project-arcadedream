@@ -19,7 +19,7 @@ public class PongGameManager : MonoBehaviour
     [HideInInspector]public int powerupChosen;
     [HideInInspector]public int spawnPointChosen;
 
-    public int numberOfPlayers = 0;
+    public int numberOfPlayers = 0; // 2 or 4
     bool spawned = false;
 
     public static Vector2 bottomLeft; //Screen points that are the edges of the game play area
@@ -65,29 +65,6 @@ public class PongGameManager : MonoBehaviour
         InvokeRepeating("SpawnPowerUp", spawnPowerups, spawnPowerups); // Starting in (spawnPowerups) seconds.
                                                                 // a powerup will be spawned every (spawnPowerup) seconds
 
-        /*
-        PlayerPaddleMovement player1paddle = Instantiate(playerPaddle) as PlayerPaddleMovement;
-        PlayerPaddleMovement player2paddle = Instantiate(playerPaddle) as PlayerPaddleMovement;
-        player1paddle.Init(1);
-        player2paddle.Init(2);
-        GoalieMovement player1goalie = Instantiate(goalie) as GoalieMovement;
-        GoalieMovement player2goalie = Instantiate(goalie) as GoalieMovement;
-        player1goalie.Init(1);
-        player2goalie.Init(2);
-        goals[0].SetActive(true);
-        goals[1].SetActive(true);
-  
-        PlayerPaddleMovement player3paddle = Instantiate(playerPaddle) as PlayerPaddleMovement;
-        PlayerPaddleMovement player4paddle = Instantiate(playerPaddle) as PlayerPaddleMovement;
-        player3paddle.Init(3);
-        player4paddle.Init(4);
-        GoalieMovement player3goalie = Instantiate(goalie) as GoalieMovement;
-        GoalieMovement player4goalie = Instantiate(goalie) as GoalieMovement;
-        player3goalie.Init(3);
-        player4goalie.Init(4);
-        goals[2].SetActive(true);
-        goals[3].SetActive(true);
-        */
     }
 
     void Update()

@@ -10,13 +10,25 @@ public class PlayerPaddleMovement : MonoBehaviour
     string input;
     bool waiting = false;
     private IEnumerator coroutine;
-    private IEnumerator coroutine2; 
+    private IEnumerator coroutine2;
+    public int speedtime;
     [SerializeField] bool mouseControl;
+
+    public int count;
+    public int counter;
+    public bool checker;
+
+    public bool slow;
+    public bool fast;
 
     // Start is called before the first frame update
     //Initialization
     void Start()
     {
+        checker = true;
+        slow = false;
+        fast = false;
+        counter = 0;
     }
 
     //Initializes each player paddle based on the player number 1-4 
@@ -48,7 +60,7 @@ public class PlayerPaddleMovement : MonoBehaviour
                 input = "Player3Paddle";
                 //Assign Color 
                 gameObject.GetComponent<SpriteRenderer>().color = Color.green;
-                
+
                 break;
             case 4:
                 // Init player 4 (Yellow)
@@ -73,43 +85,31 @@ public class PlayerPaddleMovement : MonoBehaviour
     // Update is called once per fixed frame
     void Update()
     {
-        /*
-        //Moving the PlayerPaddle
-        float move = Input.GetAxis(input) * Time.deltaTime * speed; 
-
-
-        //Restrict the movement of the player paddle to stay in game area
-        //If playerpaddle out of LOWER bound of game area 
-        if (transform.position.y < PongGameManager.bottomLeft.y + (height + 0.3f) / 2 && move < 0)
-        {
-            move = 0;
-        }
-        //If playerpaddle out of HIGHER bound of game area 
-        if (transform.position.y > PongGameManager.topRight.y - (height + 0.3f) / 2 && move > 0)
-        {
-            move = 0;
-        }
-
-                if (mouseControl == false) //don't update position based on keys if mouse controls
-        {          
-            //Update the movement
-            transform.Translate(move * Vector2.up);
-        }
-
-        */
         //mouse scroll changes rotation
-        if (Input.GetAxis("Mouse ScrollWheel") > 0) //scroll up
+        if (checker)
         {
-            transform.Rotate(Vector3.forward * rotationSpeed * Time.deltaTime); //rotate z axis
+            if (Input.GetAxis("Mouse ScrollWheel") > 0) //scroll up
+            {
+                transform.Rotate(Vector3.forward * rotationSpeed * Time.deltaTime); //rotate z axis
+            }
+            if (Input.GetAxis("Mouse ScrollWheel") < 0) //scroll down
+            {
+                transform.Rotate(-Vector3.forward * rotationSpeed * Time.deltaTime); //rotate z axis
+            }
         }
-        if (Input.GetAxis("Mouse ScrollWheel") < 0) //scroll down
+        else
         {
-            transform.Rotate(-Vector3.forward * rotationSpeed * Time.deltaTime); //rotate z axis
+            counter++;
+            if (counter == 300)
+            {
+                checker = true;
+                counter = 0;
+            }
         }
 
-       
 
     }
+
 
 
     //For mouse movement
@@ -117,10 +117,50 @@ public class PlayerPaddleMovement : MonoBehaviour
     {
         Vector2 pos_move = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y));
         Vector2 lerped = new Vector2(pos_move.x, pos_move.y);
-        transform.position = Vector2.Lerp(pos_move, lerped, Time.deltaTime * 3);
+        if (fast)
+        {
+            if (speedtime != 500)
+            {
+                speedtime++;
+                transform.position = Vector2.Lerp(pos_move, lerped, Time.deltaTime * 3);
+            }
+            if (speedtime == 500)
+            {
+                speedtime = 0;
+                fast = false;
+            }
+        }
 
+        if (slow)
+        {
+            if (speedtime != 500)
+            {
+                speedtime++;
+                count++;
+                if (count == 20)
+                {
+                    transform.position = Vector2.Lerp(pos_move, lerped, Time.deltaTime * 3);
+                    count = 0;
+                }
+            }
+            if (speedtime == 500)
+            {
+                speedtime = 0;
+                slow = false;
+            }
+        }
 
+        if (!fast && !slow)
+        {
+            count++;
+            if (count == 10)
+            {
+                transform.position = Vector2.Lerp(pos_move, lerped, Time.deltaTime * 3);
+                count = 0;
+            }
+        }
     }
+
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
