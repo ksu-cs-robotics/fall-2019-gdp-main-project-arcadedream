@@ -11,7 +11,7 @@ using UnityEngine.Networking;
 public class EnemyController : NetworkBehaviour
 {
     // The enemy prefab to be spawned.
-    [SyncVar]public GameObject ENEMYPREFAB;
+    [SyncVar] public GameObject ENEMYPREFAB;
 
     // The spawn point of this enemy.
     private Transform position_m;
