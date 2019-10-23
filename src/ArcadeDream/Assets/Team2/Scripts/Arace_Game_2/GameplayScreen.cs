@@ -19,8 +19,8 @@ public class GameplayScreen : MonoBehaviour
     public Text countdownMin;
     public Text countdownSec;
 
-    private int minutesLeft_m = 2;
-    private int secondsLeft_m = 60;
+    private int minutesLeft_m = 0;
+    private int secondsLeft_m = 5;
 
     private void Start()
     {
