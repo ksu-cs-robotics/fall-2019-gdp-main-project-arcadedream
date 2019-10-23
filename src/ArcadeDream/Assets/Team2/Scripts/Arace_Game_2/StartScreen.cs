@@ -12,6 +12,9 @@ public class StartScreen : MonoBehaviour
 {
     public GameObject startUI;
     public GameObject gameplayUI;
+    public GameObject controlsUI;
+
+    private bool displayed_m = false;
 
     private void Start()
     {
@@ -29,6 +32,17 @@ public class StartScreen : MonoBehaviour
             //
             // code to take away required amount of coins from player
             //
+        }
+
+        if(Input.GetKeyDown("c") && displayed_m == false)
+        {
+            displayed_m = true;
+            controlsUI.SetActive(true);
+        }
+        else if(Input.GetKeyDown("c") && displayed_m == true)
+        {
+            displayed_m = false;
+            controlsUI.SetActive(false);
         }
     }
 }
