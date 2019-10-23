@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
 /// <summary>
 /// Responsible for scrolling background and spawning obstacles
@@ -9,18 +10,21 @@ using UnityEngine;
 /// Version: 1
 /// </summary>
 
-public class EnvironmentController : MonoBehaviour
+public class EnvironmentController : NetworkBehaviour
 {
     private float timer_m = 3;
     private float x_m, y_m, z_m;
     private Vector3 spawnPoint_m;
     private Vector3 position_m;
 
-    public GameObject POWERUPOBSTACLE_PREFAB;
+    [SyncVar] public GameObject POWERUPOBSTACLE_PREFAB;
 
     private void Start()
     {
-        StartCoroutine(SpawnRoutine());
+        if (isServer)
+        {
+            StartCoroutine(SpawnRoutine());
+        }
     }
     
     //spawns obstacles once every 3 seconds, can adjust spawn rate as necessary
@@ -30,6 +34,7 @@ public class EnvironmentController : MonoBehaviour
         spawnPoint_m = getSpawnVector();
         //randomly select which obstacle is going to spawn in future versions, for now just "PowerupObstacle"
         GameObject PowerupObstacle = Instantiate(POWERUPOBSTACLE_PREFAB, spawnPoint_m, transform.rotation);
+        NetworkServer.Spawn(PowerupObstacle);
         StartCoroutine(SpawnRoutine());
     }
 

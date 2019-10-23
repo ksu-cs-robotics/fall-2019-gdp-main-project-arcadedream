@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
 /// <summary>
 /// Movement for obstacle, destruction requirements
@@ -36,7 +37,7 @@ public class ObstacleMovement : MonoBehaviour
     {
         if(isOnScreen_m == true)
         {
-            Destroy(gameObject);
+            NetworkServer.Destroy(gameObject);
             isOnScreen_m = false;
         }
     }
@@ -44,9 +45,9 @@ public class ObstacleMovement : MonoBehaviour
     //destroy object if collides with the player, bullet, or laser
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "HomingLaser") Destroy(gameObject);
-        if (other.gameObject.tag == "Laser") Destroy(gameObject);
-        if (other.gameObject.tag == "Player") Destroy(gameObject);
-        if (other.gameObject.tag == "Bullet") Destroy(gameObject);
+        if (other.gameObject.tag == "HomingLaser") NetworkServer.Destroy(gameObject);
+        if (other.gameObject.tag == "Laser") NetworkServer.Destroy(gameObject);
+        if (other.gameObject.tag == "Player") NetworkServer.Destroy(gameObject);
+        if (other.gameObject.tag == "Bullet") NetworkServer.Destroy(gameObject);
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
 /// <summary>
 /// when an obstacle housing a powerup is destroyed, 
@@ -18,11 +19,12 @@ public class PowerupSpawn : MonoBehaviour
         if (other.gameObject.tag == "Player" ||
             other.gameObject.tag == "Bullet" ||
             other.gameObject.tag == "Laser" ||
-            other.gameObject.tag == "HomingLaser") ;
+            other.gameObject.tag == "HomingLaser")
         {
             GameObject chosenPowerup = Instantiate(powerupArray[Random.Range(0, powerupArray.Length)],
                                        this.transform.position,
                                        transform.rotation);
+            NetworkServer.Spawn(chosenPowerup);
         }
     }
 }
