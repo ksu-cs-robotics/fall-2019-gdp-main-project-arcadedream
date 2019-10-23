@@ -9,7 +9,7 @@ public class GoalieMovement : MonoBehaviour
     public int leftlimit;
     public int rightlimit;
     string input;
-
+    public int count;
 
 
     // Start is called before the first frame update
@@ -17,7 +17,7 @@ public class GoalieMovement : MonoBehaviour
     {
         int leftlimit = 0;
         int rightlimit = 0;
-
+        int count = 0;
 
     }
 
@@ -42,6 +42,42 @@ public class GoalieMovement : MonoBehaviour
             leftlimit--;
             rightlimit++;
         }
+
+        if(leftlimit==1 && rightlimit == 1)
+        {
+            count++;
+        }
+
+        if (count == 200)
+        {
+            if (this.gameObject.tag == "goalieb")
+            {
+                leftlimit = GoalieStopper.holdbl;
+                rightlimit = GoalieStopper.holdbr;
+                count = 0;
+            }
+
+            if (this.gameObject.tag == "goalieg")
+            {
+                leftlimit = GoalieStopper.holdgl;
+                rightlimit = GoalieStopper.holdgr;
+                count = 0;
+            }
+
+            if (this.gameObject.tag == "goaliey")
+            {
+                leftlimit = GoalieStopper.holdyl;
+                rightlimit = GoalieStopper.holdyr;
+                count = 0;
+            }
+
+            if (this.gameObject.tag == "Goalie")
+            {
+                leftlimit = GoalieStopper.holdrl;
+                rightlimit = GoalieStopper.holdrr;
+                count = 0;
+            }
+        }
     }
 
 
@@ -61,6 +97,7 @@ public class GoalieMovement : MonoBehaviour
                 gameObject.GetComponent<SpriteRenderer>().color = Color.red;
                 //Assign Name
                 input = "Player1Goalie";
+                gameObject.tag = "Goalie";
                 break;
             case 2:     // init player 2 (blue)
                 // Init pos
@@ -71,6 +108,7 @@ public class GoalieMovement : MonoBehaviour
                 gameObject.GetComponent<SpriteRenderer>().color = Color.blue;
                 //Assign Name
                 input = "Player2Goalie";
+                gameObject.tag = "goalieb";
                 break;
             case 3:     // init player 3 (green)
                 // Init pos
@@ -81,6 +119,7 @@ public class GoalieMovement : MonoBehaviour
                 gameObject.GetComponent<SpriteRenderer>().color = Color.green;
                 //Assign Name
                 input = "Player3Goalie";
+                gameObject.tag = "goalieg";
                 break;
             case 4:     // init player 4 (yellow)
                 // Init pos
@@ -91,6 +130,7 @@ public class GoalieMovement : MonoBehaviour
                 gameObject.GetComponent<SpriteRenderer>().color = Color.yellow;
                 //Assign Name
                 input = "Player4Goalie";
+                gameObject.tag = "goaliey";
                 break;
             default:
                 Debug.Log("Failed to initialize player goalie. Player " + goalieNumber + " Out of range");
@@ -103,5 +143,6 @@ public class GoalieMovement : MonoBehaviour
         transform.position = pos;
         transform.Rotate(rot);
     }
+
 }
 
