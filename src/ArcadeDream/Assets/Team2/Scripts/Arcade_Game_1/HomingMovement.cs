@@ -11,7 +11,7 @@ using UnityEngine;
 public class HomingMovement : MonoBehaviour
 {
     public GameObject Shooter { get; set; }
-    private float laserSpeed_m = 1.0f;
+    private float laserSpeed_m = 10.0f;
 
     private void Start()
     {

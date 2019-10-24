@@ -49,7 +49,7 @@ public class Cancer : Enemy
         }
 
         // Move the boss into position, then do its normal behavior
-        if (gameObject.transform.position.x > 0)
+        if (gameObject.transform.position.x > 6)
         {
             transform.Translate(Vector3.back * Time.deltaTime); // Vector3.MoveTowards(transform.position, destination_m, SPEED * Time.deltaTime);
         }
