@@ -15,6 +15,7 @@ public class Register : MonoBehaviour
     private string username_m;
     private string password_m;
     private string confirmPass_m;
+    private DatabaseManager DatabaseManager;
 
     void Start()
     {
@@ -62,7 +63,7 @@ public class Register : MonoBehaviour
         form.AddField("loginUser", username);
         form.AddField("loginPassword", password);
 
-        using (UnityWebRequest www = UnityWebRequest.Post("http://localhost/Unity/DBregister.php", form))
+        using (UnityWebRequest www = UnityWebRequest.Post("http://131.123.42.251/Unity/DBregister.php", form))
         {
             yield return www.SendWebRequest();
 

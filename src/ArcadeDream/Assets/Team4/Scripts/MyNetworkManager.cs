@@ -17,6 +17,11 @@ public class MyNetworkManager : NetworkManager
         base.OnServerConnect(conn);
     }
 
+    public new void StartHost()
+    {
+        base.StartHost();
+
+    }
 
     public new void StartServer()
     {
