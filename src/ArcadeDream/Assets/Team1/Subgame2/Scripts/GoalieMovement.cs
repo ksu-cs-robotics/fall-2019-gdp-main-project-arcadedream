@@ -9,16 +9,16 @@ public class GoalieMovement : MonoBehaviour
     public int leftlimit;
     public int rightlimit;
     string input;
+    public bool able;
+
     public int count;
-
-
     // Start is called before the first frame update
     void Start()
     {
-        int leftlimit = 0;
-        int rightlimit = 0;
-        int count = 0;
-
+        leftlimit = 0;
+        rightlimit = 0;
+        able = true;
+        count = 0;
     }
 
     // Update is called once per frame
@@ -29,55 +29,33 @@ public class GoalieMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (Input.GetKeyDown(KeyCode.A) && leftlimit != 1)
+        if (able)
         {
-            this.gameObject.transform.Translate(-1, 0, 0);
-            leftlimit++;
-            rightlimit--;
+            if (Input.GetKeyDown(KeyCode.A) && leftlimit != 1)
+            {
+                this.gameObject.transform.Translate(-1, 0, 0);
+                leftlimit++;
+                rightlimit--;
+            }
+
+            if (Input.GetKeyDown(KeyCode.D) && rightlimit != 1)
+            {
+                this.gameObject.transform.Translate(1, 0, 0);
+                leftlimit--;
+                rightlimit++;
+            }
         }
 
-        if (Input.GetKeyDown(KeyCode.D) && rightlimit != 1)
-        {
-            this.gameObject.transform.Translate(1, 0, 0);
-            leftlimit--;
-            rightlimit++;
-        }
-
-        if(leftlimit==1 && rightlimit == 1)
+        else
         {
             count++;
-        }
-
-        if (count == 200)
-        {
-            if (this.gameObject.tag == "goalieb")
+            if (count == 200)
             {
-                leftlimit = GoalieStopper.holdbl;
-                rightlimit = GoalieStopper.holdbr;
-                count = 0;
-            }
-
-            if (this.gameObject.tag == "goalieg")
-            {
-                leftlimit = GoalieStopper.holdgl;
-                rightlimit = GoalieStopper.holdgr;
-                count = 0;
-            }
-
-            if (this.gameObject.tag == "goaliey")
-            {
-                leftlimit = GoalieStopper.holdyl;
-                rightlimit = GoalieStopper.holdyr;
-                count = 0;
-            }
-
-            if (this.gameObject.tag == "Goalie")
-            {
-                leftlimit = GoalieStopper.holdrl;
-                rightlimit = GoalieStopper.holdrr;
-                count = 0;
+                able = true;
             }
         }
+
+      
     }
 
 
@@ -125,7 +103,7 @@ public class GoalieMovement : MonoBehaviour
                 // Init pos
                 pos = new Vector2(PongGameManager.YellowSpawn.x, PongGameManager.YellowSpawn.y);
                 // Init rotation
-                rot = new Vector3(0f, 0f, 45315f);
+                rot = new Vector3(0f, 0f, 495f);
                 //Init Color
                 gameObject.GetComponent<SpriteRenderer>().color = Color.yellow;
                 //Assign Name
