@@ -6,9 +6,12 @@ using UnityEngine.UI;
 
 public class HighscoreTable : MonoBehaviour {
 
-    private Transform entryContainer;
-    private Transform entryTemplate;
-    private List<Transform> highscoreEntryTransformList;
+    Transform entryContainer;
+    Transform entryTemplate;
+    public List<Transform> highscoreEntryTransformList;
+
+    int subgameNumber = 0;
+    //get compontent of Playarcadegame script of subgame number
 
     private void Awake()
     {
@@ -17,23 +20,24 @@ public class HighscoreTable : MonoBehaviour {
 
         entryTemplate.gameObject.SetActive(false);
 
-        string jsonString = PlayerPrefs.GetString("highscoreTable");
+        string jsonString = PlayerPrefs.GetString("highscoreTable"+ subgameNumber.ToString());
         Highscores highscores = JsonUtility.FromJson<Highscores>(jsonString);
 
         if (highscores == null)
         {
             // There's no stored table, initialize
-            Debug.Log("Initializing table with default values...");
-            for (int i = 0; i > 12; i++)
+            Debug.Log("Initializing Subgame " + subgameNumber.ToString()+" highscore table with default values...");
+            for (int i = 0; i < 12; i++)
             {
                 AddHighscoreEntry(0, "#");
             }
             // Reload
-            jsonString = PlayerPrefs.GetString("highscoreTable");
+            jsonString = PlayerPrefs.GetString("highscoreTable" + subgameNumber.ToString());
             highscores = JsonUtility.FromJson<Highscores>(jsonString);
         }
 
         // Sort entry list by Score
+
         for (int i = 0; i < highscores.highscoreEntryList.Count; i++)
         {
             for (int j = i + 1; j < highscores.highscoreEntryList.Count; j++)
@@ -47,6 +51,7 @@ public class HighscoreTable : MonoBehaviour {
                 }
             }
         }
+
 
         highscoreEntryTransformList = new List<Transform>();
         foreach (HighscoreEntry highscoreEntry in highscores.highscoreEntryList)
@@ -89,7 +94,7 @@ public class HighscoreTable : MonoBehaviour {
         entryTransform.Find("nameText").GetComponent<Text>().text = name;
 
         // Set background visible odds and evens, easier to read
-        entryTransform.Find("background").gameObject.SetActive(rank % 2 == 1);
+        entryTransform.Find("backgroundHighscores").gameObject.SetActive(rank % 2 == 1);
         
         // Highlight First
         if (rank == 1)
@@ -110,7 +115,7 @@ public class HighscoreTable : MonoBehaviour {
         HighscoreEntry highscoreEntry = new HighscoreEntry { score = score, name = name };
         
         // Load saved Highscores
-        string jsonString = PlayerPrefs.GetString("highscoreTable");
+        string jsonString = PlayerPrefs.GetString("highscoreTable" + subgameNumber.ToString());
         Highscores highscores = JsonUtility.FromJson<Highscores>(jsonString);
 
         if (highscores == null)
@@ -127,7 +132,7 @@ public class HighscoreTable : MonoBehaviour {
 
         // Save updated Highscores
         string json = JsonUtility.ToJson(highscores);
-        PlayerPrefs.SetString("highscoreTable", json);
+        PlayerPrefs.SetString("highscoreTable" + subgameNumber.ToString(), json);
         PlayerPrefs.Save();
     }
 

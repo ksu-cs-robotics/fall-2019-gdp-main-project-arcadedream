@@ -1,0 +1,65 @@
+Team UNO
+
+Team Leader: Eric Taylor
+
+Members: Noah Lin Sierra Reed
+
+Work Document of Iteration 1:
+
+
+Week 1 (Sept.9-15):
+
+Noah had begun creating a sample scene based on mock ups of what i thought the arcade hub would look like. From there we began to develop 
+tickets as to what we should do, when we should do it, and who whould do it. Our team was tasked with the concept of this current game
+and given Noah and Sierra did not have a strong interest for the game idea, we went ahead with my idea, which is a horizontal scrolling 
+space shooter in bain with games like gradius or R-type (as i felt those kinds of games fit an arcade).
+
+From there we were able to determine who was responsible for what work. As i was the main conceptionist of the game, i was tasked with all 
+of the general design for the game such as the objects, level plans, visual ideas (not implementations) and the overall design document. 
+Noah and Sierra in my place focused their attention toward the arcade hub, such as user ui for charcter selection, arcade cabinet ui, and 
+setting ui. 
+
+During this time we consulted with the other teams what we wanted from them (we talked to team 4 about networking players as well as score
+preservation, team 2 was given an idea of what to work on (player ship and its upgrades were first priority), and team 3 was given some
+visual cues on what kind of models they would be responsible for).
+
+By the end of this week we had finsihed the ui for the character creation, as well as several facets for the subgame (name, character ship
+design, upgrades, enemies, obstacles).
+
+Week 2 (Sept. 16-22)
+
+This week was were we encountered our first issue. When Sierra attempted to push her work with the work already completed, issues arouse 
+that caused the unity files to not work (sources contradicted one another preventing running of files). This was solved by reaccessing the 
+previously working copy of the files from this github and making sure the newly implymented files were compatibile with what was already 
+there.
+
+Here we focused our attention on the subgame itself. I was tasked with planning the level progression in the game as well as the bosses and
+scoring in the game (this would be finished by wednesdays class, sept 18.) The ui was already envisioned but needed to be tangiable, so Noah
+took responsibility and finish them by midweek. Sierra had implemented her setting UI as well. Noah also wrapped up the overarcing design doc
+for the whole project (or what could be done so far) as well as the login ui.
+
+I checked in on the other teams progress to see how the other groups were fairing. Team two developed ship behavior and were working on 
+enemy types into the weekend, team 3 developed the player character model and begun work on the boss model for the first level, which by
+this time was determined the likely limit for what we could do (i planned for 4 levels but that seemed too ambitious and tedious for the 
+other groups to do in three weeks so it was not problematic that a lot of what was design never got tangiable form). They had also by this 
+time made the Arcade Dream Logo as well as the Xeonic Fleet logo, which we were then able to implement in the game ui. Team four had 
+developed the database for storing username/score and for setting up two player in the hub and likely the subgame, but had to wait until
+intergration to check for sure(with the other teams specific data/files).
+
+By this week the design document for Xeonic Fleet (the sub game) was finshised and most of the ui was as well.
+
+Week 3 (sept.23-29)
+
+This was the final week of the iteration. this week was ment for wrapping up our work for the iteration and prepare for itergration among 
+the four teams. Before that, Noah was working through some errors on his ui code in the arcade hub so it could better reprsent to the player
+what game they were going to play (some of the ui was cut off and he had to change it to fit and popup correctly). Wednesday i was tasked
+to itergrate from the master file our files into team 2's levels, which was after team 4 fixed metadata inconsistencies in the github. 
+I unforgently had issues (directory not found errors) when trying to access the files from github and did not get a solution until friday 
+where it was likely from not using the github application which links the files from unity to github (shows status of files in relation 
+to branches,commits). During Fridays class, i work with Noah from his laptop to implent the ui into team two's levels as well as the 
+plan for implementing the scoring attributes from team two's scripts into our game ui. Noah eventually finsihed the itegration allowing
+team three to miplement there models over the weekend as team 4 worked to implemnet two player cabilitlies and overall network for the 
+game.
+
+In the end of the iteration, we accomplished all our goals (tickets) that we set out for ourselfs. We still have tickets remaining but 
+those tickets are not necassarily for this first iteration but for the game as a whole. 
