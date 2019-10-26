@@ -34,12 +34,12 @@ public class StartScreen : MonoBehaviour
             //
         }
 
-        if(Input.GetKeyDown("c") && displayed_m == false)
+        if(Input.GetKeyDown("c") && displayed_m == false && gameplayUI.activeInHierarchy == true)
         {
             displayed_m = true;
             controlsUI.SetActive(true);
         }
-        else if(Input.GetKeyDown("c") && displayed_m == true)
+        else if(Input.GetKeyDown("c") && displayed_m == true && gameplayUI.activeInHierarchy == true)
         {
             displayed_m = false;
             controlsUI.SetActive(false);

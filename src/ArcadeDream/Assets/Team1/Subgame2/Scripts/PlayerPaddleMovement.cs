@@ -7,6 +7,9 @@ public class PlayerPaddleMovement : MonoBehaviour
     [SerializeField] float speed;
     [SerializeField] float rotationSpeed;
 
+    public GameObject growUI;
+    public GameObject shrinkUI;
+
     string input;
     bool waiting = false;
     private IEnumerator coroutine;
@@ -166,7 +169,7 @@ public class PlayerPaddleMovement : MonoBehaviour
     {
         if (collision.tag == "GrowPowerup")
         {
-           
+            growUI.SetActive(true);
                 Vector3 scale = new Vector3(.5f, 2, 1f);
                 transform.localScale = scale;
 
@@ -179,6 +182,7 @@ public class PlayerPaddleMovement : MonoBehaviour
         }
         if (collision.tag == "ShrinkPowerup")
         {
+            shrinkUI.SetActive(true);
             Vector3 scale = new Vector3(.25f, 1, 1f);
             Vector3 scale2 = new Vector3(.5f, 1.5f, 1f);
             GameObject[] paddles;
