@@ -20,6 +20,7 @@ public class StartScreen : MonoBehaviour
     {
         startUI.SetActive(true);
         gameplayUI.SetActive(false);
+        Time.timeScale = 0;
     }
 
     private void Update()
@@ -28,6 +29,7 @@ public class StartScreen : MonoBehaviour
         {
             startUI.SetActive(false);
             gameplayUI.SetActive(true);
+            Time.timeScale = 1;
 
             //
             // code to take away required amount of coins from player

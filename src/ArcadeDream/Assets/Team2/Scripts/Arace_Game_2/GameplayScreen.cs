@@ -10,12 +10,15 @@ using UnityEngine.UI;
 public class GameplayScreen : MonoBehaviour
 {
     public GameObject gameoverUI;
+    public GameObject overtimeUI;
 
     public Text countdownMin;
     public Text countdownSec;
 
     private int minutesLeft_m = 2;
     private int secondsLeft_m = 60;
+
+    private bool tieGame_m = false;
 
     private void Start()
     {
@@ -30,16 +33,26 @@ public class GameplayScreen : MonoBehaviour
         countdownMin.text = "\n" + minutesLeft_m;
 
         if (secondsLeft_m == 60)
-            countdownSec.text = "\n\n00     ";
+            countdownSec.text = "\n\n     00";
         else if (secondsLeft_m < 10)
-            countdownSec.text = "\n\n0     " + secondsLeft_m;
+            countdownSec.text = "\n\n     0" + secondsLeft_m;
         else
             countdownSec.text = "\n\n     " + secondsLeft_m;
 
-        if (secondsLeft_m == 0 && minutesLeft_m == 0) //when the time runs out
+        if(minutesLeft_m == 0 && secondsLeft_m <= 5)
+        {
+            tieGame_m = CheckGameTie();
+        }
+
+        if(secondsLeft_m == 0 && minutesLeft_m == 0 && tieGame_m == true)
+        {
+            overtimeUI.SetActive(true);
+        }
+        else if(secondsLeft_m == 0 && minutesLeft_m == 0 && tieGame_m == false)
         {
             gameoverUI.SetActive(true);  //activate the gameover UI
             this.enabled = false;  //deactivate this UI
+            Time.timeScale = 0;
         }
     }
 
@@ -59,5 +72,35 @@ public class GameplayScreen : MonoBehaviour
                 secondsLeft_m = 60;
             }
         }
+    }
+
+    bool CheckGameTie()
+    {
+        GameObject[] goals = GameObject.FindGameObjectsWithTag("GoalZone");
+        Debug.Log(goals[0].name + goals[1].name + goals[2].name + goals[3].name); //0=RedGoal 1=BlueGoal 2=GreenGoal 3=YellowGoal
+
+        int max = 0;
+        foreach (GameObject goal in goals) //find max points
+        {
+            if (goal.GetComponent<GoalLivesManager>().points > max)
+            {
+                max = goal.GetComponent<GoalLivesManager>().points;
+            }
+        }
+        int nummax = 0;
+        foreach (GameObject goal in goals) //if max is in more than one tie 
+        {
+            if (goal.GetComponent<GoalLivesManager>().points == max)
+            {
+                nummax++;
+            }
+        }
+        Debug.Log(nummax + " way tie");
+        if (nummax > 1)
+        {
+            return true;
+        }
+        else { return false; }
+
     }
 }
