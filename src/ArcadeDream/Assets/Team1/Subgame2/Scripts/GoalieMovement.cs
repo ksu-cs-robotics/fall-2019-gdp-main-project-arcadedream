@@ -10,6 +10,10 @@ public class GoalieMovement : MonoBehaviour
     public int rightlimit;
     string input;
     public bool able;
+    public Sprite red_goalie;
+    public Sprite blue_goalie;
+    public Sprite green_goalie;
+    public Sprite yellow_goalie;
 
     public int count;
     // Start is called before the first frame update
@@ -72,7 +76,7 @@ public class GoalieMovement : MonoBehaviour
                 // Init rotation
                 rot = new Vector3(0f, 0f, 45f);
                 //Init Color
-                gameObject.GetComponent<SpriteRenderer>().color = Color.red;
+                gameObject.GetComponent<SpriteRenderer>().sprite = red_goalie;
                 //Assign Name
                 input = "Player1Goalie";
                 gameObject.tag = "Goalie";
@@ -83,7 +87,7 @@ public class GoalieMovement : MonoBehaviour
                 // Init rotation
                 rot = new Vector3(0f, 0f, 225f);
                 //Init Color
-                gameObject.GetComponent<SpriteRenderer>().color = Color.blue;
+                gameObject.GetComponent<SpriteRenderer>().sprite = blue_goalie;
                 //Assign Name
                 input = "Player2Goalie";
                 gameObject.tag = "goalieb";
@@ -94,7 +98,7 @@ public class GoalieMovement : MonoBehaviour
                 // Init rotation
                 rot = new Vector3(0f, 0f, 315f);
                 //Init Color
-                gameObject.GetComponent<SpriteRenderer>().color = Color.green;
+                gameObject.GetComponent<SpriteRenderer>().sprite = green_goalie;
                 //Assign Name
                 input = "Player3Goalie";
                 gameObject.tag = "goalieg";
@@ -105,7 +109,7 @@ public class GoalieMovement : MonoBehaviour
                 // Init rotation
                 rot = new Vector3(0f, 0f, 495f);
                 //Init Color
-                gameObject.GetComponent<SpriteRenderer>().color = Color.yellow;
+                gameObject.GetComponent<SpriteRenderer>().sprite = yellow_goalie;
                 //Assign Name
                 input = "Player4Goalie";
                 gameObject.tag = "goaliey";
