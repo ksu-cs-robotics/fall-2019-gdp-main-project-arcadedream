@@ -10,6 +10,11 @@ public class PlayerPaddleMovement : MonoBehaviour
     public GameObject growUI;
     public GameObject shrinkUI;
 
+    public Sprite red;
+    public Sprite blue;
+    public Sprite green;
+    public Sprite yellow;
+
     string input;
     bool waiting = false;
     private IEnumerator coroutine;
@@ -46,7 +51,7 @@ public class PlayerPaddleMovement : MonoBehaviour
                 transform.Rotate(0f, 0f, -45f);
                 input = "Player1Paddle";
                 //Assign Color
-                gameObject.GetComponent<SpriteRenderer>().color = Color.red;
+                gameObject.GetComponent<SpriteRenderer>().sprite = red;
                 break;
             case 2:
                 // Init player 2 (blue)
@@ -54,7 +59,7 @@ public class PlayerPaddleMovement : MonoBehaviour
                 transform.Rotate(0f, 0f, -45f);
                 input = "Player2Paddle";
                 //Assign Color
-                gameObject.GetComponent<SpriteRenderer>().color = Color.blue;
+                gameObject.GetComponent<SpriteRenderer>().sprite = blue;
                 break;
             case 3:
                 // Init player 3 (green)
@@ -62,7 +67,7 @@ public class PlayerPaddleMovement : MonoBehaviour
                 transform.Rotate(0f, 0f, 45f);
                 input = "Player3Paddle";
                 //Assign Color 
-                gameObject.GetComponent<SpriteRenderer>().color = Color.green;
+                gameObject.GetComponent<SpriteRenderer>().sprite = green;
 
                 break;
             case 4:
@@ -71,7 +76,7 @@ public class PlayerPaddleMovement : MonoBehaviour
                 transform.Rotate(0f, 0f, 45f);
                 input = "Player4Paddle";
                 //Assign Color
-                gameObject.GetComponent<SpriteRenderer>().color = Color.yellow;
+                gameObject.GetComponent<SpriteRenderer>().sprite = yellow;
                 break;
 
             default:

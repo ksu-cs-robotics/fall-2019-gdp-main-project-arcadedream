@@ -39,7 +39,21 @@ public class BallMovement : MonoBehaviour
         {
             Debug.Log("Player Bounce");
             //Changes the color of the ball based on the last player to hit it last
-            GetComponent<SpriteRenderer>().color = collision.GetComponent<SpriteRenderer>().color;
+            switch (collision.name)
+            {
+                case "Player1Paddle":
+                    gameObject.GetComponent<SpriteRenderer>().color = Color.red;
+                    break;
+                case "Player2Paddle":
+                    gameObject.GetComponent<SpriteRenderer>().color = Color.blue;
+                    break;
+                case "Player3Paddle":
+                    gameObject.GetComponent<SpriteRenderer>().color = Color.green;
+                    break;
+                case "Player4Paddle":
+                    gameObject.GetComponent<SpriteRenderer>().color = Color.yellow;
+                    break;
+            }
             speed += 0.01f;
         }
 
