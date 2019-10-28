@@ -64,8 +64,7 @@ public class HomingMovement : MonoBehaviour
                 {
                     Destroy(gameObject);
                     var healthComponent = other.gameObject.GetComponent<EnemyHealth>();
-                    healthComponent.TakeDamage();
-                    Shooter.GetComponent<PlayerShip>().Points += healthComponent.SCOREVALUE;
+                    healthComponent.TakeDamage(Shooter);
 
                     break;
                 }
