@@ -44,7 +44,7 @@ public class EnemyHealth : MonoBehaviour
         hb = GetComponent<Collider>();
     }
 
-    public void TakeDamage()
+    public void TakeDamage(GameObject Shooter)
     {
         // If the enemy is dead, exit the function.
         if (isDead_m)
@@ -54,7 +54,10 @@ public class EnemyHealth : MonoBehaviour
           currentHealth_m--;
 
         if (currentHealth_m <= 0)
+        {
+            Shooter.GetComponent<PlayerShip>().Points += SCOREVALUE;
             Die();
+        }
     }
 
     void Die()

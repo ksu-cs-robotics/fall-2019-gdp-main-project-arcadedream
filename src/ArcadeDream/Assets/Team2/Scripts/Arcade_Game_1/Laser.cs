@@ -63,8 +63,7 @@ public class Laser : MonoBehaviour
                 {
                     var healthComponent = other.gameObject.GetComponent<EnemyHealth>();
 
-                    healthComponent.TakeDamage();
-                    Shooter.GetComponent<PlayerShip>().Points += healthComponent.SCOREVALUE;
+                    healthComponent.TakeDamage(Shooter);
 
                     break;
                 }

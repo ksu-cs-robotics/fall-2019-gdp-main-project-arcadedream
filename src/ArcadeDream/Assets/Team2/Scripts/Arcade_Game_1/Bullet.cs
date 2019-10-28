@@ -24,8 +24,7 @@ public class Bullet : MonoBehaviour
         {
             var healthComponent = other.gameObject.GetComponent<EnemyHealth>();
 
-            healthComponent.TakeDamage();
-            Shooter.GetComponent<PlayerShip>().Points += healthComponent.SCOREVALUE;
+            healthComponent.TakeDamage(Shooter);
         }
 
         Destroy(gameObject);
