@@ -34,6 +34,7 @@ public class GoalLivesManager : MonoBehaviour //Not lives points now
             if(goal.GetComponent<SpriteRenderer>().color == goalColor)
             {
                 goal.GetComponent<GoalLivesManager>().points++;
+                
             }
         }
     }
