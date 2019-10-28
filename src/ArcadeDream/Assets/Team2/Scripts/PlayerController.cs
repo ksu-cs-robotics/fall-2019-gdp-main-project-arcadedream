@@ -20,7 +20,6 @@ public class ADDBPlayerList
     public int Total_Points { get; set; }
     public ulong PermissionsHash { get; set; }
     public ulong EquipmentHash { get; set; }
-
     public ADDBPlayerList()
     {
         ID = -1;
@@ -48,7 +47,7 @@ public class PlayerController : NetworkBehaviour // NetworkBehaviour
     [SerializeField] public float WALKSPEED = 3.0f;
     [SerializeField] public float RUNSPEED = 5.0f;
     [SerializeField] public float JUMPSPEED = 5.0f;
-
+    
     protected Rigidbody rigidbody_m;
 
     // Stores references to both the Players UI canvas, as well as the text element regarding interact text
@@ -73,8 +72,16 @@ public class PlayerController : NetworkBehaviour // NetworkBehaviour
     // This acts as a buffer to prevent a interact loop from occuring when the sumbit key is held down
     protected bool SubmitKeyDown;
 
+
+    ////////////////////////////////////////////////////
+    private Animator anim;
+    
+
     void Awake()
     {
+        
+
+
         // This will prevent the playerObject from being destroyed when they enter or exit another subgame scene
         // DontDestroyOnLoad(transform.gameObject);
 
@@ -111,6 +118,9 @@ public class PlayerController : NetworkBehaviour // NetworkBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //added by team 3's number one idiot
+        anim = GetComponentInChildren<Animator>();
+        ///////////////////////////////////////////////////////
         rigidbody_m = GetComponent<Rigidbody>();
 
         playerUICanvas_m = gameObject.transform.Find("UI").gameObject;
@@ -147,6 +157,9 @@ public class PlayerController : NetworkBehaviour // NetworkBehaviour
             // Process user movement input...
             if (!movement.Equals(Vector3.zero))
             {
+                /////////////////////////////////////////////////
+                anim.SetBool("IsWalking", true);
+                /////////////////////////////////////////////////
                 Vector3 newPosition = transform.position + movement;
                 Vector3 newPositionVector = newPosition - transform.position;
                 newPositionVector.y = 0f;
@@ -157,7 +170,11 @@ public class PlayerController : NetworkBehaviour // NetworkBehaviour
                 rigidbody_m.MovePosition(transform.position + movement);
                 rigidbody_m.MoveRotation(interpolatedRotation);
             }
-
+            //////////////////////////////////////////////////////////////
+            if (movement.Equals(Vector3.zero)){
+                anim.SetBool("IsWalking", false);
+            }
+            //////////////////////////////////////////////////////////////
             // Process jumping input
             if (!jump.Equals(Vector3.zero))
             {
