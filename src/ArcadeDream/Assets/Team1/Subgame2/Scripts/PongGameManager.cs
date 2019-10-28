@@ -99,7 +99,7 @@ public class PongGameManager : MonoBehaviour
                 goals[2].SetActive(true);
                 goals[3].SetActive(true);
             }
-            spawned = false;
+            spawned = true;
         }
         
     }
