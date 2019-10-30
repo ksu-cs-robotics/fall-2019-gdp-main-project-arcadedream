@@ -37,7 +37,7 @@ public class ItemMap : MonoBehaviour
     private const uint _typeNumber = 4;
 
     // Tells ItemMap where to segment a _mapSize bit hash for the resulting sub-hashs to encompass exactly 1 type of item
-    private static readonly uint[] _typeBitShiftMap = new uint[4]
+    private static readonly uint[] _typeBitShiftMap = new uint[4/*_typeNumber*/]
     {
         // By default, there are 4 sections (types) in ItemMap, each having 8 items in total. These may be changed here...
         0x000f, 0x001f, 0x002f, 0x003f

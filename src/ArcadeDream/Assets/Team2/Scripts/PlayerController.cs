@@ -16,8 +16,10 @@ public class ADDBPlayerList
     public int ID { get; set; }
     public string Username { get; set; }
     public string UserPassword { get; set; }
+
     public int Coins { get; set; }
     public int Total_Points { get; set; }
+
     public ulong PermissionsHash { get; set; }
     public ulong EquipmentHash { get; set; }
 
