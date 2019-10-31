@@ -7,11 +7,11 @@ using UnityEngine.Networking;
 using UnityEngine.UI;
 
 /// <summary>
-/// Maps to respective fields in the Player table in the database
+/// Maps to respective fields in the Player table in the database (conquered by Team 4...)
 /// Author: Josh Dotson
 /// Version: 1
 /// </summary>
-public class ADDBPlayerList
+/* public class ADDBPlayerList
 {
     public int ID { get; set; }
     public string Username { get; set; }
@@ -31,12 +31,12 @@ public class ADDBPlayerList
         PermissionsHash = 0;
         EquipmentHash = 0;
     }
-}
+} */
 
 /// <summary>
 /// Implements basics controls for WASD, and jumping movements
 /// Implements NPC Interaction
-/// Author: Josh Dotson, Lew Fortwangler
+/// Author(s): Josh Dotson, Lew Fortwangler
 /// Version: 3
 /// </summary>
 [RequireComponent(typeof(Rigidbody))]
@@ -55,10 +55,9 @@ public class PlayerController : NetworkBehaviour // NetworkBehaviour
     protected GameObject playerUICanvas_m;
     protected GameObject playerDialogMenu_m; // Probably no longer needed as of Version 3 of InteractController...
     protected Text playerUIInteractText_m;
-
-    // Reference stream to the local player.config file
-    protected FileStream _configStream;
-    protected static readonly string _configFilePath = $@"{Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)}\Arcade Dream\player.config";
+    
+    // Const map to the config file location on the player's local machine
+    protected static readonly string _configFilePath = $@"{Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)}\Arcade Dream\config.arcadedream";
 
     // Contain information regarding currently equipped items, and unlocked items
     protected ulong _permissions;
@@ -75,42 +74,68 @@ public class PlayerController : NetworkBehaviour // NetworkBehaviour
 
     void Awake()
     {
-        // This will prevent the playerObject from being destroyed when they enter or exit another subgame scene
-        // DontDestroyOnLoad(transform.gameObject);
-
-        if (File.Exists(_configFilePath))
+        #region ** Open and Decrypt Config/Wallet Files **
+        try
         {
             // Open config file
-            _configStream = File.Open
-            (
-                path: _configFilePath,
-                mode: FileMode.Open,
-                access: FileAccess.ReadWrite,
-                share: FileShare.None
-            );
+            using (var configFileStream = File.Open(_configFilePath, FileMode.Open, FileAccess.ReadWrite, FileShare.None))
+            {
+                // Read the source file into a byte array.
+                byte[] fileContents = new byte[configFileStream.Length];
+                int numBytesToRead = (int)configFileStream.Length;
+                int numBytesRead = 0;
 
-            // Serialize, and decrypt config file contents here...
+                while (numBytesToRead > 0)
+                {
+                    // May return 0 - configFileStream.Length, therefore, we must keep numBytesRead, and numBytesToRead as indexers
+                    int numberOfBytes = configFileStream.Read(fileContents, numBytesRead, numBytesToRead);
+
+                    // Break when the end of the file is reached.
+                    if (numberOfBytes == 0)
+                        break;
+
+                    numBytesRead += numberOfBytes;
+                    numBytesToRead -= numberOfBytes;
+                }
+
+                // Decrypt file contents
+                using (ADRSAServiceProvider RSA = new ADRSAServiceProvider())
+                {
+                    var decryptedFileContents = RSA.Decrypt(fileContents);
+
+                    // Extract the info, and configure the player object with it
+                }
+            }
         }
-        else { /* Create new empty config file, and use the next step to sync it to the server */ }
+        catch
+        {
+            // Config file has been either moved, or tampered with...
+        }
+        #endregion
 
         try
         {
-            // Attempt to connect, and sync to the database. Sync database to config file if it existed, or vice versa if it didn't...
-            /* using (ADDBConnection connection = new ADDBConnection)
+            using (DatabaseManager dbManager = new DatabaseManager())
             {
-                connection.Open();
-            
-                var playerTuple = connection.Query<ADDBPlayerList>($"SELECT * FROM playerlist WHERE Username = '{PlayerUsername}'");
-                _permissions = playerTuple.permissionsHash;
-                _equipment = playerTuple.equipmentHash;
-            */
+                // Hashes not implemented yet in getPlayer(), so for now, this is a placeholder
+                // dbManager.getPlayer();
+            }
         }
         catch { /* Could not open database connection! */ }
+    }
+
+    // Whenever the equipmentHash changes, the player needs to be reinitialized with there new clothing
+    public void ReinitializePlayer()
+    {
+        // Break down the equipmentHash and use ItemMap to map the correct in-game clothing onto the player
     }
 
     // Start is called before the first frame update
     void Start()
     {
+        // Dress the player up...
+        ReinitializePlayer();
+
         rigidbody_m = GetComponent<Rigidbody>();
 
         playerUICanvas_m = gameObject.transform.Find("UI").gameObject;
@@ -122,7 +147,7 @@ public class PlayerController : NetworkBehaviour // NetworkBehaviour
 
         // Stores whether or not a character is already interacting with someone, and if so, ignore interact input
         IsUsingMouseInteract = false;
-        IsInteracting = false;      
+        IsInteracting = false;
     }
 
     void FixedUpdate()

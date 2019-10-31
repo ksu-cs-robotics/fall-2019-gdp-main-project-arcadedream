@@ -1,7 +1,62 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using UnityEngine;
+
+/// <summary>
+/// Main class used in encrypting/decrypting config, and wallet data
+/// Author(s): Josh Dotson
+/// Version: 1
+/// Notes: Thanks to Mr.Peyravi for 'Computer Network Security' RSA 
+/// </summary>
+public class ADRSAServiceProvider : IDisposable
+{
+    // make this private in the future, and configure our own methods for it
+    private RSACryptoServiceProvider ADRSA;
+    private RSAParameters ADRSAParams;
+
+    // This is not the safest thing for now, but it's just the config file
+    private static readonly byte[] _d = { 0x0 };
+    private static readonly byte[] _dmodp = { 0x0 };
+    private static readonly byte[] _dmodq = { 0x0 };
+    private static readonly byte[] _e = { 0x0 };
+    private static readonly byte[] _qinv = { 0x0 };
+    private static readonly byte[] _modulus = { 0x0 };
+    private static readonly byte[] _p = { 0x0 };
+    private static readonly byte[] _q = { 0x0 };
+
+    public ADRSAServiceProvider()
+    {
+        RSAParameters adRSAParameters = ADRSA.ExportParameters(false);
+
+        adRSAParameters.D = _d;
+        adRSAParameters.DP = _dmodp;
+        adRSAParameters.DQ = _dmodq;
+        adRSAParameters.Exponent = _e;
+        adRSAParameters.InverseQ = _qinv;
+        adRSAParameters.Modulus = _modulus;
+        adRSAParameters.P = _p;
+        adRSAParameters.Q = _q;
+    }
+
+    // Placeholders for now
+    public byte[] Encrypt(byte[] data)
+    {
+        return new byte[0];
+    }
+    public byte[] Decrypt(byte[] data)
+    {
+        return new byte[0];
+    }
+
+    // C# destructor
+    public void Dispose()
+    {
+        ADRSA.Dispose();
+    }
+}
+
 
 /// <summary>
 /// Stores an Item gameObject along with its corresponding ID
@@ -117,8 +172,6 @@ public class ItemMap : MonoBehaviour
 
         return unlockedItems;
     }
-    #endregion
-
     /// <summary>
     /// Takes an equipment hash from the database, and returns a list of equipped gameObjects based on it
     /// Author: Josh Dotson
@@ -126,12 +179,13 @@ public class ItemMap : MonoBehaviour
     /// </summary>
     /// <param name="equipmentHash">Unsigned 32 Bit int from Database</param>
     /// <returns>List of gameObjects the Player Should Be Wearing</returns>
-    public static List<GameObject> GetEquippedItems(uint equipmentHash)
+    public static List<GameObject> GetEquippedItems(ulong equipmentHash)
     {
         // ...
-        
+
         return new List<GameObject>(); // Placeholder
     }
+    #endregion
 
     public void Awake()
     {
