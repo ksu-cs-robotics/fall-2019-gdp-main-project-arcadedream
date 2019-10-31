@@ -1,0 +1,24 @@
+Team 2 - Programming / Testing
+Iteration 3 Sub-job - Networking
+
+Team Leader - Josh Dotson
+Lew Fortwangler
+Jared Anderson
+
+Risks to watch out for in Iteration 3:
+
+1. Current strategy for storing permissions in the database becomes limiting (discussed in iteration 2 presentation)
+	Impact: We can't store all of the things (more than 64) in-game that Team 3 makes because we won't be able to index them
+
+2. RSA keys get exposed, and users are able to then manually change their config file values
+	Impact: User will be able to make themselves instantly rich, and then post on reddit about how they did it
+
+3. In-game mechanics do not behave as invisioned in the design document
+	Impact: Imbalances in-game may render it boring, irritating, and/or unplayable
+
+4. Building off number 3, the mean owner may have balancing issues, causing him to viciously rob everyone of their tickets quickley before
+they have a chance to go to the bathroom and hide them
+	Impact: Game feels unrewarding, as the player will know whenever he/she earns any tickets the owner will inevitably steal them
+
+5. Communication with the other teams, particularly the coding team this iteration, will cause massive headaches to network implementation
+	Impact: Anger, and having to potentially rework the standard code implementation to be compatable with networking.

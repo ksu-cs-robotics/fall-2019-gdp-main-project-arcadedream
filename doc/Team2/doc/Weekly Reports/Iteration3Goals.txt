@@ -1,0 +1,64 @@
+Team 2 - Programming / Testing
+Iteration 3 Sub-job - Networking
+
+Team Leader - Josh Dotson
+Lew Fortwangler
+Jared Anderson
+
+Main Arcade Goals for Iteration 3:
+
+	= Finish gluing together Team 4's database value with Team 3's physical in-game models for character clothing/customization
+
+		- We need to fully implement taking equipment/permissions hashes from the database, and mapping them to actual in-game objects
+		  using the character creator. This is done via ItemMap.cs, and PlayerController.cs
+
+	= Generate public/private keys for a static RSA to encrypt/decrypt wallet and config files
+
+		- Not the most secure system, but we'll likely be storing both RSA keys in the source code, as generating a key for this purpose
+		  for every user will get complex quick do to the lack of unique global constants on the user's machine to seed it with.
+	
+	= Integrate wallet/config implementation into shop mechanics
+
+		- The actual layout and "mechanics" per say of the shop will be down to Team 1 through there AIs. However, we must work with them
+		  to integrate their shop with our wallet stuff, and create an interface they may use to figure out what items the character can
+		  buy/has already bought, etc..
+
+		- What things the user has, and has not unlocked will come down completely to the permissionsHash for that respective user in the
+	 	  database. Let's create an easy way for Team 1 to easily figure out whether or not a user has unlocked a particular item. Maybe 
+		  even provide them with a list of all items available in-game with a bool attached to each element representing whether that
+		  item is locked or unlocked.
+
+	= Add mechanics to make the shop keeper behave contemptably 
+
+		- The shop keeper needs to have a chance to come steal some tickets from the player playing a game and possibly hide them somewhere 
+		  in the arcade. 
+		
+		- Owner needs to pick a random machine at random intervals to inspect
+
+		- Backpack hidden in the bathroom needs to be implemented as an interactable object for the player to hide their tickets in
+
+
+Subgame Goals for Iteration 3:
+
+	= Create Network Manager for subgame 3
+
+   		- Ideally, this will allow us to handle most server-side network operations and a easy to understand 
+		  (other teams have done this for their respective games)
+		
+		- Optional: create a nice, modular class library/framework to hold all these tools that'll allow us to reuse a lot of this 
+		  in any networked unity games that any of us have in the future. (It might make a nice little .dll to pad our portfolios)
+
+	= Familiarize oneself with Unity's system of netorking
+		
+		- This one is kind of obvious, but get a full, deep down understanding of how all of this works together using Unity's docs,
+		  as well as the (probably much better) docs that have been made by the other teams.
+
+	= Implement NetworkBehaviour/Transforms on all required client side in-game objects
+
+		- On top of the network manager, we will also have to implement our networking plan on objects that will be client controlled
+		  and updated on the server. This may include local player movement, attacks, interactions, etc., that also need to be 
+		  reflected on the server.
+
+
+
+
