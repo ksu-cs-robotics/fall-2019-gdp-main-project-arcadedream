@@ -212,6 +212,9 @@ public class PlayerController : NetworkBehaviour // NetworkBehaviour
                 {
                     currentInteractableObject_m = gameObjectHit.transform.gameObject.GetComponent<Collider>();
                     IsUsingMouseInteract = true;
+                    //////////////////////////////////////////////////////////
+                    anim.SetBool("IsPlaying", true);
+                    //////////////////////////////////////////////////////////
                 }
                 else
                 {
@@ -221,6 +224,11 @@ public class PlayerController : NetworkBehaviour // NetworkBehaviour
                         nearbyInteractableObjects_m.Find((c) => c.gameObject.tag == "NPC") ??
                         nearbyInteractableObjects_m.Find((c) => c.gameObject.tag == "Game") ??
                         nearbyInteractableObjects_m.Find((c) => c.gameObject.tag == "Player");
+
+                    //////////////////////////////////////////////////////////
+                    anim.SetBool("IsPlaying", false);
+                    //////////////////////////////////////////////////////////
+
                 }
             }
         }
