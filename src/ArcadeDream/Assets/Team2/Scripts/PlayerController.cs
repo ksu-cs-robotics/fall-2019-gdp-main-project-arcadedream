@@ -103,7 +103,8 @@ public class PlayerController : NetworkBehaviour // NetworkBehaviour
                 {
                     var decryptedFileContents = RSA.Decrypt(fileContents);
 
-                    // Extract the info, and configure the player object with it
+                    // Convert to string, extract the info, and configure the player object with it
+                    string bitString = BitConverter.ToString(decryptedFileContents);
                 }
             }
         }
