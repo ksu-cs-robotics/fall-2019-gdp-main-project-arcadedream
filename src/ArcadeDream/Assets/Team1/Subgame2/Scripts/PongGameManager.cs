@@ -19,8 +19,10 @@ public class PongGameManager : MonoBehaviour
     [HideInInspector]public int powerupChosen;
     [HideInInspector]public int spawnPointChosen;
 
-    public int numberOfPlayers = 0; // 2 or 4
+    public int numberOfPlayers = 0; // 1 or 2 or 4
     bool spawned = false;
+
+    public GameObject singlePlayerAI;
 
     public static Vector2 bottomLeft; //Screen points that are the edges of the game play area
     public static Vector2 topRight;
@@ -72,8 +74,6 @@ public class PongGameManager : MonoBehaviour
         
         if (!spawned)
         {
-        
-
             //Create 2 Paddle / Goal / Goalie
             PlayerPaddleMovement player1paddle = Instantiate(playerPaddle) as PlayerPaddleMovement;
             PlayerPaddleMovement player2paddle = Instantiate(playerPaddle) as PlayerPaddleMovement;
@@ -101,7 +101,12 @@ public class PongGameManager : MonoBehaviour
             }
             spawned = true;
         }
-        
+        //for singleplayer AI
+        if (numberOfPlayers == 1)
+        {
+            singlePlayerAI.SetActive(true); //Sets the singplayer ai object active which activates the script
+        }
+
     }
 
     void SpawnPowerUp()
