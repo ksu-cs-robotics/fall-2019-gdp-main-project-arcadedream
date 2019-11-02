@@ -22,6 +22,8 @@ public class PongGameManager : MonoBehaviour
     public int numberOfPlayers = 0; // 2 or 4
     bool spawned = false;
 
+    public GameObject singlePlayerAI;
+
     public static Vector2 bottomLeft; //Screen points that are the edges of the game play area
     public static Vector2 topRight;
     public static Vector2 bottomRight; 
@@ -101,7 +103,12 @@ public class PongGameManager : MonoBehaviour
             }
             spawned = true;
         }
-        
+        //for singleplayer AI
+        if (numberOfPlayers == 1)
+        {
+            singlePlayerAI.SetActive(true); //Sets the singplayer ai object active which activates the script
+        }
+
     }
 
     void SpawnPowerUp()
