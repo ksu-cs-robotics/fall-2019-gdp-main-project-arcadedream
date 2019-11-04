@@ -99,16 +99,16 @@ public class ItemMap : MonoBehaviour
     };
 
     [TextArea] public string ItemType1Description;
-    [SerializeField] GameObject ID0, ID1, ID2, ID3, ID4, ID5, ID6, ID7, ID8, ID9, ID10, ID11, ID12, ID13, ID14, ID15;
+    [SerializeField] Material ID0, ID1, ID2, ID3, ID4, ID5, ID6, ID7, ID8, ID9, ID10, ID11, ID12, ID13, ID14, ID15;
 
     [TextArea] public string ItemType2Description;
-    [SerializeField] GameObject ID16, ID17, ID18, ID19, ID20, ID21, ID22, ID23, ID24, ID25, ID26, ID27, ID28, ID29, ID30, ID31;
+    [SerializeField] Material ID16, ID17, ID18, ID19, ID20, ID21, ID22, ID23, ID24, ID25, ID26, ID27, ID28, ID29, ID30, ID31;
 
     [TextArea] public string ItemType3Description;
-    [SerializeField] GameObject ID32, ID33, ID34, ID35, ID36, ID37, ID38, ID39, ID40, ID41, ID42, ID43, ID44, ID45, ID46, ID47;
+    [SerializeField] Material ID32, ID33, ID34, ID35, ID36, ID37, ID38, ID39, ID40, ID41, ID42, ID43, ID44, ID45, ID46, ID47;
 
     [TextArea] public string ItemType4Description;
-    [SerializeField] GameObject ID48, ID49, ID50, ID51, ID52, ID53, ID54, ID55, ID56, ID57, ID58, ID59, ID60, ID61, ID62, ID63;
+    [SerializeField] Material ID48, ID49, ID50, ID51, ID52, ID53, ID54, ID55, ID56, ID57, ID58, ID59, ID60, ID61, ID62, ID63;
 
     #region ** Bitwise Method Implementations **
     /// <summary>
