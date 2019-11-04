@@ -21,7 +21,6 @@ public class CharacterSelection : MonoBehaviour
     public GameObject panel2;
     public GameObject panel3;
     public GameObject panel4;
-    public GameObject panel5;
 
     void Start()
     {
@@ -47,7 +46,7 @@ public class CharacterSelection : MonoBehaviour
                 panel1.SetActive(false);
                 break;
             case 1:
-                selectionText.text = "SELECT HAIR";
+                selectionText.text = "SELECT CLOTHES";
                 //enable back button
                 back.SetActive(true);
                 //Panels
@@ -56,37 +55,28 @@ public class CharacterSelection : MonoBehaviour
                 panel2.SetActive(false);
                 break;
             case 2:
-                selectionText.text = "SELECT PANTS";
+                selectionText.text = "SELECT EYES";
                 //Panels
                 panel1.SetActive(false);
                 panel2.SetActive(true);
                 panel3.SetActive(false);
                 break;
             case 3:
-                selectionText.text = "SELECT SHOES";
+                selectionText.text = "SELECT HAT";
                 panel2.SetActive(false);
                 panel3.SetActive(true);
                 panel4.SetActive(false);
+                continueButton.SetActive(false);
                 break;
             case 4:
                 selectionText.text = "SELECT ACCESSORY";
                 //enable next button
-                next.SetActive(true);
+                next.SetActive(false);
                 //disable continue button
-                continueButton.SetActive(false);
+                continueButton.SetActive(true);
                 panel3.SetActive(false);
                 panel4.SetActive(true);
-                panel5.SetActive(false);
-                break;
-            case 5:
-                selectionText.text = "SELECT ACCESSORY";
-                //disable next button
-                next.SetActive(false);
-                //enable continue button
-                continueButton.SetActive(true);
-                panel4.SetActive(false);
-                panel5.SetActive(true);
-                break;
+                break;     
             default:
                 Debug.Log("Out of range");
                 break;
