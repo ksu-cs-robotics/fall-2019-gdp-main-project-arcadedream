@@ -31,22 +31,20 @@ public class subgame1UI : NetworkBehaviour
             playerShip = player.GetComponent<PlayerShip>();
         }
         gameover = false;
-
         Time.timeScale = 0; //pausing game
-        StartCoroutine(StartGame());
+
 
     }
-
-    IEnumerator StartGame()
-    {
-        yield return new WaitForSecondsRealtime(time);
-        startScreenUI.SetActive(false);
-        Time.timeScale = 1; //playing game
-    }
-
 
     void Update()
     {
+        if (isServer) {
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                startScreenUI.SetActive(false);
+                Time.timeScale = 1; //playing game
+            }
+            }
         if (player != null)
         {
             scoreText.text = "Score " + playerShip.Points.ToString();

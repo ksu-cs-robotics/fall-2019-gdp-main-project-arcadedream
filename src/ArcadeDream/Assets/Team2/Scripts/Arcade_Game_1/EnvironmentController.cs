@@ -21,12 +21,16 @@ public class EnvironmentController : NetworkBehaviour
 
     private void Start()
     {
-        if (isServer)
-        {
-            StartCoroutine(SpawnRoutine());
+       
+    }
+    private void update() {
+        if (isServer) {
+            if (Input.GetKeyDown(KeyCode.Space)) {
+                Debug.Log("In EnvirnControl space");
+                StartCoroutine(SpawnRoutine());
+            }
         }
     }
-    
     //spawns obstacles once every 3 seconds, can adjust spawn rate as necessary
     IEnumerator SpawnRoutine()
     {
