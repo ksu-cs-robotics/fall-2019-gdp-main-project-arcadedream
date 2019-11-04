@@ -23,6 +23,8 @@ public class PongGameManager : NetworkBehaviour
     public int numberOfPlayers = 0; // 2 or 4
     bool spawned = false;
 
+    public GameObject singlePlayerAI;
+
     public static Vector2 bottomLeft; //Screen points that are the edges of the game play area
     public static Vector2 topRight;
     public static Vector2 bottomRight;
@@ -42,11 +44,11 @@ public class PongGameManager : NetworkBehaviour
     public GameObject ball;
     public GameObject playerPaddle;
     private GameObject serverBall = null;
-    
+
     // Start is called before the first frame update
     void Start()
     {
-        
+
         //Corners of the play space
         bottomLeft = GameObject.Find("BottomLeft").GetComponent<Transform>().position;
         bottomRight = GameObject.Find("BottomRight").GetComponent<Transform>().position;
@@ -62,7 +64,7 @@ public class PongGameManager : NetworkBehaviour
         //Create ball
         //Instantiate(ball);
 
-       
+
     }
 
     void Update()
@@ -78,7 +80,13 @@ public class PongGameManager : NetworkBehaviour
 
             spawned = true;
         }
-     }
+        //for singleplayer AI
+        if (numberOfPlayers == 1)
+        {
+            singlePlayerAI.SetActive(true); //Sets the singplayer ai object active which activates the script
+        }
+
+    }
 
 
 
@@ -93,6 +101,3 @@ public class PongGameManager : NetworkBehaviour
             Debug.Log("Power up " + powerupChosen + " spawned at spawn point " + spawnPointChosen);
         }
     }
-
-
-

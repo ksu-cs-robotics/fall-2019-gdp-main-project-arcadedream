@@ -19,6 +19,7 @@ public class subgame1UI : NetworkBehaviour
     //public GameObject levelClearUI;
     public GameObject victoryUI;
     public GameObject highscoreUI;
+    public GameObject escapeMenu;
 
     bool gameover;
     float time = 2.0f;
@@ -69,6 +70,11 @@ public class subgame1UI : NetworkBehaviour
                 playerShip = player.GetComponent<PlayerShip>();
             }
         }
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            escapeMenu.SetActive(true);
+        }
     }
 
     //moving to highscore screen
@@ -90,7 +96,17 @@ public class subgame1UI : NetworkBehaviour
     //moving back to main game lobby
     public void highscoreUIButton()
     {
-        //
-        //SceneManager.GetSceneByName("NAME OF MAIN LOBBY");
+
+        SceneManager.LoadScene("Main");
+    }
+
+    public void ReturnToArcade()
+    {
+        SceneManager.LoadScene("Main");
+    }
+
+    public void Resume()
+    {
+        escapeMenu.SetActive(false);
     }
 }
