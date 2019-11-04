@@ -15,10 +15,10 @@ public class subgame1UI : NetworkBehaviour
     //public Text stageText;
 
     public GameObject gameOverUI;
-    public GameObject startScreenUI;
+    [SyncVar] public GameObject startScreenUI;
     //public GameObject levelClearUI;
-    public GameObject victoryUI;
-    public GameObject highscoreUI;
+    [SyncVar]public GameObject victoryUI;
+    [SyncVar]public GameObject highscoreUI;
 
     bool gameover;
     float time = 2.0f;
@@ -41,8 +41,9 @@ public class subgame1UI : NetworkBehaviour
         if (isServer) {
             if (Input.GetKeyDown(KeyCode.Space))
             {
-                startScreenUI.SetActive(false);
-                Time.timeScale = 1; //playing game
+                RpcUIChange();// not networked only happens on server RPC command to tell clients to change scenes
+               
+                
             }
             }
         if (player != null)
@@ -66,7 +67,12 @@ public class subgame1UI : NetworkBehaviour
             }
         }
     }
-
+    [ClientRpc]
+    void RpcUIChange()
+    {
+        startScreenUI.SetActive(false);
+        Time.timeScale = 1; //playing game
+    }
     //moving to highscore screen
     public void GameOverUIButton()
     {
