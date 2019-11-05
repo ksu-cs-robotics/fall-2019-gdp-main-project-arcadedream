@@ -100,7 +100,7 @@ public class MatirialSelector : MonoBehaviour
 
         if (Input.GetKeyDown("l")) //save player object as prefab for saving
         {
-            PrefabUtility.SaveAsPrefabAsset(player, prefabPath);
+            // PrefabUtility.SaveAsPrefabAsset(player, prefabPath);
         }
 
         if (timeLeft > -1)
