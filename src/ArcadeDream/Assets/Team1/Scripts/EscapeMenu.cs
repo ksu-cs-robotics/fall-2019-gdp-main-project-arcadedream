@@ -8,14 +8,13 @@ public class EscapeMenu : MonoBehaviour
     public static bool gamePaused = false;
     public GameObject pauseMenuUI;
     public GameObject HUDUI;
-    public GameObject chatUI;
 
     //temporary fix for player loading into next scene
     public GameObject player;
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape) && chatUI.activeSelf == false)
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
             if (gamePaused)
             {

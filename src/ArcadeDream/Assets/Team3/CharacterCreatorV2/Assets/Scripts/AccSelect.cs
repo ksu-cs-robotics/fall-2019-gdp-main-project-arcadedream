@@ -9,32 +9,12 @@ public class AccSelect : MonoBehaviour
     private GameObject currentAcc;
     int acccount = 0;
 
-    public void SetButtonId(int id) //on button press sets ID
+    void Start()
     {
-        acccount = id;
-        Debug.Log(acccount);
-        Destroy(currentAcc);
-        Destroy(currentAcc);
-        if (acccount >= acc.Length)
-        {
-            acccount = 0;
-        }
-        currentAcc = Instantiate(acc[acccount]);
-        if (currentAcc.tag == "Mask")
-        {
-            currentAcc.transform.SetParent(accarea[0].transform);
-        }
-        if (currentAcc.tag == "Wrist")
-        {
-            currentAcc.transform.SetParent(accarea[1].transform);
-        }
-        if (currentAcc.tag == "Back")
-        {
-            currentAcc.transform.SetParent(accarea[2].transform);
-        }
+  
     }
 
-    /* old way of itterating through them all before buttons were introduced
+
     void Update()
     {
         if (Input.GetKeyDown("n"))
@@ -84,6 +64,5 @@ public class AccSelect : MonoBehaviour
             }
         }
     }
-    */
 }
 

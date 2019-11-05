@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class HatSelect : MonoBehaviour
 {
@@ -9,17 +8,12 @@ public class HatSelect : MonoBehaviour
     public GameObject[] hats;
     private GameObject hat;
     int hatcount = 0;
-
-    public void SetButtonId(int id) //on button press sets ID
+    void Start()
     {
-        hatcount = id;
-        Debug.Log(hatcount);
-        Destroy(hat);
-        hat = Instantiate(hats[hatcount]);
-        hat.transform.SetParent(hatarea.transform);
+      
     }
 
-    /* old way of itterating through before the buttons were introduced
+
     void Update()
     {
         if (Input.GetKeyDown("j")) //increment shirt count and save to loadout
@@ -45,5 +39,5 @@ public class HatSelect : MonoBehaviour
             hat = Instantiate(hats[hatcount]);
             hat.transform.SetParent(hatarea.transform);
         }
-    }*/
+    }
 }
