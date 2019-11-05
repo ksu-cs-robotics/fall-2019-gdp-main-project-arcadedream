@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Networking;
-using UnityEngine.UI;
 
-public class PlayerPaddleMovement : NetworkBehaviour
+public class PlayerPaddleMovement : MonoBehaviour
 {
     [SerializeField] float speed;
     [SerializeField] float rotationSpeed;
@@ -32,22 +29,6 @@ public class PlayerPaddleMovement : NetworkBehaviour
     public bool slow;
     public bool fast;
 
-
-    //Team3 Additions
-    private Player p;
-    public int num;
-    public bool locked = false;
-
-    private Transform redSpawn;
-    private Transform blueSpawn;
-    private Transform greenSpawn;
-    private Transform yellowSpawn;
-
-    //Experimentation
-    public Vector2 ballDirection;
-
-
-
     // Start is called before the first frame update
     //Initialization
     void Start()
@@ -56,22 +37,6 @@ public class PlayerPaddleMovement : NetworkBehaviour
         slow = false;
         fast = false;
         counter = 0;
-
-        //team3
-        p = GameObject.Find("PlayerTracker").GetComponent<Player>();
-
-        redSpawn = GameObject.Find("RedPaddlePoint").GetComponent<Transform>();
-        blueSpawn = GameObject.Find("BluePaddlePoint").GetComponent<Transform>();
-        greenSpawn = GameObject.Find("GreenPaddlePoint").GetComponent<Transform>();
-        yellowSpawn = GameObject.Find("YellowPaddlePoint").GetComponent<Transform>();
-
-        if (this.transform.position == redSpawn.position) this.Init(1);
-        else if (this.transform.position == blueSpawn.position) this.Init(2);
-        else if (this.transform.position == greenSpawn.position) this.Init(3);
-        else if (this.transform.position == yellowSpawn.position) this.Init(4);
-
-        //Experimentation
-        ballDirection = Vector2.zero;
     }
 
     //Initializes each player paddle based on the player number 1-4 
@@ -83,7 +48,7 @@ public class PlayerPaddleMovement : NetworkBehaviour
             case 1:
                 // init player 1 (red)
                 pos = new Vector2(PongGameManager.RedPaddleSpawn.x, PongGameManager.RedPaddleSpawn.y);
-                transform.rotation = redSpawn.rotation;
+                transform.Rotate(0f, 0f, -45f);
                 input = "Player1Paddle";
                 //Assign Color
                 gameObject.GetComponent<SpriteRenderer>().sprite = red;
@@ -91,7 +56,7 @@ public class PlayerPaddleMovement : NetworkBehaviour
             case 2:
                 // Init player 2 (blue)
                 pos = new Vector2(PongGameManager.BluePaddleSpawn.x, PongGameManager.BluePaddleSpawn.y);
-                transform.rotation = blueSpawn.rotation;
+                transform.Rotate(0f, 0f, -45f);
                 input = "Player2Paddle";
                 //Assign Color
                 gameObject.GetComponent<SpriteRenderer>().sprite = blue;
@@ -99,7 +64,7 @@ public class PlayerPaddleMovement : NetworkBehaviour
             case 3:
                 // Init player 3 (green)
                 pos = new Vector2(PongGameManager.GreenPaddleSpawn.x, PongGameManager.GreenPaddleSpawn.y);
-                transform.rotation = greenSpawn.rotation;
+                transform.Rotate(0f, 0f, 45f);
                 input = "Player3Paddle";
                 //Assign Color 
                 gameObject.GetComponent<SpriteRenderer>().sprite = green;
@@ -108,7 +73,7 @@ public class PlayerPaddleMovement : NetworkBehaviour
             case 4:
                 // Init player 4 (Yellow)
                 pos = new Vector2(PongGameManager.YellowPaddleSpawn.x, PongGameManager.YellowPaddleSpawn.y);
-                transform.rotation = yellowSpawn.rotation;
+                transform.Rotate(0f, 0f, 45f);
                 input = "Player4Paddle";
                 //Assign Color
                 gameObject.GetComponent<SpriteRenderer>().sprite = yellow;
@@ -123,17 +88,13 @@ public class PlayerPaddleMovement : NetworkBehaviour
         //Update this paddle's position
         transform.position = pos;
 
-        //team3
-      
-        num = playerNumber;
-
 
     }
     // Update is called once per fixed frame
     void Update()
     {
         //mouse scroll changes rotation
-        if (checker && hasAuthority)
+        if (checker)
         {
             if (Input.GetAxis("Mouse ScrollWheel") > 0) //scroll up
             {
@@ -155,30 +116,12 @@ public class PlayerPaddleMovement : NetworkBehaviour
         }
 
 
-        if (locked && p.playerNumber == num)
-        {
-            Move();
-        }
-        if (Input.GetKeyDown(KeyCode.Space) && p.move_on)
-        {
-            if (locked) locked = false;
-            else if (!locked) locked = true;
-        }
-
-        //Experimentation
-        if (locked)
-        {
-
-            ballDirection = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y)) - transform.position;
-            ballDirection.Normalize();
-
-        }
-
-
     }
 
 
-    void Move()
+
+    //For mouse movement
+    void OnMouseDrag()
     {
         Vector2 pos_move = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y));
         Vector2 lerped = new Vector2(pos_move.x, pos_move.y);
@@ -217,20 +160,14 @@ public class PlayerPaddleMovement : NetworkBehaviour
 
         if (!fast && !slow)
         {
-             //count++;
-            //if (count == 10)
-            // {
-            //transform.position = Vector2.Lerp(pos_move, lerped, Time.deltaTime * 10);
-            //    count = 0;
-            // }
-            
-            //Team3 Testing
-            transform.position = Vector2.MoveTowards(transform.position, pos_move, 10 * Time.deltaTime);
+            count++;
+            if (count == 10)
+            {
+                transform.position = Vector2.Lerp(pos_move, lerped, Time.deltaTime * 3);
+                count = 0;
+            }
         }
     }
-
-
-
 
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -257,8 +194,8 @@ public class PlayerPaddleMovement : NetworkBehaviour
             paddles = GameObject.FindGameObjectsWithTag("Player");
             foreach (GameObject paddler in paddles)
             {
-
                 paddler.transform.localScale = scale;
+
                 coroutine = WaitandScale(3f);
                 StartCoroutine(coroutine);
 

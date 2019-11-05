@@ -1,15 +1,13 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Networking;
 using UnityEngine.UI;
 
 /// <summary>
 /// controls the countdown timer, displays player scores, responsible for ending game
 /// Author: Lew Fortwangler
 /// </summary>
-public class GameplayScreen : NetworkBehaviour
+public class GameplayScreen : MonoBehaviour
 {
     public GameObject gameoverUI;
     public GameObject overtimeUI;
@@ -17,30 +15,21 @@ public class GameplayScreen : NetworkBehaviour
     public Text countdownMin;
     public Text countdownSec;
 
-    [SyncVar] private int minutesLeft_m = 2;
-    [SyncVar] private int secondsLeft_m = 60;
+    private int minutesLeft_m = 2;
+    private int secondsLeft_m = 60;
 
     private bool tieGame_m = false;
 
-    ///
-    private bool started = false;
     private void Start()
     {
+        countdownMin.text = "2";
+        countdownSec.text = "00";
 
+        StartCoroutine("Countdown");
     }
 
     private void Update()
     {
-        if (isServer && Player.active && !started)
-        {
-            Debug.Log("start");
-            started = true;
-            countdownMin.text = "2";
-            countdownSec.text = "00";
-            StartCoroutine("Countdown");
-            
-        }
-
         countdownMin.text = "\n" + minutesLeft_m;
 
         if (secondsLeft_m == 60)
