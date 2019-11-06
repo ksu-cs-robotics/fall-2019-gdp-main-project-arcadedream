@@ -7,6 +7,8 @@ public class BulletScript : MonoBehaviour
     private Rigidbody2D rb;
     public float bulletSpeed;
 
+    public float despawnTime;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -18,6 +20,19 @@ public class BulletScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        StartCoroutine(despawn());
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+
+        if (collision.tag == "Ground")
+        Destroy(gameObject);
+    }
+
+    IEnumerator despawn()
+    {
+        yield return new WaitForSeconds(despawnTime);
+        Destroy(gameObject);
     }
 }

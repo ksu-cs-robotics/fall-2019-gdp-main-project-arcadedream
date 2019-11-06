@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
+
 public class GUN : MonoBehaviour
 {
     public GameObject playerPos;
@@ -10,6 +12,8 @@ public class GUN : MonoBehaviour
     public GameObject bow_;
     Vector3 mousePos;
 
+    public float fireRate;
+    private float timeLeft = 0;
     // Start is called before the first frame update
     void Start()
     {
@@ -21,11 +25,17 @@ public class GUN : MonoBehaviour
     {
         bow_move();
 
-        if (Input.GetKeyDown(KeyCode.E))
+        if (Input.GetKeyDown(KeyCode.E) && timeLeft <= 0) 
         {
             //NETWORK HERE
             Instantiate(bullet, transform.position, playerPos.transform.rotation);
-        }  
+            timeLeft = fireRate;
+        }
+        if (timeLeft > 0)
+        {
+            timeLeft -= Time.deltaTime;
+        }
+        
     }
 
     private void bow_move() //this code was taken from https://answers.unity.com/questions/1326563/top-down-2d-game-aim-weapon-with-mouse-please-help.html

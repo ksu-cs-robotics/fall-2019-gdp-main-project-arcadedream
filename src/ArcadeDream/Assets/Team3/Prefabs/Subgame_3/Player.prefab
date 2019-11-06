@@ -126,6 +126,7 @@ MonoBehaviour:
   playerPos: {fileID: 7114197272471028908}
   bullet: {fileID: 8662675910154126864, guid: 263c1a7cca1bdcf4fb8cc88e3ae415bc, type: 3}
   bow_: {fileID: 0}
+  fireRate: 0.15
 --- !u!1 &7114197273132059118
 GameObject:
   m_ObjectHideFlags: 0
@@ -140,6 +141,7 @@ GameObject:
   - component: {fileID: 7114197273132059113}
   - component: {fileID: 7114197273132058133}
   - component: {fileID: 7114197273132058132}
+  - component: {fileID: 1147355006}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -244,7 +246,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 1.5
-  jumpForce: 3.5
+  jumpForce: 3.2
+  doubleJumpModifier: 0.75
+  slideSpeed: 0.2
+  wallJumpLerp: 3
+  horizontalWallJumpSpeed: 2
+  wallSlide: 0
+  hasDoubleJump: 1
+  pushingWall: 1
+  canMove: 1
+  wallJumped: 0
 --- !u!61 &7114197273132058133
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -258,7 +269,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0.0011828095, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0.049999997, y: 0.049999997, z: 0.049999997, w: 0.049999997}
     pivot: {x: 0.5, y: 0.5}
@@ -269,7 +280,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.16, y: 0.16}
+  m_Size: {x: 0.13870925, y: 0.1316123}
   m_EdgeRadius: 0
 --- !u!114 &7114197273132058132
 MonoBehaviour:
@@ -285,3 +296,27 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fallMultiplier: 2.5
   lowJumpMultiplier: 3
+--- !u!114 &1147355006
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7114197273132059118}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 231e76bc868b7b94bb41da52fd6f3727, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 512
+  grounded: 1
+  onWall: 0
+  onRightWall: 0
+  onLeftWall: 0
+  wallSide: 0
+  collisionRadius: 0.025
+  bottomOffset: {x: 0, y: -0.07}
+  rightOffset: {x: 0.07, y: 0}
+  leftOffset: {x: -0.07, y: 0}
