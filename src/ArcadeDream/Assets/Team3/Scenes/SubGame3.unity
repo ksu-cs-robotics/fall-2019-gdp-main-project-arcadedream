@@ -123,6 +123,7 @@ GameObject:
   - component: {fileID: 519420032}
   - component: {fileID: 519420031}
   - component: {fileID: 519420029}
+  - component: {fileID: 519420030}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -138,6 +139,22 @@ AudioListener:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
   m_Enabled: 1
+--- !u!114 &519420030
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 519420028}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 604bce0a1f109f44fb1466ad0f43949d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 1147354999}
+  smoothing: 5
+  horizMovePoint: 0
+  vertMovePoint: 0
 --- !u!20 &519420031
 Camera:
   m_ObjectHideFlags: 0
@@ -279,30 +296,6 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 1747900767}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1147355006
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1147354999}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 231e76bc868b7b94bb41da52fd6f3727, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  groundLayer:
-    serializedVersion: 2
-    m_Bits: 512
-  grounded: 1
-  onWall: 0
-  onRightWall: 0
-  onLeftWall: 0
-  wallSide: 0
-  collisionRadius: 0.025
-  bottomOffset: {x: 0, y: -0.07}
-  rightOffset: {x: 0.07, y: 0}
-  leftOffset: {x: -0.07, y: 0}
 --- !u!1001 &1747900767
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -369,61 +362,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7114197273132059113, guid: a1cf6d1181aeb594aa35c6d525ea2467,
-        type: 3}
-      propertyPath: doubleJumpModifier
-      value: 0.75
-      objectReference: {fileID: 0}
-    - target: {fileID: 7114197273132059113, guid: a1cf6d1181aeb594aa35c6d525ea2467,
-        type: 3}
-      propertyPath: slideSpeed
-      value: 0.2
-      objectReference: {fileID: 0}
-    - target: {fileID: 7114197273132059113, guid: a1cf6d1181aeb594aa35c6d525ea2467,
-        type: 3}
-      propertyPath: wallJumpLerp
-      value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: 7114197273132059113, guid: a1cf6d1181aeb594aa35c6d525ea2467,
-        type: 3}
-      propertyPath: pushingWall
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7114197273132059113, guid: a1cf6d1181aeb594aa35c6d525ea2467,
-        type: 3}
-      propertyPath: horizontalWallJumpSpeed
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 7114197273132059113, guid: a1cf6d1181aeb594aa35c6d525ea2467,
-        type: 3}
-      propertyPath: wallSlide
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7114197273132059113, guid: a1cf6d1181aeb594aa35c6d525ea2467,
-        type: 3}
-      propertyPath: jumpForce
-      value: 3.2
-      objectReference: {fileID: 0}
-    - target: {fileID: 7114197273132058133, guid: a1cf6d1181aeb594aa35c6d525ea2467,
-        type: 3}
-      propertyPath: m_Offset.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7114197273132058133, guid: a1cf6d1181aeb594aa35c6d525ea2467,
-        type: 3}
-      propertyPath: m_Size.y
-      value: 0.1316123
-      objectReference: {fileID: 0}
-    - target: {fileID: 7114197273132058133, guid: a1cf6d1181aeb594aa35c6d525ea2467,
-        type: 3}
-      propertyPath: m_Offset.x
-      value: 0.0011828095
-      objectReference: {fileID: 0}
-    - target: {fileID: 7114197273132058133, guid: a1cf6d1181aeb594aa35c6d525ea2467,
-        type: 3}
-      propertyPath: m_Size.x
-      value: 0.13870925
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a1cf6d1181aeb594aa35c6d525ea2467, type: 3}
