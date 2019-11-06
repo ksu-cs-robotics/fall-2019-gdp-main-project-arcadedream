@@ -57,8 +57,4 @@ public class ChatSystem : MonoBehaviour
         //could display fireworks type thing in the scene
     }
 
-    public void Scrollbar()
-    {
-        scrollbar.GetComponent<Scrollbar>().value = 0;
-    }
 }
