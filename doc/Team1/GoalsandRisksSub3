@@ -25,3 +25,16 @@ Sub-Game Risks:
 Sprites not working properly
 Sprite movement missing (don’t have proper setup)
 More risks once design document is finished. 
+
+
+
+Concerns raised in the extreme pong testing questions:
+Power ups only work on server side 
+Rotating only server side
+Score only server side
+Phantom balls don’t despawn - if they don’t hit a goal within 15 seconds they will despawn.
+Ball movement buggy - fix how the ball changes direction
+Make sure UI works with different resolutions
+Larger paddles for paddle grow power up
+Power ups need to work with both 2 player and 4 player
+Need to get the number of players from the networking script and spawn the correct amount of players based on that.

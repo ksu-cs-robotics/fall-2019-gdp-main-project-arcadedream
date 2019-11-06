@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 /// <summary>
 /// Controls the gameover screen, will display how many points you earned and what place you were in
@@ -13,6 +14,7 @@ public class GameoverScreen : MonoBehaviour
     public GameObject highscoreUI;
     public Text scoreText;
     public Text placementText;
+    public GameObject escapeMenuUI;
 
     private int yourPlacement_m = 0;
 
@@ -42,6 +44,11 @@ public class GameoverScreen : MonoBehaviour
         if(gameoverUI.activeInHierarchy == true)
         {
             setValues();
+        }
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            escapeMenuUI.SetActive(true);
         }
     }
 
@@ -79,5 +86,15 @@ public class GameoverScreen : MonoBehaviour
             placementText.text = "2nd";
         else
             placementText.text = "1st";
+    }
+
+    public void ReturnToArcadeButton()
+    {
+        SceneManager.LoadScene("Main");
+    }
+
+    public void ResumeButton()
+    {
+        escapeMenuUI.SetActive(false);
     }
 }
