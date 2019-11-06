@@ -6,7 +6,6 @@ public class TitleButtons : MonoBehaviour
     string levelToLoad = "CharacterCreation";
     public GameObject titleScreenUI;
     public GameObject settingsUI;
-    public GameObject creditsUI;
 
     private void Start()
     {
@@ -39,11 +38,6 @@ public class TitleButtons : MonoBehaviour
     {
         titleScreenUI.SetActive(true);
         settingsUI.SetActive(false);
-    }
-
-    public void Credits()
-    {
-        creditsUI.SetActive(true);
     }
 
 }
