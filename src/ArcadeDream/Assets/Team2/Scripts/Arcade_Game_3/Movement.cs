@@ -13,8 +13,9 @@ public class Movement : NetworkBehaviour
     private Collision collScript;
 
     //Movement stats
-    public float speed;
-    public float jumpForce;
+    [SerializeField] public float speed = 5;
+    [SerializeField] public float jumpForce = 10;
+
     [Range(0, 1)]
     public float doubleJumpModifier; //Multiplies jumpforce to decrease height of double jump
     public float slideSpeed;
@@ -45,6 +46,8 @@ public class Movement : NetworkBehaviour
             float x = Input.GetAxis("Horizontal");
             float y = Input.GetAxis("Vertical");
 
+            Debug.Log(x);
+
             //Makes walljumping way more consistant at the cost of not being able to climb walls.
             //This might be better, talk with design team
             // if (collScript.onLeftWall && x < 0) x = 0;
@@ -52,7 +55,7 @@ public class Movement : NetworkBehaviour
 
             Vector2 dir = new Vector2(x, y);
 
-            if (canMove && x != 0.0f)
+            if (canMove && x != 0)
                 Walk(dir);
 
             if ((!Input.GetAxisRaw("Jump").Equals(0)) && canMove)
