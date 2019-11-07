@@ -1,15 +1,22 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 //Base for movement script taken from https://github.com/mixandjam/Celeste-Movement/blob/master/Assets/Scripts/Movement.cs
 
 public class Movement : MonoBehaviour
 {
     //Components
+    public Text countdownText;
+    public Text timerObject;
+    public GameObject countdownObject;
+    public GameObject timeObject;
     private Rigidbody2D rb;
     private Collision2D coll;
     private Collision collScript;
+    private Vector3 respawnPosition;
+    private Vector2 respawnDir;
 
     //Movement stats
     public float speed;
@@ -20,27 +27,47 @@ public class Movement : MonoBehaviour
     private float startingSlideSpeed;
     public float wallJumpLerp;
     public float horizontalWallJumpSpeed;
+    private float countdownTime = 5;
+    private bool countdown = true;
 
     //movement bools. temporarily public to be able to see them while testing
     public bool wallSlide = false;
     public bool hasDoubleJump = true;
     public bool pushingWall = false;
-    public bool canMove = true;
+    public bool canMove;
     public bool wallJumped = false;
-    
+
 
 
     // Start is called before the first frame update
     void Start()
     {
+        canMove = false;
         rb = GetComponent<Rigidbody2D>();
         collScript = GetComponent<Collision>();
+        timeObject.SetActive(false);
+        countdownText.text = countdownTime.ToString();
         startingSlideSpeed = slideSpeed;
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (countdown)
+        {
+            countdownTime -= Time.deltaTime;
+            countdownText.text = Mathf.Round(countdownTime).ToString();
+
+            if (countdownTime <= 0)
+            {
+                timeObject.SetActive(true);
+                countdownObject.SetActive(false);
+                canMove = true;
+                countdown = false;
+                timerObject.GetComponent<GameTimer>().runTimer = true;
+            }
+        }
+
         float x = Input.GetAxis("Horizontal");
         float y = Input.GetAxis("Vertical");
 
@@ -52,7 +79,7 @@ public class Movement : MonoBehaviour
         Vector2 dir = new Vector2(x, y);
 
 
-        if(canMove)
+        if (canMove)
             Walk(dir);
 
         if (Input.GetKeyDown(KeyCode.Space) && canMove)
@@ -63,6 +90,12 @@ public class Movement : MonoBehaviour
             hasDoubleJump = true;
 
             wallJumped = false;
+
+        }
+        if (collScript.grounded && !collScript.onWall)
+        {
+            respawnPosition = gameObject.transform.position;
+            respawnDir = dir;
         }
         if (collScript.onWall && !collScript.grounded && rb.velocity.y <= 0)
         {
@@ -75,6 +108,9 @@ public class Movement : MonoBehaviour
         {
             wallSlide = false;
             slideSpeed = startingSlideSpeed;
+
+            if (gameObject.transform.position.y < -4)
+                Respawn();
         }
     }
 
@@ -89,7 +125,6 @@ public class Movement : MonoBehaviour
 
     private void Walk(Vector2 dir)
     {
-
         if (!wallJumped)
         {
             rb.velocity = new Vector2(dir.x * speed, rb.velocity.y);
@@ -118,14 +153,14 @@ public class Movement : MonoBehaviour
         }
 
         //Wall Jump
-        if(!collScript.grounded && collScript.onWall)
+        if (!collScript.grounded && collScript.onWall)
         {
             StopCoroutine(DisableMovement(0));
             StartCoroutine(DisableMovement(.1f));
 
             Vector2 wallDir = collScript.onRightWall ? Vector2.left : Vector2.right;
             rb.velocity = new Vector2(rb.velocity.x, 0);
-            rb.velocity += (jumpDir*.9f + wallDir * horizontalWallJumpSpeed);
+            rb.velocity += (jumpDir * .9f + wallDir * horizontalWallJumpSpeed);
             StartCoroutine(waitframe());
         }
 
@@ -157,4 +192,13 @@ public class Movement : MonoBehaviour
         rb.velocity = new Vector2(push, -slideSpeed);
     }
 
+    private void Respawn()
+    {
+        if (respawnDir.x > 0)
+            rb.position = new Vector2(respawnPosition.x - 0.25f, respawnPosition.y);
+        else if (respawnDir.x > 0)
+            rb.position = new Vector2(respawnPosition.x + 0.25f, respawnPosition.y);
+
+        StartCoroutine(DisableMovement(3));
+    }
 }
