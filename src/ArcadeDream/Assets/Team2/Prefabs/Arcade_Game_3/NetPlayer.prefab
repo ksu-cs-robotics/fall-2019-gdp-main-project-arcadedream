@@ -11,8 +11,9 @@ GameObject:
   - component: {fileID: 1838799571904361886}
   - component: {fileID: 2875463780171066211}
   - component: {fileID: 104261899289280272}
-  - component: {fileID: 350120745104118077}
   - component: {fileID: 7115794974564484259}
+  - component: {fileID: 6013919675021525337}
+  - component: {fileID: 2154810549451956666}
   - component: {fileID: 5938709866931981985}
   - component: {fileID: 3150717529183275310}
   m_Layer: 0
@@ -105,22 +106,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &350120745104118077
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6841871110768939253}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2dd428312c44862479862ff47cea04d5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  PlayerUsername: 
-  WALKSPEED: 3
-  RUNSPEED: 5
-  JUMPSPEED: 5
 --- !u!61 &7115794974564484259
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -147,6 +132,53 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &6013919675021525337
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6841871110768939253}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2484bf57e7e965d4e9f95a1673d6c0ed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 5
+  jumpForce: 10
+  doubleJumpModifier: 0.17
+  slideSpeed: 1
+  wallJumpLerp: 0
+  horizontalWallJumpSpeed: 0
+  wallSlide: 0
+  hasDoubleJump: 1
+  pushingWall: 0
+  canMove: 1
+  wallJumped: 0
+--- !u!114 &2154810549451956666
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6841871110768939253}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d65f563a942109c47b274fa05315384a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 1
+  grounded: 0
+  onWall: 0
+  onRightWall: 0
+  onLeftWall: 0
+  wallSide: 0
+  collisionRadius: 0.25
+  bottomOffset: {x: 0, y: 0}
+  rightOffset: {x: 0, y: 0}
+  leftOffset: {x: 0, y: 0}
 --- !u!114 &5938709866931981985
 MonoBehaviour:
   m_ObjectHideFlags: 0

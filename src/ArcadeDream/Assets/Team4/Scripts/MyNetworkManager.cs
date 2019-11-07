@@ -6,7 +6,6 @@ using UnityEngine.Networking.Match;
 
 public class MyNetworkManager : NetworkManager
 {
-
     public bool serverOn = false;
     public bool clientOn = false;
     public bool connected = false;
@@ -20,7 +19,6 @@ public class MyNetworkManager : NetworkManager
     public new void StartHost()
     {
         base.StartHost();
-
     }
 
     public new void StartServer()

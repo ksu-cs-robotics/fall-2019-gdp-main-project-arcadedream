@@ -8,9 +8,7 @@ public class paddleGrowPowerup : MonoBehaviour
 
     void Start(){
 
-
-        paddleToGrow = GameObject.Find("PlayerPaddle");
-        
+        paddleToGrow = GameObject.Find("PlayerPaddle");        
     }
 
     void Update()
@@ -18,7 +16,8 @@ public class paddleGrowPowerup : MonoBehaviour
         
     }
 
-    void OnCollisionEnter (Collision col){
+    void OnCollisionEnter (Collision col)
+    {
         Vector3 scale = new Vector3(2,2, 1f);                                    
         if(col.gameObject.name == "PlayerPaddle")
         {
