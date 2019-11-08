@@ -23,19 +23,21 @@ public class GUN : NetworkBehaviour
     // Update is called once per frame
     void Update()
     {
-        bow_move();
+        if (isLocalPlayer)
+        {
+            bow_move();
 
-        if (Input.GetKeyDown(KeyCode.E) && timeLeft <= 0) 
-        {
-            Instantiate(bullet, transform.position, playerPos.transform.rotation);
-            NetworkServer.Spawn(bullet);
-            timeLeft = fireRate;
-        }
-        if (timeLeft > 0)
-        {
-            timeLeft -= Time.deltaTime;
-        }
-        
+            if (Input.GetKeyDown(KeyCode.E) && timeLeft <= 0)
+            {
+                Instantiate(bullet, transform.position, playerPos.transform.rotation);
+                NetworkServer.Spawn(bullet);
+                timeLeft = fireRate;
+            }
+            if (timeLeft > 0)
+            {
+                timeLeft -= Time.deltaTime;
+            }
+       } 
     }
 
     private void bow_move() //this code was taken from https://answers.unity.com/questions/1326563/top-down-2d-game-aim-weapon-with-mouse-please-help.html
