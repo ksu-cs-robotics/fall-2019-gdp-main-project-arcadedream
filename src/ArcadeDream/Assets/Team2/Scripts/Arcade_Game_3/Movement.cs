@@ -46,8 +46,6 @@ public class Movement : NetworkBehaviour
             float x = Input.GetAxis("Horizontal");
             float y = Input.GetAxis("Vertical");
 
-            Debug.Log(x);
-
             //Makes walljumping way more consistant at the cost of not being able to climb walls.
             //This might be better, talk with design team
             // if (collScript.onLeftWall && x < 0) x = 0;
