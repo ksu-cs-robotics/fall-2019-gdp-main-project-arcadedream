@@ -37,7 +37,7 @@ public class Pipe : MonoBehaviour
     {
         if (collision.tag == "Player" && Broke == true)
         {
-            collision.GetComponent<Rigidbody2D>().AddForce(new Vector3(0f, 1f * thrust, 0f));
+            collision.GetComponent<Rigidbody2D>().AddForce(new Vector3(0f, thrust, 0f));
         }
     }
 
