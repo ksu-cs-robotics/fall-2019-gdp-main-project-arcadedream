@@ -37,6 +37,8 @@ public class Movement : MonoBehaviour
     public bool canMove;
     public bool wallJumped = false;
 
+    public GameTimer timer;
+    SpriteRenderer playerSprite;
 
 
     // Start is called before the first frame update
@@ -48,6 +50,7 @@ public class Movement : MonoBehaviour
         timeObject.SetActive(false);
         countdownText.text = countdownTime.ToString();
         startingSlideSpeed = slideSpeed;
+        playerSprite = gameObject.GetComponent<SpriteRenderer>();
     }
 
     // Update is called once per frame
@@ -64,9 +67,14 @@ public class Movement : MonoBehaviour
                 countdownObject.SetActive(false);
                 canMove = true;
                 countdown = false;
-                timerObject.GetComponent<GameTimer>().runTimer = true;
+                //timerObject.GetComponent<GameTimer>().runTimer = true;
+                timer.runTimer = true;
+                Debug.Log(timer.runTimer);
+              
             }
         }
+
+        //if (!countdown) timer.runTimer = true;
 
         float x = Input.GetAxis("Horizontal");
         float y = Input.GetAxis("Vertical");
@@ -194,11 +202,26 @@ public class Movement : MonoBehaviour
 
     private void Respawn()
     {
+        rb.velocity = Vector2.zero;
         if (respawnDir.x > 0)
-            rb.position = new Vector2(respawnPosition.x - 0.25f, respawnPosition.y);
-        else if (respawnDir.x > 0)
-            rb.position = new Vector2(respawnPosition.x + 0.25f, respawnPosition.y);
+            rb.position = new Vector2(respawnPosition.x - 0.35f, respawnPosition.y + .25f);
+        else if (respawnDir.x < 0)
+            rb.position = new Vector2(respawnPosition.x + 0.35f, respawnPosition.y + .25f);
 
         StartCoroutine(DisableMovement(3));
+        //InvokeRepeating("flash", 0, .1f);
+    }
+
+    private void flash()
+    {
+
+        if (playerSprite.enabled = false)
+        {
+            playerSprite.enabled = true;
+            Debug.Log(playerSprite.enabled);
+        }
+        else if (playerSprite.enabled = true)
+            playerSprite.enabled = false;
+
     }
 }

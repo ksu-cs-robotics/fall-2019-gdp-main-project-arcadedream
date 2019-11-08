@@ -13,13 +13,14 @@ public class GameTimer : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        runTimer = false;
+        //runTimer = false;
         timerText.text = timer.ToString();
     }
 
     // Update is called once per frame
     void Update()
     {
+
         if (runTimer)
         {
             timer += Time.deltaTime;

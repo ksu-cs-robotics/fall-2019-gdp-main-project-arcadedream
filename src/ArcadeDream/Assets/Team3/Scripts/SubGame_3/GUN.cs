@@ -9,7 +9,6 @@ public class GUN : MonoBehaviour
     public GameObject playerPos;
     public GameObject bullet;
     public static float angle;
-    public GameObject bow_;
     Vector3 mousePos;
 
     public float fireRate;
