@@ -730,6 +730,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 56c6f778b1d9d394fb1b6302e5fe0b14, type: 3}
+--- !u!61 &1937779411 stripped
+BoxCollider2D:
+  m_CorrespondingSourceObject: {fileID: 6234083204611757041, guid: f6e4db38c1132dd479dd75ebf03efc2f,
+    type: 3}
+  m_PrefabInstance: {fileID: 6234083205281580671}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1992442584
 GameObject:
   m_ObjectHideFlags: 0
@@ -1048,6 +1054,11 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Breakable
       objectReference: {fileID: 0}
+    - target: {fileID: 6234083204611757043, guid: f6e4db38c1132dd479dd75ebf03efc2f,
+        type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
     - target: {fileID: 6234083204611757038, guid: f6e4db38c1132dd479dd75ebf03efc2f,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1111,7 +1122,12 @@ PrefabInstance:
     - target: {fileID: 6234083204611757042, guid: f6e4db38c1132dd479dd75ebf03efc2f,
         type: 3}
       propertyPath: BrokeTime
-      value: 1
+      value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 6234083204611757042, guid: f6e4db38c1132dd479dd75ebf03efc2f,
+        type: 3}
+      propertyPath: air
+      value: 
+      objectReference: {fileID: 1937779411}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f6e4db38c1132dd479dd75ebf03efc2f, type: 3}

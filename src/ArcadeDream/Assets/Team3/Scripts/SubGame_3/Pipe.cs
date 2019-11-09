@@ -9,12 +9,14 @@ public class Pipe : MonoBehaviour
     public Sprite Broken; //borken wall
     public float BrokeTime; //amouot of time wall stays broken
     public float BrokeTimer; //timer for how long it will stay broken
+    public BoxCollider2D air;
     private bool Broke; //boolen so the walls not reseting every frame
 
     // Start is called before the first frame update
     void Start()
     {
         this.GetComponent<SpriteRenderer>().sprite = UnBroken;
+        air.enabled = false;
         Broke = false;
     }
 
@@ -29,6 +31,8 @@ public class Pipe : MonoBehaviour
         else if (BrokeTimer < 0 && Broke == true)
         {
             this.GetComponent<SpriteRenderer>().sprite = UnBroken;
+            gameObject.layer = 9;
+            air.enabled = false; 
             Broke = false;
         }
     }
@@ -48,6 +52,8 @@ public class Pipe : MonoBehaviour
         {
             BrokeTimer = BrokeTime;
             this.GetComponent<SpriteRenderer>().sprite = Broken;
+            gameObject.layer = 0;
+            air.enabled = true;
             Broke = true;
         }
     }
