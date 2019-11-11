@@ -12,6 +12,7 @@ public class Movement : MonoBehaviour
     public Text timerObject;
     public GameObject countdownObject;
     public GameObject timeObject;
+    public GameObject gun;
     private Rigidbody2D rb;
     private Collision2D coll;
     private Collision collScript;
@@ -67,10 +68,8 @@ public class Movement : MonoBehaviour
                 countdownObject.SetActive(false);
                 canMove = true;
                 countdown = false;
-                //timerObject.GetComponent<GameTimer>().runTimer = true;
                 timer.runTimer = true;
-                Debug.Log(timer.runTimer);
-              
+                gun.GetComponent<GUN>().canShoot = true;
             }
         }
 

@@ -9,6 +9,7 @@ public class GUN : MonoBehaviour
     public GameObject playerPos;
     public GameObject bullet;
     public static float angle;
+    public bool canShoot = false;
     Vector3 mousePos;
 
     public float fireRate;
@@ -27,8 +28,11 @@ public class GUN : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.E) && timeLeft <= 0) 
         {
             //NETWORK HERE
-            Instantiate(bullet, transform.position, playerPos.transform.rotation);
-            timeLeft = fireRate;
+            if (canShoot)
+            {
+                Instantiate(bullet, transform.position, playerPos.transform.rotation);
+                timeLeft = fireRate;
+            }
         }
         if (timeLeft > 0)
         {

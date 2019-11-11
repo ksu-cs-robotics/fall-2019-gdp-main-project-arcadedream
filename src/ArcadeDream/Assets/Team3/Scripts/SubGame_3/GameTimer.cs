@@ -9,11 +9,9 @@ public class GameTimer : MonoBehaviour
     public bool runTimer;
 
     private double timer = 0.0;
-
-    // Start is called before the first frame update
+    
     void Start()
     {
-        //runTimer = false;
         timerText.text = timer.ToString();
     }
 
