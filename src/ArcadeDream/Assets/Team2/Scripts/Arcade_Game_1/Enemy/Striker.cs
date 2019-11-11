@@ -28,18 +28,20 @@ public class Striker : Enemy
     protected override void Update()
     {
         base.Update();
-
-        try
+        if (isServer)
         {
-            if (behaviourIterator_m.Current.IsAttacking && ((1.0 / primaryWeapon_m.FireRate) <= weaponTimer_m) && IsActive)
+            try
             {
-                ChooseVictim(out victim_m);
-                RpcShoot();
+                if (behaviourIterator_m.Current.IsAttacking && ((1.0 / primaryWeapon_m.FireRate) <= weaponTimer_m) && IsActive)
+                {
+                    ChooseVictim(out victim_m);
+                    RpcShoot();
 
-                weaponTimer_m = 0.0f;
+                    weaponTimer_m = 0.0f;
+                }
             }
+            finally { }
         }
-        finally { }
     }
     [ClientRpc]
     protected override void RpcShoot()
