@@ -37,7 +37,8 @@ public class Assaulter : Enemy
 
         // This class does have a weapon (Bullet)
         GameObject bullet = Instantiate(PROJECTILE, transform.position + Vector3.left, transform.rotation);
-        bullet.transform.parent = gameObject.transform;
+        NetworkServer.Spawn(bullet);
+        
         bullet.GetComponent<Rigidbody>().velocity = Vector3.left * BULLETSPEED;
         bullet.GetComponent<Bullet>().Shooter = gameObject;
     }

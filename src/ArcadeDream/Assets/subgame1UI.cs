@@ -19,6 +19,7 @@ public class subgame1UI : NetworkBehaviour
     //public GameObject levelClearUI;
     [SyncVar]public GameObject victoryUI;
     [SyncVar]public GameObject highscoreUI;
+    [SyncVar] public GameObject environment;
 
     bool gameover;
     float time = 2.0f;
@@ -72,6 +73,7 @@ public class subgame1UI : NetworkBehaviour
     {
         startScreenUI.SetActive(false);
         Time.timeScale = 1; //playing game
+        environment.SetActive(true);
     }
     //moving to highscore screen
     public void GameOverUIButton()

@@ -48,7 +48,7 @@ public class Striker : Enemy
 
         // This class does have a weapon (Laser)
         GameObject bullet = Instantiate(PROJECTILE, transform.position + Vector3.left, Quaternion.identity);
-
+        NetworkServer.Spawn(bullet);
         // var targetVelocity = victim_m.GetComponent<Rigidbody>().velocity;
         // var targetDistance = Vector3.Distance(victim_m.transform.position, transform.position);
         // var projectileTravelTime = targetDistance / BULLETSPEED;
