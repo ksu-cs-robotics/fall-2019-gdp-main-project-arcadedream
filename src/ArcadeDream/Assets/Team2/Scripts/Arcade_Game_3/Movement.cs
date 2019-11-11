@@ -1,10 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-<<<<<<< Updated upstream:src/ArcadeDream/Assets/Team2/Scripts/Arcade_Game_3/Movement.cs
-=======
 using UnityEngine.UI;
->>>>>>> Stashed changes:src/ArcadeDream/Assets/Team3/Scripts/SubGame_3/Movement.cs
 using UnityEngine.Networking;
 
 //Base for movement script taken from https://github.com/mixandjam/Celeste-Movement/blob/master/Assets/Scripts/Movement.cs
@@ -12,33 +9,38 @@ using UnityEngine.Networking;
 public class Movement : NetworkBehaviour
 {
     //Components
+    public Text countdownText;
+    public Text timerObject;
+    public GameObject countdownObject;
+    public GameObject timeObject;
     private Rigidbody2D rb;
     private Collision2D coll;
     private Collision collScript;
+    private Vector3 respawnPosition;
+    private Vector2 respawnDir;
 
     //Movement stats
-    [SerializeField] public float speed = 5;
-    [SerializeField] public float jumpForce = 10;
-
+    public float speed;
+    public float jumpForce;
     [Range(0, 1)]
     public float doubleJumpModifier; //Multiplies jumpforce to decrease height of double jump
     public float slideSpeed;
     private float startingSlideSpeed;
     public float wallJumpLerp;
     public float horizontalWallJumpSpeed;
+    private float countdownTime = 5;
+    private bool countdown = true;
 
     //movement bools. temporarily public to be able to see them while testing
     public bool wallSlide = false;
     public bool hasDoubleJump = true;
     public bool pushingWall = false;
-    public bool canMove = true;
+    public bool canMove;
     public bool wallJumped = false;
 
     // Start is called before the first frame update
     void Start()
     {
-<<<<<<< Updated upstream:src/ArcadeDream/Assets/Team2/Scripts/Arcade_Game_3/Movement.cs
-=======
         // Get the local UI elements in the local players environment...
         var localUICanvas = GameObject.FindGameObjectWithTag("UI");
         var timer = localUICanvas.gameObject.transform.Find("TimerText");
@@ -52,7 +54,7 @@ public class Movement : NetworkBehaviour
         timerObject = timer.GetComponent<Text>();
 
         canMove = false;
->>>>>>> Stashed changes:src/ArcadeDream/Assets/Team3/Scripts/SubGame_3/Movement.cs
+
         rb = GetComponent<Rigidbody2D>();
         collScript = GetComponent<Collision>();
         startingSlideSpeed = slideSpeed;
@@ -73,8 +75,6 @@ public class Movement : NetworkBehaviour
     {
         if (isLocalPlayer)
         {
-<<<<<<< Updated upstream:src/ArcadeDream/Assets/Team2/Scripts/Arcade_Game_3/Movement.cs
-=======
             if (countdown)
             {
                 countdownTime -= Time.deltaTime;
@@ -86,30 +86,21 @@ public class Movement : NetworkBehaviour
                     countdownObject.SetActive(false);
                     canMove = true;
                     countdown = false;
-                    timerObject.GetComponent<GameTimer>().runTimer = true;
+                    // timerObject.GetComponent<GameTimer>().runTimer = true;
                 }
             }
 
->>>>>>> Stashed changes:src/ArcadeDream/Assets/Team3/Scripts/SubGame_3/Movement.cs
             float x = Input.GetAxis("Horizontal");
             float y = Input.GetAxis("Vertical");
 
-            //Makes walljumping way more consistant at the cost of not being able to climb walls.
-            //This might be better, talk with design team
-<<<<<<< Updated upstream:src/ArcadeDream/Assets/Team2/Scripts/Arcade_Game_3/Movement.cs
-            // if (collScript.onLeftWall && x < 0) x = 0;
-            // if (collScript.onRightWall && x > 0) x = 0;
-=======
             if (collScript.onLeftWall && x < 0) x = 0;
             if (collScript.onRightWall && x > 0) x = 0;
->>>>>>> Stashed changes:src/ArcadeDream/Assets/Team3/Scripts/SubGame_3/Movement.cs
 
             Vector2 dir = new Vector2(x, y);
 
             if (canMove && x != 0)
                 Walk(dir);
 
-<<<<<<< Updated upstream:src/ArcadeDream/Assets/Team2/Scripts/Arcade_Game_3/Movement.cs
             if ((!Input.GetAxisRaw("Jump").Equals(0)) && canMove)
                 Jump(Vector2.up);
 
@@ -119,6 +110,7 @@ public class Movement : NetworkBehaviour
 
                 wallJumped = false;
             }
+
             if (collScript.onWall && !collScript.grounded && rb.velocity.y <= 0)
             {
                 wallSlide = true;
@@ -132,42 +124,6 @@ public class Movement : NetworkBehaviour
                 slideSpeed = startingSlideSpeed;
             }
         }
-=======
-            if (canMove)
-                Walk(dir);
-
-            if (Input.GetKeyDown(KeyCode.Space) && canMove)
-                Jump(Vector2.up);
-
-            if (collScript.grounded || wallSlide)
-            {
-                hasDoubleJump = true;
-
-                wallJumped = false;
-
-            }
-            if (collScript.grounded && !collScript.onWall)
-            {
-                respawnPosition = gameObject.transform.position;
-                respawnDir = dir;
-            }
-            if (collScript.onWall && !collScript.grounded && rb.velocity.y <= 0)
-            {
-                wallSlide = true;
-                wallSlideFunc();
-
-                StartCoroutine(increaseSlideSpeed());
-            }
-            else
-            {
-                wallSlide = false;
-                slideSpeed = startingSlideSpeed;
-
-                if (gameObject.transform.position.y < -4)
-                    Respawn();
-            }
-        }        
->>>>>>> Stashed changes:src/ArcadeDream/Assets/Team3/Scripts/SubGame_3/Movement.cs
     }
 
     IEnumerator increaseSlideSpeed()
