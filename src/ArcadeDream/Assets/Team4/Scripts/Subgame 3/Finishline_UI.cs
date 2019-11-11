@@ -17,6 +17,11 @@ public class Finishline_UI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        /*
+        if (endpoint.hasPassed) {
+            endUI.SetActive(true);
+            timeText.text = player_Prefab.timer.toString();
+        }
+        */
     }
 }
