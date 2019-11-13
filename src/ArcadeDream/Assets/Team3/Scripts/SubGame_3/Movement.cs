@@ -25,11 +25,12 @@ public class Movement : MonoBehaviour
     [Range(0, 1)]
     public float doubleJumpModifier; //Multiplies jumpforce to decrease height of double jump
     public float slideSpeed;
-    private float startingSlideSpeed;
     public float wallJumpLerp;
     public float horizontalWallJumpSpeed;
-    private float countdownTime = 5;
+    public float countdownTime;
     private bool countdown = true;
+
+    public bool launched;
 
     //movement bools. temporarily public to be able to see them while testing
     public bool wallSlide = false;
@@ -41,6 +42,13 @@ public class Movement : MonoBehaviour
     public GameTimer timer;
     SpriteRenderer playerSprite;
 
+    //Pipe/launcher variables
+    public float launchSpeed;
+    public float maxLaunchSpeed;
+    public float speedAtStart;
+
+    //Respawn variables
+    public float respawnThreshold;
 
     // Start is called before the first frame update
     void Start()
@@ -50,8 +58,10 @@ public class Movement : MonoBehaviour
         collScript = GetComponent<Collision>();
         timeObject.SetActive(false);
         countdownText.text = countdownTime.ToString();
-        startingSlideSpeed = slideSpeed;
         playerSprite = gameObject.GetComponent<SpriteRenderer>();
+
+        //
+        speedAtStart = speed;
     }
 
     // Update is called once per frame
@@ -89,7 +99,7 @@ public class Movement : MonoBehaviour
         if (canMove)
             Walk(dir);
 
-        if (Input.GetKeyDown(KeyCode.Space) && canMove)
+        if (Input.GetButtonDown("Jump") && canMove)
             Jump(Vector2.up);
 
         if (collScript.grounded || wallSlide)
@@ -98,11 +108,13 @@ public class Movement : MonoBehaviour
 
             wallJumped = false;
 
+            launched = false;
         }
         if (collScript.grounded && !collScript.onWall)
         {
             respawnPosition = gameObject.transform.position;
             respawnDir = dir;
+
         }
         if (collScript.onWall && !collScript.grounded && rb.velocity.y <= 0)
         {
@@ -114,12 +126,23 @@ public class Movement : MonoBehaviour
         else
         {
             wallSlide = false;
-            slideSpeed = startingSlideSpeed;
-
-            if (gameObject.transform.position.y < -4)
+            if (gameObject.transform.position.y < respawnThreshold)
                 Respawn();
         }
+
+        if (!collScript.onWall) slideSpeed = .2f;
+
+        if (gameObject.transform.rotation != Quaternion.identity && collScript.grounded)
+        {
+            if (x > 0) speed = speedAtStart * 2;
+            if (x < 0) speed = speedAtStart;
+        }
+        //else speed = speedAtStart;
+        
     }
+
+
+
 
     IEnumerator increaseSlideSpeed()
     {
@@ -132,14 +155,22 @@ public class Movement : MonoBehaviour
 
     private void Walk(Vector2 dir)
     {
-        if (!wallJumped)
+        if (!wallJumped && !launched)
         {
             rb.velocity = new Vector2(dir.x * speed, rb.velocity.y);
         }
+        else if (launched) 
+        {
+            rb.velocity += new Vector2(dir.x * launchSpeed, 0);
+            //rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y);
+            if (rb.velocity.x >= maxLaunchSpeed) rb.velocity = new Vector2(maxLaunchSpeed, rb.velocity.y);
+            if (rb.velocity.x <= -(maxLaunchSpeed)) rb.velocity = new Vector2(-maxLaunchSpeed, rb.velocity.y);
+        } 
         else
         {
             rb.velocity = Vector2.Lerp(rb.velocity, (new Vector2(dir.x * speed, rb.velocity.y)), wallJumpLerp * Time.deltaTime);
         }
+       
     }
 
     private void Jump(Vector2 dir)
@@ -222,5 +253,23 @@ public class Movement : MonoBehaviour
         else if (playerSprite.enabled = true)
             playerSprite.enabled = false;
 
+    }
+
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "Ground")
+        {
+            if (collScript.grounded) gameObject.transform.rotation = collision.gameObject.transform.rotation;
+        }
+        else gameObject.transform.rotation = Quaternion.identity;
+
+    }
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        if(collision.gameObject.tag == "Ground")
+        {
+            speed = speedAtStart;
+        }
     }
 }

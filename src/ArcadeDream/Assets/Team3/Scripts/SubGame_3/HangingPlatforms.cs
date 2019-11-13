@@ -36,7 +36,7 @@ public class HangingPlatforms : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
 
-        if (collision.tag == "Bullet" && Broke == false)
+        if (collision.tag == "Bullet"  )
         {
             BrokeTimer = BrokeTime;
             this.transform.Rotate(0, 0, 90);

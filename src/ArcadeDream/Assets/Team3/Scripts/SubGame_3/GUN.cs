@@ -14,6 +14,7 @@ public class GUN : MonoBehaviour
 
     public float fireRate;
     private float timeLeft = 0;
+   
     // Start is called before the first frame update
     void Start()
     {

@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class Pipe : MonoBehaviour
 {
-    public float thrust;
+    //public float thrust;
+    public float horizThrust;
+    public float vertThrust;
     public Sprite UnBroken; //sprite for unbroken wall
     public Sprite Broken; //borken wall
     public float BrokeTime; //amouot of time wall stays broken
@@ -12,12 +14,17 @@ public class Pipe : MonoBehaviour
     public BoxCollider2D air;
     private bool Broke; //boolen so the walls not reseting every frame
 
+    private Vector2 launchDir;
+    public BoxCollider2D box;
+
     // Start is called before the first frame update
     void Start()
     {
         this.GetComponent<SpriteRenderer>().sprite = UnBroken;
         air.enabled = false;
         Broke = false;
+        launchDir = transform.up;
+        Debug.Log(transform.up);
     }
 
     // Update is called once per frame
@@ -34,6 +41,7 @@ public class Pipe : MonoBehaviour
             gameObject.layer = 9;
             air.enabled = false; 
             Broke = false;
+            box.enabled = true;
         }
     }
 
@@ -41,9 +49,15 @@ public class Pipe : MonoBehaviour
     {
         if (collision.tag == "Player" && Broke == true)
         {
-            collision.GetComponent<Rigidbody2D>().AddForce(new Vector3(0f, thrust, 0f));
+            if (collision.GetComponent<Movement>().canMove == true)
+            {
+                collision.GetComponent<Rigidbody2D>().velocity += (launchDir  * new Vector2(horizThrust, vertThrust));
+                collision.GetComponent<Movement>().launched = true;
+            }
         }
     }
+
+    
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -55,6 +69,7 @@ public class Pipe : MonoBehaviour
             gameObject.layer = 0;
             air.enabled = true;
             Broke = true;
+            box.enabled = false;
         }
     }
 }
