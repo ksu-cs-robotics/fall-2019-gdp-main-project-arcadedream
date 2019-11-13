@@ -26,7 +26,7 @@ public class GUN : MonoBehaviour
     {
         bow_move();
 
-        if (Input.GetKeyDown(KeyCode.E) && timeLeft <= 0) 
+        if ((Input.GetKeyDown(KeyCode.E) || Input.GetButtonDown("Fire1")) && timeLeft <= 0) 
         {
             //NETWORK HERE
             if (canShoot)
