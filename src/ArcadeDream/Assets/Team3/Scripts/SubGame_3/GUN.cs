@@ -1,12 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
-
-
-public class GUN : MonoBehaviour
+public class GUN : NetworkBehaviour
 {
-    //hello
     public GameObject playerPos;
     public GameObject bullet;
     public static float angle;
@@ -33,6 +31,7 @@ public class GUN : MonoBehaviour
             if (canShoot)
             {
                 Instantiate(bullet, transform.position, playerPos.transform.rotation);
+                NetworkServer.SpawnWithClientAuthority(bullet, playerPos);
                 timeLeft = fireRate;
             }
         }

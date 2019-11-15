@@ -1,8 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
-public class BulletScript : MonoBehaviour
+public class BulletScript : NetworkBehaviour
 {
     private Rigidbody2D rb;
     public float bulletSpeed;
@@ -27,12 +28,12 @@ public class BulletScript : MonoBehaviour
     {
 
         if (collision.tag == "Ground" || collision.tag == "Breakable")
-        Destroy(gameObject);
+        NetworkServer.Destroy(gameObject);
     }
 
     IEnumerator despawn()
     {
         yield return new WaitForSeconds(despawnTime);
-        Destroy(gameObject);
+        NetworkServer.Destroy(gameObject);
     }
 }
