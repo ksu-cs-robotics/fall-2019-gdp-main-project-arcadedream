@@ -36,7 +36,6 @@ public class WallBreak : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-
         if (collision.tag == "Bullet")
         {
             BrokeTimer = BrokeTime;
