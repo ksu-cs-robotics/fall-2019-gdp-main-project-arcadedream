@@ -23,7 +23,7 @@ public class GUN : NetworkBehaviour
     // Update is called once per frame
     void Update()
     {
-        if ((Input.GetKeyDown(KeyCode.E) || Input.GetButtonDown("Fire1")) && timeLeft <= 0 && canShoot) 
+        if ((Input.GetKeyDown(KeyCode.E) || Input.GetButtonDown("Fire1")) && timeLeft <= 0 && canShoot && isLocalPlayer) 
         {
             mousePos = new Vector3(Input.mousePosition.x, Input.mousePosition.y, 10);
             Vector3 lookPos = Camera.main.ScreenToWorldPoint(mousePos);
