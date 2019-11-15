@@ -1,15 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
 
 
-public class GUN : MonoBehaviour
+public class GUN : NetworkBehaviour
 {
-    public GameObject playerPos;
     public GameObject bullet;
-    public static float angle;
-    public bool canShoot = false;
+    public bool canShoot = true;
     Vector3 mousePos;
 
     public float fireRate;
@@ -24,32 +23,29 @@ public class GUN : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        bow_move();
-
-        if ((Input.GetKeyDown(KeyCode.E) || Input.GetButtonDown("Fire1")) && timeLeft <= 0) 
+        if ((Input.GetKeyDown(KeyCode.E) || Input.GetButtonDown("Fire1")) && timeLeft <= 0 && canShoot) 
         {
-            //NETWORK HERE
-            if (canShoot)
-            {
-                Instantiate(bullet, transform.position, playerPos.transform.rotation);
-                timeLeft = fireRate;
-            }
+            mousePos = new Vector3(Input.mousePosition.x, Input.mousePosition.y, 10);
+            Vector3 lookPos = Camera.main.ScreenToWorldPoint(mousePos);
+            lookPos = lookPos - transform.position;
+            float angle = Mathf.Atan2(lookPos.y, lookPos.x) * Mathf.Rad2Deg;
+            CmdShootGun(angle);
+            timeLeft = fireRate;
+
         }
         if (timeLeft > 0)
         {
             timeLeft -= Time.deltaTime;
         }
-        
     }
 
-    private void bow_move() //this code was taken from https://answers.unity.com/questions/1326563/top-down-2d-game-aim-weapon-with-mouse-please-help.html
+    [Command]
+    void CmdShootGun(float angle)
     {
-        mousePos = new Vector3(Input.mousePosition.x, Input.mousePosition.y, 10);
-        Vector3 lookPos = Camera.main.ScreenToWorldPoint(mousePos);
-        lookPos = lookPos - playerPos.transform.position;
-        angle = Mathf.Atan2(lookPos.y, lookPos.x) * Mathf.Rad2Deg;
-        playerPos.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
-        this.transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
-
+        Debug.Log("SERVER SHOOT");
+        
+        GameObject bullet_temp = Instantiate(bullet, transform.position, Quaternion.Euler(0, 0, angle));
+        NetworkServer.Spawn(bullet_temp);
     }
+
 }
