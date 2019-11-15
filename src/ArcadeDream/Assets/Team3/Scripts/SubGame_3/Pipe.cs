@@ -25,7 +25,7 @@ public class Pipe : NetworkBehaviour
         air.enabled = false;
         Broke = false;
         launchDir = transform.up;
-        Debug.Log(transform.up);
+       // Debug.Log(transform.up);
     }
 
     // Update is called once per frame
@@ -52,6 +52,8 @@ public class Pipe : NetworkBehaviour
         {
             if (collision.GetComponent<Movement>().canMove == true)
             {
+                
+                Debug.Log(launchDir);
                 collision.GetComponent<Rigidbody2D>().velocity += (launchDir  * new Vector2(horizThrust, vertThrust));
                 collision.GetComponent<Movement>().launched = true;
             }
@@ -61,15 +63,20 @@ public class Pipe : NetworkBehaviour
     
     private void OnTriggerEnter2D(Collider2D collision)
     {
-
         if (collision.tag == "Bullet")
         {
-            BrokeTimer = BrokeTime;
-            this.GetComponent<SpriteRenderer>().sprite = Broken;
-            gameObject.layer = 0;
-            air.enabled = true;
-            Broke = true;
-            box.enabled = false;
+            RpcChangeSprite();
         }
+    }
+
+    [ClientRpc]
+    private void RpcChangeSprite()
+    {
+        BrokeTimer = BrokeTime;
+        this.GetComponent<SpriteRenderer>().sprite = Broken;
+        gameObject.layer = 0;
+        air.enabled = true;
+        Broke = true;
+        box.enabled = false;
     }
 }
