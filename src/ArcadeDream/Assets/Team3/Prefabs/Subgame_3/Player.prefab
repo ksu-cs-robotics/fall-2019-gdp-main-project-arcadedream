@@ -125,7 +125,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerPos: {fileID: 7114197272471028908}
   bullet: {fileID: 8662675910154126864, guid: 263c1a7cca1bdcf4fb8cc88e3ae415bc, type: 3}
-  bow_: {fileID: 0}
+  canShoot: 0
   fireRate: 0.15
 --- !u!1 &7114197273132059118
 GameObject:
@@ -143,6 +143,8 @@ GameObject:
   - component: {fileID: 7114197273132058132}
   - component: {fileID: 1147355006}
   - component: {fileID: 5170098219222488147}
+  - component: {fileID: 3949983049745008135}
+  - component: {fileID: 6592420405309786636}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -246,17 +248,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08ab76e6a7a695f478a67e1fdf5401f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  countdownText: {fileID: 0}
+  timerObject: {fileID: 0}
+  countdownObject: {fileID: 0}
+  timeObject: {fileID: 0}
+  gun: {fileID: 0}
   speed: 1.5
   jumpForce: 3.2
   doubleJumpModifier: 0.75
   slideSpeed: 0.2
   wallJumpLerp: 3
   horizontalWallJumpSpeed: 2
+  countdownTime: 0
+  launched: 0
   wallSlide: 0
   hasDoubleJump: 1
   pushingWall: 1
   canMove: 1
   wallJumped: 0
+  timer: {fileID: 0}
+  launchSpeed: 0
+  maxLaunchSpeed: 0
+  speedAtStart: 0
+  respawnThreshold: -30
 --- !u!61 &7114197273132058133
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -345,3 +359,58 @@ MonoBehaviour:
   bottomOffset: {x: 0, y: -0.07}
   rightOffset: {x: 0.07, y: 0}
   leftOffset: {x: -0.07, y: 0}
+--- !u!114 &3949983049745008135
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7114197273132059118}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 372142912, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SceneId:
+    m_Value: 0
+  m_AssetId:
+    i0: 0
+    i1: 0
+    i2: 0
+    i3: 0
+    i4: 0
+    i5: 0
+    i6: 0
+    i7: 0
+    i8: 0
+    i9: 0
+    i10: 0
+    i11: 0
+    i12: 0
+    i13: 0
+    i14: 0
+    i15: 0
+  m_ServerOnly: 0
+  m_LocalPlayerAuthority: 1
+--- !u!114 &6592420405309786636
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7114197273132059118}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1768714887, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_TransformSyncMode: 2
+  m_SendInterval: 0.06666667
+  m_SyncRotationAxis: 3
+  m_RotationSyncCompression: 0
+  m_SyncSpin: 0
+  m_MovementTheshold: 0.001
+  m_VelocityThreshold: 0.0001
+  m_SnapThreshold: 5
+  m_InterpolateRotation: 1
+  m_InterpolateMovement: 1

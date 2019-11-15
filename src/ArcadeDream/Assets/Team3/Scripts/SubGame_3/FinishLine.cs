@@ -11,6 +11,7 @@ public class FinishLine : MonoBehaviour
 
     void Start()
     {
+        gameOverText = gameOverObject.gameObject.GetComponent<Text>();
         gameOverText.text = "Finished";
         gameOverObject.SetActive(false);
     }

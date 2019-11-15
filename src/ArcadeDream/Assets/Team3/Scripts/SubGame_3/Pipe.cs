@@ -1,8 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
-public class Pipe : MonoBehaviour
+public class Pipe : NetworkBehaviour
 {
     //public float thrust;
     public float horizThrust;
@@ -58,7 +59,6 @@ public class Pipe : MonoBehaviour
     }
 
     
-
     private void OnTriggerEnter2D(Collider2D collision)
     {
 

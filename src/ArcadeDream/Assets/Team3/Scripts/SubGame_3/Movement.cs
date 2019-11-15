@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Networking;
 
 //Base for movement script taken from https://github.com/mixandjam/Celeste-Movement/blob/master/Assets/Scripts/Movement.cs
 
-public class Movement : MonoBehaviour
+public class Movement : NetworkBehaviour
 {
     //Components
     public Text countdownText;
@@ -53,6 +54,16 @@ public class Movement : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        var UICanvas = GameObject.FindGameObjectWithTag("UI").gameObject;
+        var timerTextTemp = UICanvas.gameObject.transform.GetChild(0).gameObject;
+        var countdownTextTemp = UICanvas.gameObject.transform.GetChild(1).gameObject;
+
+        timerObject = timerTextTemp.gameObject.GetComponent<Text>();
+        timeObject = timerTextTemp.gameObject;
+
+        countdownObject = countdownTextTemp.gameObject;
+        countdownText = countdownTextTemp.gameObject.GetComponent<Text>();
+
         canMove = false;
         rb = GetComponent<Rigidbody2D>();
         collScript = GetComponent<Collision>();
@@ -64,89 +75,93 @@ public class Movement : MonoBehaviour
         speedAtStart = speed;
     }
 
+    public override void OnStartLocalPlayer()
+    {
+        base.OnStartLocalPlayer();
+
+        this.gameObject.name = "LocalPlayer";
+        GameObject.FindGameObjectWithTag("MainCamera").GetComponent<MainCamera>().SetPlayer(this.gameObject);
+    }
+
     // Update is called once per frame
     void Update()
     {
-        if (countdown)
+        if (isLocalPlayer)
         {
-            countdownTime -= Time.deltaTime;
-            countdownText.text = Mathf.Round(countdownTime).ToString();
-
-            if (countdownTime <= 0)
+            if (countdown)
             {
-                timeObject.SetActive(true);
-                countdownObject.SetActive(false);
-                canMove = true;
-                countdown = false;
-                timer.runTimer = true;
-                gun.GetComponent<GUN>().canShoot = true;
+                countdownTime -= Time.deltaTime;
+                countdownText.text = Mathf.Round(countdownTime).ToString();
+
+                if (countdownTime <= 0)
+                {
+                    timeObject.SetActive(true);
+                    countdownObject.SetActive(false);
+                    canMove = true;
+                    countdown = false;
+                    //timer.runTimer = true;
+                    //gun.GetComponent<GUN>().canShoot = true;
+                }
             }
+
+            //if (!countdown) timer.runTimer = true;
+
+            float x = Input.GetAxis("Horizontal");
+            float y = Input.GetAxis("Vertical");
+
+            //Makes walljumping way more consistant at the cost of not being able to climb walls.
+            //This might be better, talk with design team
+            if (collScript.onLeftWall && x < 0) x = 0;
+            if (collScript.onRightWall && x > 0) x = 0;
+
+            Vector2 dir = new Vector2(x, y);
+
+            if (canMove)
+                Walk(dir);
+
+            if (Input.GetButtonDown("Jump") && canMove)
+                Jump(Vector2.up);
+
+            if (collScript.grounded || wallSlide)
+            {
+                hasDoubleJump = true;
+
+                wallJumped = false;
+
+                launched = false;
+            }
+            /*if (collScript.grounded && !collScript.onWall)
+            {
+                respawnPosition = gameObject.transform.position;
+                respawnDir = dir;
+            }*/
+            if (collScript.onWall && !collScript.grounded && rb.velocity.y <= 0)
+            {
+                wallSlide = true;
+                wallSlideFunc();
+
+                StartCoroutine(increaseSlideSpeed());
+            }
+            else
+            {
+                wallSlide = false;
+                if (gameObject.transform.position.y < respawnThreshold)
+                    Respawn();
+            }
+
+            if (!collScript.onWall) slideSpeed = .2f;
+
+            if (gameObject.transform.rotation != Quaternion.identity && collScript.grounded)
+            {
+                if (x > 0) speed = speedAtStart * 2;
+                if (x < 0) speed = speedAtStart;
+            }
+            //else speed = speedAtStart;
         }
-
-        //if (!countdown) timer.runTimer = true;
-
-        float x = Input.GetAxis("Horizontal");
-        float y = Input.GetAxis("Vertical");
-
-        //Makes walljumping way more consistant at the cost of not being able to climb walls.
-        //This might be better, talk with design team
-        if (collScript.onLeftWall && x < 0) x = 0;
-        if (collScript.onRightWall && x > 0) x = 0;
-
-        Vector2 dir = new Vector2(x, y);
-
-
-        if (canMove)
-            Walk(dir);
-
-        if (Input.GetButtonDown("Jump") && canMove)
-            Jump(Vector2.up);
-
-        if (collScript.grounded || wallSlide)
-        {
-            hasDoubleJump = true;
-
-            wallJumped = false;
-
-            launched = false;
-        }
-        if (collScript.grounded && !collScript.onWall)
-        {
-            respawnPosition = gameObject.transform.position;
-            respawnDir = dir;
-
-        }
-        if (collScript.onWall && !collScript.grounded && rb.velocity.y <= 0)
-        {
-            wallSlide = true;
-            wallSlideFunc();
-
-            StartCoroutine(increaseSlideSpeed());
-        }
-        else
-        {
-            wallSlide = false;
-            if (gameObject.transform.position.y < respawnThreshold)
-                Respawn();
-        }
-
-        if (!collScript.onWall) slideSpeed = .2f;
-
-        if (gameObject.transform.rotation != Quaternion.identity && collScript.grounded)
-        {
-            if (x > 0) speed = speedAtStart * 2;
-            if (x < 0) speed = speedAtStart;
-        }
-        //else speed = speedAtStart;
-        
     }
-
-
-
 
     IEnumerator increaseSlideSpeed()
     {
-
         yield return new WaitForSeconds(.02f);
         //if (slideSpeed < 1)
         slideSpeed = slideSpeed * 1.03f;
@@ -169,8 +184,7 @@ public class Movement : MonoBehaviour
         else
         {
             rb.velocity = Vector2.Lerp(rb.velocity, (new Vector2(dir.x * speed, rb.velocity.y)), wallJumpLerp * Time.deltaTime);
-        }
-       
+        }    
     }
 
     private void Jump(Vector2 dir)
