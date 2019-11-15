@@ -6,6 +6,7 @@ using UnityEngine;
 
 public class GUN : MonoBehaviour
 {
+    //hello
     public GameObject playerPos;
     public GameObject bullet;
     public static float angle;
