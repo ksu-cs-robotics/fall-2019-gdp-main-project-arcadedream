@@ -1,8 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
-public class Balcony : MonoBehaviour
+public class Balcony : NetworkBehaviour
 {
 
     public GameObject Rubble;
@@ -27,10 +28,7 @@ public class Balcony : MonoBehaviour
 
         else if (BrokeTimer < 0)
         {
-            Rubble.GetComponent<SpriteRenderer>().enabled = false;
-            Rubble.GetComponent<BoxCollider2D>().enabled = false;
-            gameObject.GetComponent<SpriteRenderer>().enabled = true;
-            gameObject.GetComponent<BoxCollider2D>().enabled = true;
+            RpcBalcony();   
         }
     }
 
@@ -39,11 +37,26 @@ public class Balcony : MonoBehaviour
 
         if (collision.tag == "Bullet")
         {
-            Rubble.GetComponent<SpriteRenderer>().enabled = true;
-            Rubble.GetComponent<BoxCollider2D>().enabled = true;
-            gameObject.GetComponent<SpriteRenderer>().enabled = false;
-            gameObject.GetComponent<BoxCollider2D>().enabled = false;
-            BrokeTimer = BrokeTime;
+            RpcRubble();
         }
+    }
+
+    [ClientRpc]
+    private void RpcRubble()
+    {
+        Rubble.GetComponent<SpriteRenderer>().enabled = true;
+        Rubble.GetComponent<BoxCollider2D>().enabled = true;
+        gameObject.GetComponent<SpriteRenderer>().enabled = false;
+        gameObject.GetComponent<BoxCollider2D>().enabled = false;
+        BrokeTimer = BrokeTime;
+    }
+
+    [ClientRpc]
+    private void RpcBalcony()
+    {
+        Rubble.GetComponent<SpriteRenderer>().enabled = false;
+        Rubble.GetComponent<BoxCollider2D>().enabled = false;
+        gameObject.GetComponent<SpriteRenderer>().enabled = true;
+        gameObject.GetComponent<BoxCollider2D>().enabled = true;
     }
 }

@@ -1,8 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
-public class HangingPlatforms : MonoBehaviour
+public class HangingPlatforms : NetworkBehaviour
 {
     public float BrokeTime; //amouot of time wall stays broken
     public float BrokeTimer; //timer for how long it will stay broken
@@ -38,9 +39,15 @@ public class HangingPlatforms : MonoBehaviour
 
         if (collision.tag == "Bullet"  )
         {
-            BrokeTimer = BrokeTime;
-            this.transform.Rotate(0, 0, 90);
-            Broke = true;
+            RpcRotate();
         }
+    }
+
+    [ClientRpc]
+    private void RpcRotate()
+    {
+        BrokeTimer = BrokeTime;
+        this.transform.Rotate(0, 0, 90);
+        Broke = true;
     }
 }

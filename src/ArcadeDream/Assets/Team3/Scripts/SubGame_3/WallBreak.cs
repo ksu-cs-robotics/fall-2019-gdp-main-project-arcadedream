@@ -1,8 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
-public class WallBreak : MonoBehaviour
+public class WallBreak : NetworkBehaviour
 {
     public Sprite UnBroken; //sprite for unbroken wall
     public Sprite Broken; //borken wall
@@ -38,11 +39,17 @@ public class WallBreak : MonoBehaviour
     {
         if (collision.tag == "Bullet")
         {
-            BrokeTimer = BrokeTime;
-            this.GetComponent<SpriteRenderer>().sprite = Broken;
-            this.GetComponent<Collider2D>().enabled = false;
-            Broke = true;
-            Debug.Log(this.GetComponent<Collider2D>().enabled);
+            RpcChangeSprite();
         }
+    }
+
+    [ClientRpc]
+    private void RpcChangeSprite()
+    {
+        BrokeTimer = BrokeTime;
+        this.GetComponent<SpriteRenderer>().sprite = Broken;
+        this.GetComponent<Collider2D>().enabled = false;
+        Broke = true;
+        //Debug.Log(this.GetComponent<Collider2D>().enabled);
     }
 }
