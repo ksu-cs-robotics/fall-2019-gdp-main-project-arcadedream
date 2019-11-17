@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
-public class BulletScript : NetworkBehaviour
+public class BulletsScript : NetworkBehaviour
 {
     private Rigidbody2D rb;
     public float bulletSpeed;
