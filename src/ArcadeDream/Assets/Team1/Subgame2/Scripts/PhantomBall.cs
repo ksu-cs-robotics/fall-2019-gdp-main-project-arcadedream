@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class PhantomBall : MonoBehaviour
 {
-    public GameObject powerupUI;
-
     public GameObject phantoms;
     private IEnumerator coroutine;
     // Start is called before the first frame update
@@ -24,7 +22,6 @@ public class PhantomBall : MonoBehaviour
     {
         if (collision.tag == "Player")
         {
-            powerupUI.SetActive(true);
             Instantiate(phantoms, new Vector3(0, 0, 0), Quaternion.identity);
             Instantiate(phantoms, new Vector3(0, 0, 0), Quaternion.identity);
             coroutine = Waitandkill(3f);

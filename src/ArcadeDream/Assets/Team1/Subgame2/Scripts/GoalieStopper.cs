@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class GoalieStopper : MonoBehaviour
 {
-    public GameObject powerupUI;
-
  public static int holdrl;
     public static int holdrr;
     public static int holdgl;
@@ -105,7 +103,6 @@ public class GoalieStopper : MonoBehaviour
     {
         if (collision.name == "Player1Paddle")
         {
-            powerupUI.SetActive(true);
             GameObject temp = GameObject.FindGameObjectWithTag("goalieb");
             if (temp.GetComponent<GoalieMovement>().leftlimit == 1)
             {
@@ -145,7 +142,6 @@ public class GoalieStopper : MonoBehaviour
 
         if (collision.name == "Player2Paddle")
         {
-            powerupUI.SetActive(true);
             GameObject temp = GameObject.FindGameObjectWithTag("Goalie");
             if (temp.GetComponent<GoalieMovement>().leftlimit == 1)
             {
@@ -185,7 +181,6 @@ public class GoalieStopper : MonoBehaviour
 
         if (collision.name == "Player3Paddle")
         {
-            powerupUI.SetActive(true);
             GameObject temp = GameObject.FindGameObjectWithTag("goalieb");
             if (temp.GetComponent<GoalieMovement>().leftlimit == 1)
             {
@@ -226,7 +221,6 @@ public class GoalieStopper : MonoBehaviour
 
         if (collision.name == "Player4Paddle")
         {
-            powerupUI.SetActive(true);
             GameObject temp = GameObject.FindGameObjectWithTag("goalieb");
             if (temp.GetComponent<GoalieMovement>().leftlimit == 1)
             {
