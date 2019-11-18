@@ -15,9 +15,9 @@ GameObject:
   - component: {fileID: 7436032136532637005}
   - component: {fileID: 7436032136532637003}
   - component: {fileID: 7436032136532637002}
+  - component: {fileID: 7759349303224689631}
   - component: {fileID: 7436032136532637001}
   - component: {fileID: 1607557830489018970}
-  - component: {fileID: 7759349303224689631}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -207,6 +207,21 @@ MonoBehaviour:
   bottomOffset: {x: -0.02, y: -0.085}
   rightOffset: {x: 0.07, y: 0}
   leftOffset: {x: -0.07, y: 0}
+--- !u!114 &7759349303224689631
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7436032136532636999}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 35fe03e9c49728240a4c71b854ef0ff4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bullet: {fileID: 8662675910154126864, guid: 263c1a7cca1bdcf4fb8cc88e3ae415bc, type: 3}
+  canShoot: 1
+  fireRate: 0
 --- !u!114 &7436032136532637001
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -253,7 +268,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_TransformSyncMode: 2
-  m_SendInterval: 0.1
+  m_SendInterval: 0.033333335
   m_SyncRotationAxis: 3
   m_RotationSyncCompression: 0
   m_SyncSpin: 0
@@ -262,19 +277,3 @@ MonoBehaviour:
   m_SnapThreshold: 5
   m_InterpolateRotation: 1
   m_InterpolateMovement: 1
---- !u!114 &7759349303224689631
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7436032136532636999}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 35fe03e9c49728240a4c71b854ef0ff4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerPos: {fileID: 7436032136532636999}
-  bullet: {fileID: 8662675910154126864, guid: 263c1a7cca1bdcf4fb8cc88e3ae415bc, type: 3}
-  canShoot: 1
-  fireRate: 0

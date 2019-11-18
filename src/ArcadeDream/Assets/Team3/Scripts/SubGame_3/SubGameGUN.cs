@@ -23,12 +23,14 @@ public class SubGameGUN : NetworkBehaviour
     // Update is called once per frame
     void Update()
     {
-        if ((Input.GetKeyDown(KeyCode.E) || Input.GetButtonDown("Fire1")) && timeLeft <= 0 && canShoot && isLocalPlayer) 
+        if (Input.GetKeyDown(KeyCode.E) && timeLeft <= 0 && canShoot && isLocalPlayer) 
         {
             mousePos = new Vector3(Input.mousePosition.x, Input.mousePosition.y, 10);
+            Debug.Log(mousePos);
             Vector3 lookPos = Camera.main.ScreenToWorldPoint(mousePos);
             lookPos = lookPos - transform.position;
             float angle = Mathf.Atan2(lookPos.y, lookPos.x) * Mathf.Rad2Deg;
+            Debug.Log(angle);
             CmdShootGun(angle);
             timeLeft = fireRate;
 
@@ -42,8 +44,7 @@ public class SubGameGUN : NetworkBehaviour
     [Command]
     void CmdShootGun(float angle)
     {
-        Debug.Log("SERVER SHOOT");
-        
+        Debug.Log("PEWPEW");
         GameObject bullet_temp = Instantiate(bullet, transform.position, Quaternion.Euler(0, 0, angle));
         NetworkServer.Spawn(bullet_temp);
     }
