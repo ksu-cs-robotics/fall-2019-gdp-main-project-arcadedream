@@ -1,62 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Security.Cryptography;
 using UnityEngine;
-
-/// <summary>
-/// Main class used in encrypting/decrypting config, and wallet data
-/// Author(s): Josh Dotson
-/// Version: 1
-/// Notes: Thanks to Mr.Peyravi for 'Computer Network Security' RSA 
-/// </summary>
-public class ADRSAServiceProvider : IDisposable
-{
-    // make this private in the future, and configure our own methods for it
-    private RSACryptoServiceProvider ADRSA;
-    private RSAParameters ADRSAParams;
-
-    // This is not the safest thing for now, but it's just the config file
-    private static readonly byte[] _d = { 0x0 };
-    private static readonly byte[] _dmodp = { 0x0 };
-    private static readonly byte[] _dmodq = { 0x0 };
-    private static readonly byte[] _e = { 0x0 };
-    private static readonly byte[] _qinv = { 0x0 };
-    private static readonly byte[] _modulus = { 0x0 };
-    private static readonly byte[] _p = { 0x0 };
-    private static readonly byte[] _q = { 0x0 };
-
-    public ADRSAServiceProvider()
-    {
-        RSAParameters adRSAParameters = ADRSA.ExportParameters(false);
-
-        adRSAParameters.D = _d;
-        adRSAParameters.DP = _dmodp;
-        adRSAParameters.DQ = _dmodq;
-        adRSAParameters.Exponent = _e;
-        adRSAParameters.InverseQ = _qinv;
-        adRSAParameters.Modulus = _modulus;
-        adRSAParameters.P = _p;
-        adRSAParameters.Q = _q;
-    }
-
-    // Placeholders for now
-    public byte[] Encrypt(byte[] data)
-    {
-        return new byte[0];
-    }
-    public byte[] Decrypt(byte[] data)
-    {
-        return new byte[0];
-    }
-
-    // C# destructor
-    public void Dispose()
-    {
-        ADRSA.Dispose();
-    }
-}
-
 
 /// <summary>
 /// Stores an Item gameObject along with its corresponding ID
@@ -99,16 +44,16 @@ public class ItemMap : MonoBehaviour
     };
 
     [TextArea] public string ItemType1Description;
-    [SerializeField] Material ID0, ID1, ID2, ID3, ID4, ID5, ID6, ID7, ID8, ID9, ID10, ID11, ID12, ID13, ID14, ID15;
+    [SerializeField] GameObject ID0, ID1, ID2, ID3, ID4, ID5, ID6, ID7, ID8, ID9, ID10, ID11, ID12, ID13, ID14, ID15;
 
     [TextArea] public string ItemType2Description;
-    [SerializeField] Material ID16, ID17, ID18, ID19, ID20, ID21, ID22, ID23, ID24, ID25, ID26, ID27, ID28, ID29, ID30, ID31;
+    [SerializeField] GameObject ID16, ID17, ID18, ID19, ID20, ID21, ID22, ID23, ID24, ID25, ID26, ID27, ID28, ID29, ID30, ID31;
 
     [TextArea] public string ItemType3Description;
-    [SerializeField] Material ID32, ID33, ID34, ID35, ID36, ID37, ID38, ID39, ID40, ID41, ID42, ID43, ID44, ID45, ID46, ID47;
+    [SerializeField] GameObject ID32, ID33, ID34, ID35, ID36, ID37, ID38, ID39, ID40, ID41, ID42, ID43, ID44, ID45, ID46, ID47;
 
     [TextArea] public string ItemType4Description;
-    [SerializeField] Material ID48, ID49, ID50, ID51, ID52, ID53, ID54, ID55, ID56, ID57, ID58, ID59, ID60, ID61, ID62, ID63;
+    [SerializeField] GameObject ID48, ID49, ID50, ID51, ID52, ID53, ID54, ID55, ID56, ID57, ID58, ID59, ID60, ID61, ID62, ID63;
 
     #region ** Bitwise Method Implementations **
     /// <summary>
@@ -172,6 +117,8 @@ public class ItemMap : MonoBehaviour
 
         return unlockedItems;
     }
+    #endregion
+
     /// <summary>
     /// Takes an equipment hash from the database, and returns a list of equipped gameObjects based on it
     /// Author: Josh Dotson
@@ -179,13 +126,12 @@ public class ItemMap : MonoBehaviour
     /// </summary>
     /// <param name="equipmentHash">Unsigned 32 Bit int from Database</param>
     /// <returns>List of gameObjects the Player Should Be Wearing</returns>
-    public static List<GameObject> GetEquippedItems(ulong equipmentHash)
+    public static List<GameObject> GetEquippedItems(uint equipmentHash)
     {
         // ...
-
+        
         return new List<GameObject>(); // Placeholder
     }
-    #endregion
 
     public void Awake()
     {

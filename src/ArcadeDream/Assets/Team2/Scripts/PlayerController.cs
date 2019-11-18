@@ -7,11 +7,11 @@ using UnityEngine.Networking;
 using UnityEngine.UI;
 
 /// <summary>
-/// Maps to respective fields in the Player table in the database (conquered by Team 4...)
+/// Maps to respective fields in the Player table in the database
 /// Author: Josh Dotson
 /// Version: 1
 /// </summary>
-/* public class ADDBPlayerList
+public class ADDBPlayerList
 {
     public int ID { get; set; }
     public string Username { get; set; }
@@ -20,7 +20,6 @@ using UnityEngine.UI;
     public int Total_Points { get; set; }
     public ulong PermissionsHash { get; set; }
     public ulong EquipmentHash { get; set; }
-
     public ADDBPlayerList()
     {
         ID = -1;
@@ -31,12 +30,12 @@ using UnityEngine.UI;
         PermissionsHash = 0;
         EquipmentHash = 0;
     }
-} */
+}
 
 /// <summary>
 /// Implements basics controls for WASD, and jumping movements
 /// Implements NPC Interaction
-/// Author(s): Josh Dotson, Lew Fortwangler
+/// Author: Josh Dotson, Lew Fortwangler
 /// Version: 3
 /// </summary>
 [RequireComponent(typeof(Rigidbody))]
@@ -48,16 +47,17 @@ public class PlayerController : NetworkBehaviour // NetworkBehaviour
     [SerializeField] public float WALKSPEED = 3.0f;
     [SerializeField] public float RUNSPEED = 5.0f;
     [SerializeField] public float JUMPSPEED = 5.0f;
-
+    
     protected Rigidbody rigidbody_m;
 
     // Stores references to both the Players UI canvas, as well as the text element regarding interact text
     protected GameObject playerUICanvas_m;
     protected GameObject playerDialogMenu_m; // Probably no longer needed as of Version 3 of InteractController...
     protected Text playerUIInteractText_m;
-    
-    // Const map to the config file location on the player's local machine
-    protected static readonly string _configFilePath = $@"{Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)}\Arcade Dream\config.arcadedream";
+
+    // Reference stream to the local player.config file
+    protected FileStream _configStream;
+    protected static readonly string _configFilePath = $@"{Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)}\Arcade Dream\player.config";
 
     // Contain information regarding currently equipped items, and unlocked items
     protected ulong _permissions;
@@ -72,71 +72,55 @@ public class PlayerController : NetworkBehaviour // NetworkBehaviour
     // This acts as a buffer to prevent a interact loop from occuring when the sumbit key is held down
     protected bool SubmitKeyDown;
 
+
+    ////////////////////////////////////////////////////
+    private Animator anim;
+    
+
     void Awake()
     {
-        #region ** Open and Decrypt Config/Wallet Files **
-        try
+        
+
+
+        // This will prevent the playerObject from being destroyed when they enter or exit another subgame scene
+        // DontDestroyOnLoad(transform.gameObject);
+
+        if (File.Exists(_configFilePath))
         {
             // Open config file
-            using (var configFileStream = File.Open(_configFilePath, FileMode.Open, FileAccess.ReadWrite, FileShare.None))
-            {
-                // Read the source file into a byte array.
-                byte[] fileContents = new byte[configFileStream.Length];
-                int numBytesToRead = (int)configFileStream.Length;
-                int numBytesRead = 0;
+            _configStream = File.Open
+            (
+                path: _configFilePath,
+                mode: FileMode.Open,
+                access: FileAccess.ReadWrite,
+                share: FileShare.None
+            );
 
-                while (numBytesToRead > 0)
-                {
-                    // May return 0 - configFileStream.Length, therefore, we must keep numBytesRead, and numBytesToRead as indexers
-                    int numberOfBytes = configFileStream.Read(fileContents, numBytesRead, numBytesToRead);
-
-                    // Break when the end of the file is reached.
-                    if (numberOfBytes == 0)
-                        break;
-
-                    numBytesRead += numberOfBytes;
-                    numBytesToRead -= numberOfBytes;
-                }
-
-                // Decrypt file contents
-                using (ADRSAServiceProvider RSA = new ADRSAServiceProvider())
-                {
-                    var decryptedFileContents = RSA.Decrypt(fileContents);
-
-                    // Convert to string, extract the info, and configure the player object with it
-                    string bitString = BitConverter.ToString(decryptedFileContents);
-                }
-            }
+            // Serialize, and decrypt config file contents here...
         }
-        catch
-        {
-            // Config file has been either moved, or tampered with...
-        }
-        #endregion
+        else { /* Create new empty config file, and use the next step to sync it to the server */ }
 
         try
         {
-            using (DatabaseManager dbManager = new DatabaseManager())
+            // Attempt to connect, and sync to the database. Sync database to config file if it existed, or vice versa if it didn't...
+            /* using (ADDBConnection connection = new ADDBConnection)
             {
-                // Hashes not implemented yet in getPlayer(), so for now, this is a placeholder
-                // dbManager.getPlayer();
-            }
+                connection.Open();
+            
+                var playerTuple = connection.Query<ADDBPlayerList>($"SELECT * FROM playerlist WHERE Username = '{PlayerUsername}'");
+                _permissions = playerTuple.permissionsHash;
+                _equipment = playerTuple.equipmentHash;
+            */
         }
         catch { /* Could not open database connection! */ }
-    }
-
-    // Whenever the equipmentHash changes, the player needs to be reinitialized with there new clothing
-    public void ReinitializePlayer()
-    {
-        // Break down the equipmentHash and use ItemMap to map the correct in-game clothing onto the player
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        // Dress the player up...
-        ReinitializePlayer();
-
+        //added by team 3's number one idiot
+        anim = GetComponentInChildren<Animator>();
+        ///////////////////////////////////////////////////////
         rigidbody_m = GetComponent<Rigidbody>();
 
         playerUICanvas_m = gameObject.transform.Find("UI").gameObject;
@@ -148,7 +132,7 @@ public class PlayerController : NetworkBehaviour // NetworkBehaviour
 
         // Stores whether or not a character is already interacting with someone, and if so, ignore interact input
         IsUsingMouseInteract = false;
-        IsInteracting = false;
+        IsInteracting = false;      
     }
 
     void FixedUpdate()
@@ -173,6 +157,9 @@ public class PlayerController : NetworkBehaviour // NetworkBehaviour
             // Process user movement input...
             if (!movement.Equals(Vector3.zero))
             {
+                /////////////////////////////////////////////////
+                anim.SetBool("IsWalking", true);
+                /////////////////////////////////////////////////
                 Vector3 newPosition = transform.position + movement;
                 Vector3 newPositionVector = newPosition - transform.position;
                 newPositionVector.y = 0f;
@@ -183,7 +170,11 @@ public class PlayerController : NetworkBehaviour // NetworkBehaviour
                 rigidbody_m.MovePosition(transform.position + movement);
                 rigidbody_m.MoveRotation(interpolatedRotation);
             }
-
+            //////////////////////////////////////////////////////////////
+            if (movement.Equals(Vector3.zero)){
+                anim.SetBool("IsWalking", false);
+            }
+            //////////////////////////////////////////////////////////////
             // Process jumping input
             if (!jump.Equals(Vector3.zero))
             {
@@ -221,6 +212,9 @@ public class PlayerController : NetworkBehaviour // NetworkBehaviour
                 {
                     currentInteractableObject_m = gameObjectHit.transform.gameObject.GetComponent<Collider>();
                     IsUsingMouseInteract = true;
+                    //////////////////////////////////////////////////////////
+                    anim.SetBool("IsPlaying", true);
+                    //////////////////////////////////////////////////////////
                 }
                 else
                 {
@@ -230,6 +224,11 @@ public class PlayerController : NetworkBehaviour // NetworkBehaviour
                         nearbyInteractableObjects_m.Find((c) => c.gameObject.tag == "NPC") ??
                         nearbyInteractableObjects_m.Find((c) => c.gameObject.tag == "Game") ??
                         nearbyInteractableObjects_m.Find((c) => c.gameObject.tag == "Player");
+
+                    //////////////////////////////////////////////////////////
+                    anim.SetBool("IsPlaying", false);
+                    //////////////////////////////////////////////////////////
+
                 }
             }
         }

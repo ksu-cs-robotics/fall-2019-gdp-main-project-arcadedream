@@ -5,7 +5,7 @@ using UnityEngine;
 public class paddleGrowPowerup : MonoBehaviour
 {
     GameObject paddleToGrow;
-    
+
     void Start(){
 
 

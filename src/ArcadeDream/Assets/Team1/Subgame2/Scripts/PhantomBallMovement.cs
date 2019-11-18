@@ -39,7 +39,32 @@ public class PhantomBallMovement : MonoBehaviour
         {
             Debug.Log("Player Bounce");
             //Changes the color of the ball based on the last player to hit it last
-            GetComponent<SpriteRenderer>().color = collision.GetComponent<SpriteRenderer>().color;
+            switch (collision.name)
+            {
+                case "Player1Paddle":
+                    gameObject.GetComponent<SpriteRenderer>().color = Color.red;
+                    gameObject.GetComponent<TrailRenderer>().startColor = Color.red;
+                    gameObject.GetComponent<TrailRenderer>().endColor = Color.red;
+                    break;
+                case "Player2Paddle":
+                    gameObject.GetComponent<SpriteRenderer>().color = Color.blue;
+                    gameObject.GetComponent<TrailRenderer>().startColor = Color.blue;
+                    gameObject.GetComponent<TrailRenderer>().endColor = Color.blue;
+                    break;
+                case "Player3Paddle":
+                    gameObject.GetComponent<SpriteRenderer>().color = Color.green;
+                    gameObject.GetComponent<TrailRenderer>().startColor = Color.green;
+                    gameObject.GetComponent<TrailRenderer>().endColor = Color.green;
+                    break;
+                case "Player4Paddle":
+                    gameObject.GetComponent<SpriteRenderer>().color = Color.yellow;
+                    gameObject.GetComponent<TrailRenderer>().startColor = Color.yellow;
+                    gameObject.GetComponent<TrailRenderer>().endColor = Color.yellow;
+                    break;
+                default:
+                    break;
+            }
+            collision.GetComponent<AudioSource>().Play();
             speed += 0.01f;
         }
 

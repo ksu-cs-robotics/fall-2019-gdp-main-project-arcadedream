@@ -1,15 +1,16 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 using UnityEngine.UI;
-
 // This is placed on each Goal Zone object in the game and when the ball enters it a point is given to the last player who touched the ball
 
-public class GoalLivesManager : MonoBehaviour //Not lives points now
+public class GoalLivesManager : NetworkBehaviour //Not lives points now
 {
     public GameObject[] goals;
     Text pointsText;
-    public int points;
+    [SyncVar] public int points;
     string input;
     // Start is called before the first frame update
     void Start()
@@ -34,6 +35,7 @@ public class GoalLivesManager : MonoBehaviour //Not lives points now
             if(goal.GetComponent<SpriteRenderer>().color == goalColor)
             {
                 goal.GetComponent<GoalLivesManager>().points++;
+                
             }
         }
     }
