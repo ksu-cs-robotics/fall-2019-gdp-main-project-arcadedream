@@ -24,7 +24,7 @@ public class Distance_UI : MonoBehaviour
         distance_m = Mathf.Abs(player_prefab.transform.position.x - beginPoint.transform.position.x);
         //Debug.Log(distance_m);
         distanceBar_m.fillAmount = distance_m / true_Distance_m;
-        //Debug.Log(distance_m / true_Distance_m);
+        Debug.Log(distance_m / true_Distance_m);
         distanceText_m.text = distance_m.ToString("F1") + " meters";
         
     }

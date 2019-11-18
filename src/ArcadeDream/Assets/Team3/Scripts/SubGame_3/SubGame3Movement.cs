@@ -16,7 +16,7 @@ public class SubGame3Movement : NetworkBehaviour
     public GameObject gun;
     private Rigidbody2D rb;
     private Collision2D coll;
-    private SubGameCollision collScript;
+    private Collision collScript;
     private Vector3 respawnPosition;
     private Vector2 respawnDir;
 
@@ -66,7 +66,7 @@ public class SubGame3Movement : NetworkBehaviour
 
         canMove = false;
         rb = GetComponent<Rigidbody2D>();
-        collScript = GetComponent<SubGameCollision>();
+        collScript = GetComponent<Collision>();
         timeObject.SetActive(false);
         countdownText.text = countdownTime.ToString();
         playerSprite = gameObject.GetComponent<SpriteRenderer>();

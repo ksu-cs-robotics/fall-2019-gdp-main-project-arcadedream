@@ -1,9 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Networking;
 
-public class BulletScript : NetworkBehaviour
+public class BulletScript : MonoBehaviour
 {
     private Rigidbody2D rb;
     public float bulletSpeed;
@@ -15,6 +14,7 @@ public class BulletScript : NetworkBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         rb.velocity = transform.right * bulletSpeed;
+        
     }
 
     // Update is called once per frame
