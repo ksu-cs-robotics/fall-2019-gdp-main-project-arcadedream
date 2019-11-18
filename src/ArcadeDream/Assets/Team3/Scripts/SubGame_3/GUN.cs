@@ -5,7 +5,7 @@ using UnityEngine.Networking;
 
 
 
-public class SubGameGUN : NetworkBehaviour
+public class GUN : NetworkBehaviour
 {
     public GameObject bullet;
     public bool canShoot = true;

@@ -55,7 +55,7 @@ public class Pipe : NetworkBehaviour
                 
                 Debug.Log(launchDir);
                 collision.GetComponent<Rigidbody2D>().velocity += (launchDir  * new Vector2(horizThrust, vertThrust));
-                collision.GetComponent<SubGame3Movement>().launched = true;
+                collision.GetComponent<Movement>().launched = true;
             }
         }
     }

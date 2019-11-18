@@ -6,7 +6,7 @@ using UnityEngine.Networking;
 
 //Base for movement script taken from https://github.com/mixandjam/Celeste-Movement/blob/master/Assets/Scripts/Movement.cs
 
-public class SubGame3Movement : NetworkBehaviour
+public class Movement : NetworkBehaviour
 {
     //Components
     public Text countdownText;

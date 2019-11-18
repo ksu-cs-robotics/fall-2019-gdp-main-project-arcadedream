@@ -116,7 +116,7 @@ public class PlayerController : NetworkBehaviour // NetworkBehaviour
 
         try
         {
-            //using (DatabaseManager dbManager = new DatabaseManager()) Had to comment out was throwing errors and could not integrate with it
+            using (DatabaseManager dbManager = new DatabaseManager())
             {
                 // Hashes not implemented yet in getPlayer(), so for now, this is a placeholder
                 // dbManager.getPlayer();

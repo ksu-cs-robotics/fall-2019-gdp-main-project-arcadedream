@@ -6,10 +6,14 @@ using UnityEngine.UI;
 public class FinishLine : MonoBehaviour
 {
     public GameObject player;
-    public bool hasPassed = false;
+    public GameObject gameOverObject;
+    public Text gameOverText;
 
     void Start()
     {
+        gameOverText = gameOverObject.gameObject.GetComponent<Text>();
+        gameOverText.text = "Finished";
+        gameOverObject.SetActive(false);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -18,7 +22,7 @@ public class FinishLine : MonoBehaviour
         {
             Debug.Log("running");
             player.GetComponent<Movement>().canMove = false;
-            hasPassed = true;
+            gameOverObject.SetActive(true);
         }
     }
 }

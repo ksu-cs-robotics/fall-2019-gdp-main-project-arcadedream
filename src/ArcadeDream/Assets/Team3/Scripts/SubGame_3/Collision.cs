@@ -5,7 +5,7 @@ using UnityEngine;
 //Taken from https://github.com/mixandjam/Celeste-Movement/blob/master/Assets/Scripts/Collision.cs
 
 
-public class SubGameCollision : MonoBehaviour
+public class Collision : MonoBehaviour
 {
     public LayerMask groundLayer;
 

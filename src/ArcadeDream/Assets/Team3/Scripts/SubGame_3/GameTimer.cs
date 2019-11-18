@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class SubGameTimer : MonoBehaviour
+public class GameTimer : MonoBehaviour
 {
     public Text timerText;
     public bool runTimer;
