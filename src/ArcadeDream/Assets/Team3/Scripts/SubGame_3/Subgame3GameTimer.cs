@@ -12,17 +12,16 @@ public class Subgame3GameTimer : MonoBehaviour
     
     void Start()
     {
-        timerText.text = timer.ToString();
+        timerText.text = $"Time: {timer.ToString()}";
     }
 
     // Update is called once per frame
     void Update()
     {
-
         if (runTimer)
         {
             timer += Time.deltaTime;
-            timerText.text = System.Math.Round(timer, 2).ToString();
+            timerText.text = $"Time: {System.Math.Round(timer, 2).ToString()}";
         }
     }
 }

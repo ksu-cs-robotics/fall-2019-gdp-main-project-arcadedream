@@ -58,7 +58,8 @@ public class Movement : NetworkBehaviour
         localUICanvas = GameObject.FindGameObjectWithTag("UI").gameObject;
         var timerTextTemp = localUICanvas.gameObject.transform.GetChild(0).gameObject;
         var countdownTextTemp = localUICanvas.gameObject.transform.GetChild(1).gameObject;
-
+        
+        // Set timer references, and inital values...
         timerObject = timerTextTemp.gameObject.GetComponent<Text>();
         timeObject = timerTextTemp.gameObject;
         timerObject.GetComponent<Subgame3GameTimer>().runTimer = true;
