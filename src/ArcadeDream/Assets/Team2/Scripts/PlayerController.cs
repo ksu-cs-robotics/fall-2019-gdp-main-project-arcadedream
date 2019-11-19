@@ -114,8 +114,7 @@ public class PlayerController : NetworkBehaviour // NetworkBehaviour
         }
         #endregion
 
-        /*
-        try
+        /*try
         {
             using (DatabaseManager dbManager = new DatabaseManager())
             {
@@ -123,8 +122,7 @@ public class PlayerController : NetworkBehaviour // NetworkBehaviour
                 // dbManager.getPlayer();
             }
         }
-        catch {  Could not open database connection!  }
-        */
+        catch { Could not open database connection!  }*/
     }
 
     // Whenever the equipmentHash changes, the player needs to be reinitialized with there new clothing
