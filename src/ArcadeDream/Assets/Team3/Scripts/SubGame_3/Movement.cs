@@ -42,6 +42,7 @@ public class Movement : NetworkBehaviour
 
     public GameTimer timer;
     SpriteRenderer playerSprite;
+    public GameObject localUICanvas;
 
     //Pipe/launcher variables
     public float launchSpeed;
@@ -54,15 +55,17 @@ public class Movement : NetworkBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        var UICanvas = GameObject.FindGameObjectWithTag("UI").gameObject;
-        var timerTextTemp = UICanvas.gameObject.transform.GetChild(0).gameObject;
-        var countdownTextTemp = UICanvas.gameObject.transform.GetChild(1).gameObject;
+        localUICanvas = GameObject.FindGameObjectWithTag("UI").gameObject;
+        var timerTextTemp = localUICanvas.gameObject.transform.GetChild(0).gameObject;
+        var countdownTextTemp = localUICanvas.gameObject.transform.GetChild(1).gameObject;
 
         timerObject = timerTextTemp.gameObject.GetComponent<Text>();
         timeObject = timerTextTemp.gameObject;
+        timerObject.GetComponent<Subgame3GameTimer>().runTimer = true;
 
         countdownObject = countdownTextTemp.gameObject;
         countdownText = countdownTextTemp.gameObject.GetComponent<Text>();
+        countdownTime = 5;
 
         canMove = false;
         rb = GetComponent<Rigidbody2D>();
@@ -71,7 +74,6 @@ public class Movement : NetworkBehaviour
         countdownText.text = countdownTime.ToString();
         playerSprite = gameObject.GetComponent<SpriteRenderer>();
 
-        //
         speedAtStart = speed;
     }
 
@@ -81,6 +83,9 @@ public class Movement : NetworkBehaviour
 
         this.gameObject.name = "LocalPlayer";
         GameObject.FindGameObjectWithTag("MainCamera").GetComponent<MainCamera>().SetPlayer(this.gameObject);
+
+        // Start the local timer when the players start. This shouldnt have to be networked
+        localUICanvas = GameObject.FindGameObjectWithTag("UI").gameObject;
     }
 
     // Update is called once per frame

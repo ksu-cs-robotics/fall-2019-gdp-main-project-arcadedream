@@ -21,9 +21,17 @@ public class MainCamera : MonoBehaviour
 
     void Update()
     {
-        targetCamPos = new Vector2(player.transform.position.x, player.transform.position.y);
-        transform.position = Vector2.Lerp(transform.position, targetCamPos, smoothing * Time.deltaTime);
-        transform.position = new Vector3(transform.position.x, transform.position.y, -10f);     
+        try
+        {
+            targetCamPos = new Vector2(player.transform.position.x, player.transform.position.y);
+            transform.position = Vector2.Lerp(transform.position, targetCamPos, smoothing * Time.deltaTime);
+            transform.position = new Vector3(transform.position.x, transform.position.y, -10f);
+        } 
+        catch
+        {
+            // if the player no longer exists, set camera to stare at itself...
+            DefaultPlayer();
+        }
     }
 
     public void SetPlayer(GameObject newPlayer) { player = newPlayer; }
