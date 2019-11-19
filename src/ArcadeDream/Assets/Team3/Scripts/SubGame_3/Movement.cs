@@ -186,7 +186,7 @@ public class Movement : NetworkBehaviour
            // rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y);
             if (rb.velocity.x >= maxLaunchSpeed) rb.velocity = new Vector2(maxLaunchSpeed, rb.velocity.y);
             if (rb.velocity.x <= -(maxLaunchSpeed)) rb.velocity = new Vector2(-maxLaunchSpeed, rb.velocity.y);
-            Debug.Log(rb.velocity);         } 
+        } 
         else
         {
             rb.velocity = Vector2.Lerp(rb.velocity, (new Vector2(dir.x * speed, rb.velocity.y)), wallJumpLerp * Time.deltaTime);

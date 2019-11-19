@@ -21,6 +21,7 @@ public class Subgame3NetworkManagerHUD : MonoBehaviour
     // Runtime variable
     bool showServer = false;
     bool isHosting = false;
+    // bool isStarted = false;
 
     private string _errorMessage;
 
@@ -98,25 +99,38 @@ public class Subgame3NetworkManagerHUD : MonoBehaviour
                 ypos += spacing;
             }
 
-            var statusLabel = (isHosting) ? $"#Players: {manager.numPlayers} / {LobbyInfo.MAXPLAYERS}" : "Waiting For Host...";
+            // if (!isStarted)
+            {
+                string statusLabel = string.Empty;
+                statusLabel = (isHosting) ? $"#Players: {manager.numPlayers} / {LobbyInfo.MAXPLAYERS}" : "Waiting For Host...";
 
-            // Shows how many players are currently in the lobby
-            GUI.Label(new Rect(xpos, ypos, 200, 25), statusLabel);
-            ypos += spacing;
+                // Shows how many players are currently in the lobby
+                GUI.Label(new Rect(xpos, ypos, 200, 25), statusLabel);
+                ypos += spacing;
+            }
 
-            /*if (NetworkServer.active || NetworkClient.active)
+            if (NetworkServer.active || NetworkClient.active)
             {
                 if (GUI.Button(new Rect(xpos, ypos, 200, 20), "Exit Game"))
                 {
+                    //if (isHosting) { manager.StopHost(); }
+                    //else { manager.StopClient(); }
+
                     manager.StopHost();
+                    isHosting = false;
+                    // isStarted = false;
+
+                    GameObject.FindGameObjectWithTag("UI").transform.GetChild(0).GetComponent<Subgame3GameTimer>().runTimer = false;
                 }
-            }*/
+            }
+            ypos += spacing;
         }
 
         // If this player is hosting, and the server is ready, you may start the game!
         if (isHosting && manager.isReady && GUI.Button(new Rect(xpos, ypos, 200, 20), "Start Game!"))
         {
             manager.StartGame();
+            // isStarted = true;
         }
     }
 }

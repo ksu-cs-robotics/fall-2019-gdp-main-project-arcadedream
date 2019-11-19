@@ -19,13 +19,16 @@ public static class LobbyInfo
 public class PlayerInfo
 {
     public NetworkConnection Conn { get; set; }
+    public GameObject Player { get; set; }
     public short PlayerControllerId { get; set; }
+    public bool isActive { get; set; }
 
     private PlayerInfo() { }
-    public PlayerInfo(NetworkConnection conn, short playerControllerId) : this()
+    public PlayerInfo(NetworkConnection conn, short playerControllerId, bool isactive) : this()
     {
         Conn = conn;
         PlayerControllerId = playerControllerId;
+        isActive = isactive;
     }
 }
 
@@ -46,6 +49,11 @@ public class Subgame3NetworkManager : NetworkManager
     public Subgame3NetworkManager()
     {
         // there can be a max of 4 players within a game
+        Initialize();
+    }
+
+    private void Initialize()
+    {
         isReady = false;
         isRunning = false;
         numPlayers = 0;
@@ -55,55 +63,51 @@ public class Subgame3NetworkManager : NetworkManager
     // the override keywords are commented out now until this is fully functioning
     public override void OnServerAddPlayer(NetworkConnection conn, short playerControllerId)
     {
-        try
-        {
-            if (numPlayers >= LobbyInfo.MAXPLAYERS) { throw new Exception("Server Is Full!"); }
-            if (isRunning) { throw new Exception("The Match Has Already Begun!"); }
+        var active = true;
+        if (numPlayers >= LobbyInfo.MAXPLAYERS || isRunning) { active = false; }
 
-            // Call base function, and add this new connection to the list of connections inside the lobby
-            ++numPlayers;
-            _clientConnections.Add(new PlayerInfo(conn, playerControllerId));
+        // Call base function, and add this new connection to the list of connections inside the lobby
+        ++numPlayers;
+        _clientConnections.Add(new PlayerInfo(conn, playerControllerId, active));
 
-            // If there is the requisite number of players in the lobby...
-            isReady = (numPlayers >= LobbyInfo.MINPLAYERS) && !isRunning;
-        }
-        catch (Exception ex)
-        {
-            Debug.Log($"Error: {ex.Message}");
-            return;
-        }
+        // If there is the requisite number of players in the lobby...
+        isReady = (numPlayers >= LobbyInfo.MINPLAYERS) && !isRunning;       
     }
-
-    public override void OnServerRemovePlayer(NetworkConnection conn, UnityEngine.Networking.PlayerController player)
+    public override void OnServerDisconnect(NetworkConnection conn)
     {
-        base.OnServerRemovePlayer(conn, player);
+        base.OnClientDisconnect(conn);
 
         --numPlayers;
-        _clientConnections.RemoveAll((p) => p.PlayerControllerId == player.playerControllerId );
+        _clientConnections.RemoveAll((p) => p.Conn == conn);
 
         // Remove actual gameobject of the player
-        
+
         // If there is the requisite number of players in the lobby..
         isReady = (numPlayers >= LobbyInfo.MINPLAYERS) && !isRunning;
     }
-
-    public /*override*/ void OnClientConnect(NetworkConnection conn)
+    public override void OnStopHost()
     {
-        base.OnClientConnect(conn);
+        base.OnStopHost();
+        Initialize();
     }
 
     public void StartGame()
     {
         foreach (var player in _clientConnections)
-        {
-            base.OnServerAddPlayer(player.Conn, player.PlayerControllerId);
-            
-            // Get where to actually spawn this player from base.GetStartPosition()
-            // var playerSpawn = GetStartPosition();
+        {           
+            // base.OnServerAddPlayer(player.Conn, player.PlayerControllerId);
 
-            // Spawn in the actual player prefab, and assign it client authority to this particular connection
-            // var playerObject = Instantiate(playerPrefab, playerSpawn.position, playerSpawn.rotation);
-            // NetworkServer.SpawnWithClientAuthority(playerObject, player.Conn);
+            if (player.isActive)
+            {
+                // Get where to actually spawn this player from base.GetStartPosition()
+                var playerSpawn = GetStartPosition();
+                var playerObject = Instantiate(playerPrefab, playerSpawn.position, Quaternion.identity);
+
+                // Get the reference to its physical gameObject in PlayerInfo so it'll be easy to map objects to connections
+                player.Player = playerObject;
+
+                NetworkServer.AddPlayerForConnection(player.Conn, playerObject, player.PlayerControllerId);
+            }
         }
 
         isReady = false;
@@ -111,10 +115,11 @@ public class Subgame3NetworkManager : NetworkManager
     }
     public void EndGame()
     {
-        var players = GameObject.FindGameObjectsWithTag("Player");
-        foreach (var player in players)
+        var activePlayers = _clientConnections.FindAll((p) => p.isActive);
+        foreach (var player in activePlayers)
         {
-            NetworkServer.Destroy(player);
+            // base.OnServerRemovePlayer
+            NetworkServer.Destroy(player.Player);
         }
 
         isReady = true;
