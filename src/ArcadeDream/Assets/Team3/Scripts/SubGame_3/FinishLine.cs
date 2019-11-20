@@ -21,7 +21,7 @@ public class FinishLine : MonoBehaviour
         if (collision.CompareTag("Player"))
         {
             Debug.Log("running");
-            player.GetComponent<Movement>().canMove = false;
+            collision.GetComponent<Movement>().canMove = false;
             gameOverObject.SetActive(true);
         }
     }

@@ -109,8 +109,7 @@ public class Movement : NetworkBehaviour
             float x = Input.GetAxis("Horizontal");
             float y = Input.GetAxis("Vertical");
 
-            //Makes walljumping way more consistant at the cost of not being able to climb walls.
-            //This might be better, talk with design team
+
             if (collScript.onLeftWall && x < 0) x = 0;
             if (collScript.onRightWall && x > 0) x = 0;
 
@@ -130,11 +129,11 @@ public class Movement : NetworkBehaviour
 
                 launched = false;
             }
-            /*if (collScript.grounded && !collScript.onWall)
+            if (collScript.grounded && !collScript.onWall)
             {
                 respawnPosition = gameObject.transform.position;
                 respawnDir = dir;
-            }*/
+            }
             if (collScript.onWall && !collScript.grounded && rb.velocity.y <= 0)
             {
                 wallSlide = true;
@@ -252,7 +251,7 @@ public class Movement : NetworkBehaviour
         else if (respawnDir.x < 0)
             rb.position = new Vector2(respawnPosition.x + 0.35f, respawnPosition.y + .25f);
 
-        StartCoroutine(DisableMovement(3));
+        StartCoroutine(DisableMovement(1));
         //InvokeRepeating("flash", 0, .1f);
     }
 
