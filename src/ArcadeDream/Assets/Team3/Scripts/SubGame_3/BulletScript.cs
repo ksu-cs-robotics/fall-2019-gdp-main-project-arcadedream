@@ -13,8 +13,7 @@ public class BulletScript : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        rb.velocity = transform.right * bulletSpeed;
-        
+        rb.velocity = transform.right * bulletSpeed;       
     }
 
     // Update is called once per frame
@@ -25,9 +24,8 @@ public class BulletScript : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-
         if (collision.tag == "Ground" || collision.tag == "Breakable")
-        Destroy(gameObject);
+            Destroy(gameObject);
     }
 
     IEnumerator despawn()

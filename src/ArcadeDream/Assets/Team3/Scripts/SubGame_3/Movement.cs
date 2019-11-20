@@ -42,6 +42,7 @@ public class Movement : NetworkBehaviour
 
     public GameTimer timer;
     SpriteRenderer playerSprite;
+    public GameObject localUICanvas;
 
     //Pipe/launcher variables
     public float launchSpeed;
@@ -54,15 +55,18 @@ public class Movement : NetworkBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        var UICanvas = GameObject.FindGameObjectWithTag("UI").gameObject;
-        var timerTextTemp = UICanvas.gameObject.transform.GetChild(0).gameObject;
-        var countdownTextTemp = UICanvas.gameObject.transform.GetChild(1).gameObject;
-
+        localUICanvas = GameObject.FindGameObjectWithTag("UI").gameObject;
+        var timerTextTemp = localUICanvas.gameObject.transform.GetChild(0).gameObject;
+        var countdownTextTemp = localUICanvas.gameObject.transform.GetChild(1).gameObject;
+        
+        // Set timer references, and inital values...
         timerObject = timerTextTemp.gameObject.GetComponent<Text>();
         timeObject = timerTextTemp.gameObject;
+        timerObject.GetComponent<Subgame3GameTimer>().runTimer = true;
 
         countdownObject = countdownTextTemp.gameObject;
         countdownText = countdownTextTemp.gameObject.GetComponent<Text>();
+        countdownTime = 5;
 
         canMove = false;
         rb = GetComponent<Rigidbody2D>();
@@ -71,7 +75,6 @@ public class Movement : NetworkBehaviour
         countdownText.text = countdownTime.ToString();
         playerSprite = gameObject.GetComponent<SpriteRenderer>();
 
-        //
         speedAtStart = speed;
     }
 
@@ -81,6 +84,9 @@ public class Movement : NetworkBehaviour
 
         this.gameObject.name = "LocalPlayer";
         GameObject.FindGameObjectWithTag("MainCamera").GetComponent<MainCamera>().SetPlayer(this.gameObject);
+
+        // Start the local timer when the players start. This shouldnt have to be networked
+        localUICanvas = GameObject.FindGameObjectWithTag("UI").gameObject;
     }
 
     // Update is called once per frame
@@ -109,8 +115,7 @@ public class Movement : NetworkBehaviour
             float x = Input.GetAxis("Horizontal");
             float y = Input.GetAxis("Vertical");
 
-            //Makes walljumping way more consistant at the cost of not being able to climb walls.
-            //This might be better, talk with design team
+
             if (collScript.onLeftWall && x < 0) x = 0;
             if (collScript.onRightWall && x > 0) x = 0;
 
@@ -130,11 +135,11 @@ public class Movement : NetworkBehaviour
 
                 launched = false;
             }
-            /*if (collScript.grounded && !collScript.onWall)
+            if (collScript.grounded && !collScript.onWall)
             {
                 respawnPosition = gameObject.transform.position;
                 respawnDir = dir;
-            }*/
+            }
             if (collScript.onWall && !collScript.grounded && rb.velocity.y <= 0)
             {
                 wallSlide = true;
@@ -180,7 +185,7 @@ public class Movement : NetworkBehaviour
            // rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y);
             if (rb.velocity.x >= maxLaunchSpeed) rb.velocity = new Vector2(maxLaunchSpeed, rb.velocity.y);
             if (rb.velocity.x <= -(maxLaunchSpeed)) rb.velocity = new Vector2(-maxLaunchSpeed, rb.velocity.y);
-            Debug.Log(rb.velocity);         } 
+        } 
         else
         {
             rb.velocity = Vector2.Lerp(rb.velocity, (new Vector2(dir.x * speed, rb.velocity.y)), wallJumpLerp * Time.deltaTime);
@@ -252,7 +257,7 @@ public class Movement : NetworkBehaviour
         else if (respawnDir.x < 0)
             rb.position = new Vector2(respawnPosition.x + 0.35f, respawnPosition.y + .25f);
 
-        StartCoroutine(DisableMovement(3));
+        StartCoroutine(DisableMovement(1));
         //InvokeRepeating("flash", 0, .1f);
     }
 
