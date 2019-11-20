@@ -25,7 +25,7 @@ public class GUN : NetworkBehaviour
     void Update()
     {
         pos = gameObject.transform.position;
-        if (Input.GetKeyDown(KeyCode.E) || Input.GetButtonDown("SG3Shoot") && timeLeft <= 0 && canShoot && isLocalPlayer) 
+        if ((Input.GetKeyDown(KeyCode.E) || Input.GetButtonDown("SG3Shoot")) && timeLeft <= 0 && canShoot && isLocalPlayer) 
         {
             mousePos = new Vector3(Input.mousePosition.x, Input.mousePosition.y, 10);
             Vector3 lookPos = Camera.main.ScreenToWorldPoint(mousePos);

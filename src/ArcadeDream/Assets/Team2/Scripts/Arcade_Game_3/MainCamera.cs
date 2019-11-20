@@ -30,7 +30,7 @@ public class MainCamera : MonoBehaviour
         {
             if ((player.GetComponent<Movement>().launched == true || player.transform.rotation != Quaternion.identity) && GetComponent<Camera>().orthographicSize <= 5f)
                 GetComponent<Camera>().orthographicSize = Mathf.Lerp(GetComponent<Camera>().orthographicSize, 5f, smoothing * Time.deltaTime);
-            if ((player.GetComponent<Movement>().launched == false || player.transform.rotation != Quaternion.identity) && GetComponent<Camera>().orthographicSize >= 2.5f)
+            else if ((player.GetComponent<Movement>().launched == false || player.transform.rotation != Quaternion.identity) && GetComponent<Camera>().orthographicSize >= 2.5f)
                 GetComponent<Camera>().orthographicSize = Mathf.Lerp(GetComponent<Camera>().orthographicSize, 2.5f, smoothing * Time.deltaTime);
         }
     }

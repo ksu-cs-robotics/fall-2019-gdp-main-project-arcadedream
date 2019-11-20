@@ -5,7 +5,6 @@ using UnityEngine.UI;
 
 public class FinishLine : MonoBehaviour
 {
-    public GameObject player;
     public bool hasPassed = false;
     
 
@@ -20,7 +19,7 @@ public class FinishLine : MonoBehaviour
         {
             Debug.Log("running");
 
-            player.GetComponent<Movement>().canMove = false;
+            collision.GetComponent<Movement>().canMove = false;
             hasPassed = true;
 
 
