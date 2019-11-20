@@ -6,8 +6,8 @@ public class Finishline_UI : MonoBehaviour
 {
     public Text timeText;
     public GameObject endUI;
-    public GameObject endpoint;
-    public GameObject player_Prefab;
+    public FinishLine endpoint;
+    public Movement player_Prefab;
     // Start is called before the first frame update
     void Start()
     {
@@ -17,11 +17,11 @@ public class Finishline_UI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        /*
+        
         if (endpoint.hasPassed) {
             endUI.SetActive(true);
-            timeText.text = player_Prefab.timer.toString();
+            timeText.text = player_Prefab.timer.ToString();
         }
-        */
+        
     }
 }
