@@ -77,10 +77,12 @@ public class Subgame3NetworkManager : NetworkManager
     {
         base.OnClientDisconnect(conn);
 
+        // Get rid of the players actual gameObject on the server
+        var player = _clientConnections.Find((p) => (p.Conn == conn) && (p.isActive));
+        NetworkServer.Destroy(player.Player);
+
         --numPlayers;
         _clientConnections.RemoveAll((p) => p.Conn == conn);
-
-        // Remove actual gameobject of the player
 
         // If there is the requisite number of players in the lobby..
         isReady = (numPlayers >= LobbyInfo.MINPLAYERS) && !isRunning;

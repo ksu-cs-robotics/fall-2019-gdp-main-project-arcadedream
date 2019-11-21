@@ -12,7 +12,8 @@ public class MainCamera : MonoBehaviour
     public float horizMovePoint;
     public float vertMovePoint;
 
-    private bool spawned = false;
+    // Gonna use this inside HUD to keep track of whether or not the player is spawned
+    public bool spawned = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -35,9 +36,14 @@ public class MainCamera : MonoBehaviour
         }
     }
 
-    public void SetPlayer(GameObject newPlayer) {
+    public void SetPlayer(GameObject newPlayer)
+    {
         player = newPlayer;
         spawned = true;
     }
-    public void DefaultPlayer() { player = this.gameObject; }
+    public void DefaultPlayer()
+    {
+        player = this.gameObject;
+        spawned = false;
+    }
 }

@@ -13,6 +13,8 @@ using UnityEngine.Networking.Match;
 public class Subgame3NetworkManagerHUD : MonoBehaviour
 {
     private Subgame3NetworkManager manager;
+    private MainCamera camera;
+    private Subgame3GameTimer timer;
 
     [SerializeField] public bool showGUI = true;
     [SerializeField] public int offsetX;
@@ -29,6 +31,9 @@ public class Subgame3NetworkManagerHUD : MonoBehaviour
     {
         // Get the network manager components of this components parent gameObject
         manager = GetComponent<Subgame3NetworkManager>();
+        camera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<MainCamera>();
+        timer = GameObject.FindGameObjectWithTag("UI").transform.GetChild(0).GetComponent<Subgame3GameTimer>();
+
         _errorMessage = string.Empty;
     }
 
@@ -41,6 +46,8 @@ public class Subgame3NetworkManagerHUD : MonoBehaviour
         // If the server, nor the client are active...
         if (!NetworkClient.active && !NetworkServer.active)
         {
+            timer.runTimer = false;
+
             // Hot key shortbut for the host button
             if (Input.GetKeyDown(KeyCode.H)) { manager.StartHost(); isHosting = true; }
             // Hotkey shortcut for the client button
@@ -99,7 +106,7 @@ public class Subgame3NetworkManagerHUD : MonoBehaviour
                 ypos += spacing;
             }
 
-            // if (!isStarted)
+            // if (!camera.spawned)
             {
                 string statusLabel = string.Empty;
                 statusLabel = (isHosting) ? $"#Players: {manager.numPlayers} / {LobbyInfo.MAXPLAYERS}" : "Waiting For Host...";
@@ -113,14 +120,12 @@ public class Subgame3NetworkManagerHUD : MonoBehaviour
             {
                 if (GUI.Button(new Rect(xpos, ypos, 200, 20), "Exit Game"))
                 {
-                    //if (isHosting) { manager.StopHost(); }
-                    //else { manager.StopClient(); }
+                    if (isHosting) { manager.StopHost(); }
+                    else { manager.StopClient(); }
 
-                    manager.StopHost();
+                    // manager.StopHost();
                     isHosting = false;
                     // isStarted = false;
-
-                    GameObject.FindGameObjectWithTag("UI").transform.GetChild(0).GetComponent<Subgame3GameTimer>().runTimer = false;
                 }
             }
             ypos += spacing;
