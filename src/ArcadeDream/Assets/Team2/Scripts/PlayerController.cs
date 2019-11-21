@@ -1,5 +1,7 @@
 ﻿using System;
 using System.IO;
+using System.Text;
+using System.Security.Cryptography;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -55,9 +57,6 @@ public class PlayerController : NetworkBehaviour // NetworkBehaviour
     protected GameObject playerUICanvas_m;
     protected GameObject playerDialogMenu_m; // Probably no longer needed as of Version 3 of InteractController...
     protected Text playerUIInteractText_m;
-    
-    // Const map to the config file location on the player's local machine
-    protected static readonly string _configFilePath = $@"{Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)}\Arcade Dream\config.arcadedream";
 
     // Contain information regarding currently equipped items, and unlocked items
     protected ulong _permissions;
@@ -74,47 +73,31 @@ public class PlayerController : NetworkBehaviour // NetworkBehaviour
 
     void Awake()
     {
-        #region ** Open and Decrypt Config/Wallet Files **
-        try
+        byte[] configContent;
+        string configContentPlainText;
+        string certContent;
+
+        if (ADIOManager.GetConfigFileContents(out configContent) && ADIOManager.GetCertFileContents(out certContent))
         {
-            // Open config file
-            using (var configFileStream = File.Open(_configFilePath, FileMode.Open, FileAccess.ReadWrite, FileShare.None))
+            // Decrypt file contents
+            using (ADRSAServiceProvider RSA = new ADRSAServiceProvider(certContent))
             {
-                // Read the source file into a byte array.
-                byte[] fileContents = new byte[configFileStream.Length];
-                int numBytesToRead = (int)configFileStream.Length;
-                int numBytesRead = 0;
+                var decryptedFileContents = RSA.Decrypt(configContent);
 
-                while (numBytesToRead > 0)
-                {
-                    // May return 0 - configFileStream.Length, therefore, we must keep numBytesRead, and numBytesToRead as indexers
-                    int numberOfBytes = configFileStream.Read(fileContents, numBytesRead, numBytesToRead);
-
-                    // Break when the end of the file is reached.
-                    if (numberOfBytes == 0)
-                        break;
-
-                    numBytesRead += numberOfBytes;
-                    numBytesToRead -= numberOfBytes;
-                }
-
-                // Decrypt file contents
-                using (ADRSAServiceProvider RSA = new ADRSAServiceProvider())
-                {
-                    var decryptedFileContents = RSA.Decrypt(fileContents);
-
-                    // Convert to string, extract the info, and configure the player object with it
-                    string bitString = BitConverter.ToString(decryptedFileContents);
-                }
+                // Convert to string, extract the info, and configure the player object with it
+                configContentPlainText = BitConverter.ToString(decryptedFileContents);
             }
         }
-        catch
+        else
         {
-            // Config file has been either moved, or tampered with...
-        }
-        #endregion
+            ADIOManager.GenerateNewConfigFile();
+            ADIOManager.GetConfigFileContents(out configContent);
 
-        /*try
+            // Convert to string, extract the info, and configure the player object with it
+            configContentPlainText = BitConverter.ToString(configContent);
+        }
+
+        try
         {
             using (DatabaseManager dbManager = new DatabaseManager())
             {
@@ -122,7 +105,10 @@ public class PlayerController : NetworkBehaviour // NetworkBehaviour
                 // dbManager.getPlayer();
             }
         }
-        catch { Could not open database connection!  }*/
+        catch
+        {
+            
+        }
     }
 
     // Whenever the equipmentHash changes, the player needs to be reinitialized with there new clothing

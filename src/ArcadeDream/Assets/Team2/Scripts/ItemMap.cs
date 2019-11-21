@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Collections;
 using System.Collections.Generic;
 using System.Security.Cryptography;
@@ -8,52 +9,89 @@ using UnityEngine;
 /// Main class used in encrypting/decrypting config, and wallet data
 /// Author(s): Josh Dotson
 /// Version: 1
-/// Notes: Thanks to Mr.Peyravi for 'Computer Network Security' RSA 
 /// </summary>
 public class ADRSAServiceProvider : IDisposable
 {
     // make this private in the future, and configure our own methods for it
     private RSACryptoServiceProvider ADRSA;
-    private RSAParameters ADRSAParams;
-
-    // This is not the safest thing for now, but it's just the config file
-    private static readonly byte[] _d = { 0x0 };
-    private static readonly byte[] _dmodp = { 0x0 };
-    private static readonly byte[] _dmodq = { 0x0 };
-    private static readonly byte[] _e = { 0x0 };
-    private static readonly byte[] _qinv = { 0x0 };
-    private static readonly byte[] _modulus = { 0x0 };
-    private static readonly byte[] _p = { 0x0 };
-    private static readonly byte[] _q = { 0x0 };
 
     public ADRSAServiceProvider()
     {
-        RSAParameters adRSAParameters = ADRSA.ExportParameters(false);
-
-        adRSAParameters.D = _d;
-        adRSAParameters.DP = _dmodp;
-        adRSAParameters.DQ = _dmodq;
-        adRSAParameters.Exponent = _e;
-        adRSAParameters.InverseQ = _qinv;
-        adRSAParameters.Modulus = _modulus;
-        adRSAParameters.P = _p;
-        adRSAParameters.Q = _q;
+        ADRSA = new RSACryptoServiceProvider();
     }
+    public ADRSAServiceProvider(string xmlString) : this() { InitializeFromXML(xmlString); }
+
+    // Generates a new set of RSA parameters for first time users
+    public void GenerateRSAParameters() { ADRSA.ExportParameters(true); }
+    // Initializes parameters from XML file
+    public void InitializeFromXML(string xmlString) { ADRSA.FromXmlString(xmlString); }
 
     // Placeholders for now
-    public byte[] Encrypt(byte[] data)
-    {
-        return new byte[0];
-    }
-    public byte[] Decrypt(byte[] data)
-    {
-        return new byte[0];
-    }
+    public byte[] Encrypt(byte[] data) { return ADRSA.Encrypt(data, false); }
+    public byte[] Decrypt(byte[] data) { return ADRSA.Decrypt(data, false); }
 
     // C# destructor
     public void Dispose()
     {
         ADRSA.Dispose();
+    }
+}
+
+/// <summary>
+/// Manages all IO operations between .arcadedream files, and this program
+/// Author: Josh Dotson
+/// Version: 1
+/// </summary>
+public static class ADIOManager
+{
+    // Const map to the config file location on the player's local machine
+    private static readonly string _configFilePath = $@"{Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)}\Arcade Dream\config.arcadedream";
+    private static readonly string _certFilePath = $@"{Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)}\Arcade Dream\adcert.arcadedream";
+
+    public static bool GenerateNewConfigFile()
+    {
+        try
+        {
+            File.Create(_configFilePath);
+            return true;
+        }
+        catch { return false; }
+    }
+    public static bool GenerateNewCertFile()
+    {
+        try
+        {
+            File.Create(_certFilePath);
+            return true;
+        }
+        catch { return false; }
+    }
+
+    public static bool GetConfigFileContents(out byte[] bytes)
+    {
+        try
+        {
+            bytes = File.ReadAllBytes(_configFilePath);
+            return true;
+        }
+        catch
+        {
+            bytes = default(byte[]);
+            return false;
+        }
+    }
+    public static bool GetCertFileContents(out string xmlString)
+    {
+        try
+        {
+            xmlString = File.ReadAllText(_certFilePath);
+            return true;
+        }
+        catch
+        {
+            xmlString = default(string);
+            return false;
+        }
     }
 }
 
