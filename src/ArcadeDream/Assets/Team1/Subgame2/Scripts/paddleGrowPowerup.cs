@@ -16,6 +16,7 @@ public class paddleGrowPowerup : MonoBehaviour
         
     }
 
+    /*
     void OnCollisionEnter (Collision col)
     {
         Vector3 scale = new Vector3(2,2, 1f);                                    
@@ -23,5 +24,5 @@ public class paddleGrowPowerup : MonoBehaviour
         {
              paddleToGrow.gameObject.transform.localScale = scale;
         }
-     }
+     }*/
 }

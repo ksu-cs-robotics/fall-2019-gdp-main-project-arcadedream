@@ -1,0 +1,8 @@
+When implementing into main scene:
+-Bake a navmesh into scene (with a bathroom safe area)
+-add navmesh agent to owner (speed can be tweaked)
+-create an empty gameobject for the owner to return to when he stole tickets
+-tag objects appropriately:
+	player: ArcadePlayer
+	cabinets: GameCabinet
+-add another box collider to players and cabinets that extend further
