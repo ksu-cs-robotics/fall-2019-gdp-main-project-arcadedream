@@ -221,8 +221,8 @@ Transform:
   m_Children:
   - {fileID: 8611192959667296639}
   - {fileID: 595469354}
-  - {fileID: 1299380008}
   - {fileID: 1576418933}
+  - {fileID: 1299380008}
   m_Father: {fileID: 274254847}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -4123,7 +4123,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Stored Cash: 0'
+  m_Text: 'Stored Tickets: 0'
 --- !u!222 &319787958
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -4415,6 +4415,21 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 130972303290192516}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &379834023
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 379834022}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3bad7cfefa7dc2e409f25a715bf3fddc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cashText: {fileID: 763661090}
+  TicketsText: {fileID: 271926190}
+  ToiletTicketsText: {fileID: 319787957}
 --- !u!4 &379834029 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 130972303535447086, guid: 48de995ae8ed83e4585c6b2b4703c1ee,
@@ -13270,7 +13285,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1516623897}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 379834023}
+        m_MethodName: StoreTickets
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &1516623897
@@ -17967,7 +17993,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2129237559}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 379834023}
+        m_MethodName: RetrieveTickets
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &2129237559
