@@ -8,6 +8,9 @@ public class OwnerMovement : MonoBehaviour
     NavMeshAgent Owner;
     public GameObject restingSpot;
 
+    private int sneakSpeed = 2;
+    private int runSpeed = 5;
+
     private void Start()
     {
         Owner = GetComponent<NavMeshAgent>();
@@ -33,6 +36,7 @@ public class OwnerMovement : MonoBehaviour
 
         if(playerList[pos_m].GetComponent<Player_ADTest>().getRobbableStatus() == true)
         {
+            Owner.speed = sneakSpeed;
             Owner.SetDestination(playerList[pos_m].transform.position);
         }
         else
@@ -52,6 +56,7 @@ public class OwnerMovement : MonoBehaviour
         if(other.gameObject.tag == "ArcadePlayer")
         {
             //INSERT CODE TO STEAL FROM PLAYER
+            Owner.speed = runSpeed;
             Owner.SetDestination(restingSpot.transform.position);
             StartCoroutine("StealTickets");
         }

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Player_ADTest : MonoBehaviour
 {
-    public bool canBeRobbed;
+    private bool canBeRobbed;
 
     private void Start()
     {
