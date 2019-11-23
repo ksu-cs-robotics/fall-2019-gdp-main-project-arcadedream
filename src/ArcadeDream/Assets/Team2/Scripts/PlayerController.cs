@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
+using Photon.Pun;
+using Photon.Realtime;
 
 /// <summary>
 /// Maps to respective fields in the Player table in the database (conquered by Team 4...)
@@ -72,6 +74,14 @@ public class PlayerController : NetworkBehaviour // NetworkBehaviour
     // This acts as a buffer to prevent a interact loop from occuring when the sumbit key is held down
     protected bool SubmitKeyDown;
 
+
+
+    //PHOTONSHIT
+    private PhotonView pv;
+    [SerializeField]
+    public GameObject cameraPrefab;
+    private GameObject createdCamera;
+
     void Awake()
     {
         #region ** Open and Decrypt Config/Wallet Files **
@@ -123,6 +133,7 @@ public class PlayerController : NetworkBehaviour // NetworkBehaviour
             }
         }
         catch { Could not open database connection!  }*/
+
     }
 
     // Whenever the equipmentHash changes, the player needs to be reinitialized with there new clothing
@@ -149,6 +160,15 @@ public class PlayerController : NetworkBehaviour // NetworkBehaviour
         // Stores whether or not a character is already interacting with someone, and if so, ignore interact input
         IsUsingMouseInteract = false;
         IsInteracting = false;
+
+        pv = GetComponent<PhotonView>();
+        if (pv.IsMine)
+        {
+            createdCamera = Instantiate(cameraPrefab);
+            //createdCamera.gameObject.transform.parent = this.gameObject.transform;
+            createdCamera.GetComponent<PHOTONSHIT.CameraController>().PLAYER = this.gameObject;
+        }
+        
     }
 
     void FixedUpdate()
@@ -156,7 +176,7 @@ public class PlayerController : NetworkBehaviour // NetworkBehaviour
         var movement = new Vector3();
         var jump = new Vector3();
 
-        if (true || isLocalPlayer)
+        if (pv.IsMine)
         {
             // If the character is interacting with a game, ignore movement input so they don't act out there actions in the subgame
             if (!IsInteracting)
@@ -307,4 +327,13 @@ public class PlayerController : NetworkBehaviour // NetworkBehaviour
             }
         }
     }
+
+
+    private void OnDestroy()
+    {
+        Debug.Log("Destroying Camera");
+        Destroy(createdCamera);
+    }
+
+
 }

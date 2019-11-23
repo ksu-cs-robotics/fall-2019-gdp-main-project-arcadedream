@@ -12,6 +12,9 @@ public class Launcher : MonoBehaviourPunCallbacks
     [SerializeField]
     string gameVersion = "1";
 
+    /// <summary>
+    /// Used to connect to the Photon Cloud Server
+    /// </summary>
     public void Connect()
     {
         if (!PhotonNetwork.IsConnected)
@@ -39,8 +42,20 @@ public class Launcher : MonoBehaviourPunCallbacks
     {
         Debug.Log("No Room Avaliable Creating MainLobby");
 
-        PhotonNetwork.CreateRoom("MainLobby", new RoomOptions { MaxPlayers = 20 });
-        LoadArena();
+        PhotonNetwork.CreateRoom("MainLobby", new RoomOptions { MaxPlayers = 20 }, TypedLobby.Default);
+
+        //LoadArena();
+    }
+
+    public override void OnJoinedRoom()
+    {
+        Debug.Log("Sucssefully Joined Room");
+        if (!PhotonNetwork.IsMasterClient)
+        {
+            Debug.LogError("Trying to Load a level but we are not the Master Client");
+        }
+        PhotonNetwork.LoadLevel("Main");
+
     }
 
     public override void OnConnectedToMaster()
@@ -56,9 +71,4 @@ public class Launcher : MonoBehaviourPunCallbacks
         PhotonNetwork.AutomaticallySyncScene = false;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }
