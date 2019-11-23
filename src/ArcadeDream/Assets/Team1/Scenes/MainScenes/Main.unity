@@ -1864,15 +1864,15 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2023442413}
-        m_MethodName: PlayArcade2Button
-        m_Mode: 1
+      - m_Target: {fileID: 4180106491707046820}
+        m_MethodName: StartGame
+        m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: 
+          m_StringArgument: ExtremePong
           m_BoolArgument: 0
         m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
@@ -5109,7 +5109,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ec82d657ca8c7b4ea64f9e0c2ad17a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SUBGAMESCENENAME: ArcadeGame1Test
+  SUBGAMESCENENAME: XeonicFleet
 --- !u!114 &430905576
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6267,6 +6267,39 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 595469353}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &595469355 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4019007321651333020, guid: b5c46c49fa157dc40a8a0a374b106f64,
+    type: 3}
+  m_PrefabInstance: {fileID: 595469353}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &595469356
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 595469355}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ec82d657ca8c7b4ea64f9e0c2ad17a7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SUBGAMESCENENAME: BloodRun
+--- !u!114 &595469357
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 595469355}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92164823dafeb444a8772e8900933dc3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  INTERACTTEXT: Press E to Play BloodRun
+  UIGameObject: {fileID: 1369810941}
 --- !u!1 &620457745
 GameObject:
   m_ObjectHideFlags: 0
@@ -7121,15 +7154,15 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2023442413}
-        m_MethodName: PlayArcade2Button
-        m_Mode: 1
+      - m_Target: {fileID: 4180106491707046820}
+        m_MethodName: StartGame
+        m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: 
+          m_StringArgument: BloodRun
           m_BoolArgument: 0
         m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
@@ -12500,6 +12533,39 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1299380007}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1299380009 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4019007321651333020, guid: b5c46c49fa157dc40a8a0a374b106f64,
+    type: 3}
+  m_PrefabInstance: {fileID: 1299380007}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1299380010
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1299380009}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ec82d657ca8c7b4ea64f9e0c2ad17a7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SUBGAMESCENENAME: BloodRun
+--- !u!114 &1299380011
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1299380009}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92164823dafeb444a8772e8900933dc3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  INTERACTTEXT: Press E to Play BloodRun
+  UIGameObject: {fileID: 1369810941}
 --- !u!1 &1299430197
 GameObject:
   m_ObjectHideFlags: 0
@@ -15813,6 +15879,39 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1576418932}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1576418934 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4019007321651333020, guid: b5c46c49fa157dc40a8a0a374b106f64,
+    type: 3}
+  m_PrefabInstance: {fileID: 1576418932}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1576418935
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1576418934}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ec82d657ca8c7b4ea64f9e0c2ad17a7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SUBGAMESCENENAME: BloodRun
+--- !u!114 &1576418936
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1576418934}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92164823dafeb444a8772e8900933dc3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  INTERACTTEXT: Press E to Play BloodRun
+  UIGameObject: {fileID: 1369810941}
 --- !u!1001 &1600692079
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -19505,17 +19604,6 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2023442413}
-        m_MethodName: PlayArcade1Button
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 0
       - m_Target: {fileID: 4180106491707046820}
         m_MethodName: StartGame
         m_Mode: 5
@@ -19524,7 +19612,7 @@ MonoBehaviour:
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: BloodRun
+          m_StringArgument: XeonicFleet
           m_BoolArgument: 0
         m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
@@ -19907,6 +19995,39 @@ PrefabInstance:
     m_RemovedComponents:
     - {fileID: 7296887640799380678, guid: b5c46c49fa157dc40a8a0a374b106f64, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: b5c46c49fa157dc40a8a0a374b106f64, type: 3}
+--- !u!1 &91206813722708703 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4019007321651333020, guid: b5c46c49fa157dc40a8a0a374b106f64,
+    type: 3}
+  m_PrefabInstance: {fileID: 91206813722708702}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &91206813722708704
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 91206813722708703}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ec82d657ca8c7b4ea64f9e0c2ad17a7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SUBGAMESCENENAME: BloodRun
+--- !u!114 &91206813722708705
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 91206813722708703}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92164823dafeb444a8772e8900933dc3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  INTERACTTEXT: Press E to Play BloodRun
+  UIGameObject: {fileID: 1369810941}
 --- !u!1001 &4180106491707046819
 PrefabInstance:
   m_ObjectHideFlags: 0

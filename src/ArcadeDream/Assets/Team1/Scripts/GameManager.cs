@@ -55,6 +55,14 @@ namespace PHOTONSHIT {
                 Debug.Log("Left Room");
                 currentGameCreation = "BloodRun";
             }
+
+            if (name == "ExtremePong")
+            {
+                Debug.Log("ExtremePong To Begin");
+                PhotonNetwork.LeaveRoom(false);
+                Debug.Log("Left Room");
+                currentGameCreation = "ExtremePong";
+            }
         }
 
         public override void OnConnectedToMaster()
