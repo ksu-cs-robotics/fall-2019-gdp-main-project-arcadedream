@@ -44,6 +44,7 @@ public class PlayerController : NetworkBehaviour // NetworkBehaviour
 {
     // This will likely be set from a local config file
     public string PlayerUsername;
+    private bool canBeRobbed;
 
     [SerializeField] public float WALKSPEED = 3.0f;
     [SerializeField] public float RUNSPEED = 5.0f;
@@ -134,6 +135,7 @@ public class PlayerController : NetworkBehaviour // NetworkBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        canBeRobbed = true;
         // Dress the player up...
         ReinitializePlayer();
 
@@ -267,6 +269,9 @@ public class PlayerController : NetworkBehaviour // NetworkBehaviour
     // When object comes in contact with the player, add it to the list of nearby objects
     private void OnTriggerEnter(Collider other)
     {
+        if (other.gameObject.tag == "Game")
+            canBeRobbed = false;
+        
         // If other is not interactable, just forget it
         if (!other.GetComponent<InteractController>())
             return;
@@ -290,7 +295,10 @@ public class PlayerController : NetworkBehaviour // NetworkBehaviour
 
     // When object leaves the proximity of the player, remove it from the list of nearby objects
     private void OnTriggerExit(Collider other)
-    {      
+    {
+        if (other.gameObject.tag == "Game")
+            canBeRobbed = true;
+
         // Remove other, as it just moved out of range
         nearbyInteractableObjects_m.Remove(other);
 
@@ -306,5 +314,10 @@ public class PlayerController : NetworkBehaviour // NetworkBehaviour
                     nearbyInteractableObjects_m.Find((c) => c.gameObject.tag == "Player");
             }
         }
+    }
+
+    public bool getRobbableStatus()
+    {
+        return canBeRobbed;
     }
 }
