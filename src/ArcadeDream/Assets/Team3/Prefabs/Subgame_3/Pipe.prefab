@@ -31,7 +31,7 @@ Transform:
   m_GameObject: {fileID: 6234083204611757043}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.575, y: 0.472, z: 0}
-  m_LocalScale: {x: -0.0283277, y: 0.025100095, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -73,7 +73,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 29c3909a300f199499deb94bffb66182, type: 3}
+  m_Sprite: {fileID: 21300000, guid: b97a823d081d15d4b92f0839272a2ebe, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -97,18 +97,18 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: -0.024641752, y: -0.06608343}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 17.72, y: 17.72}
+    oldSize: {x: 4.49, y: 2.3}
     newSize: {x: 17.72, y: 17.72}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 17.72, y: 17.72}
+  m_Size: {x: 2.4691548, y: 2.1321669}
   m_EdgeRadius: 0
 --- !u!61 &6234083204611757041
 BoxCollider2D:
@@ -123,18 +123,18 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 26.486595}
+  m_Offset: {x: 0.12362325, y: 26.486595}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 17.72, y: 17.72}
+    oldSize: {x: 4.49, y: 2.3}
     newSize: {x: 17.72, y: 17.72}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 17.72, y: 70.01924}
+  m_Size: {x: 4.2668304, y: 70.01924}
   m_EdgeRadius: 0
 --- !u!114 &6234083204611757042
 MonoBehaviour:
@@ -150,8 +150,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   horizThrust: 15
   vertThrust: 4
-  UnBroken: {fileID: 21300000, guid: 29c3909a300f199499deb94bffb66182, type: 3}
-  Broken: {fileID: 21300000, guid: 2d39373e35cb214468b0cc93d01d3465, type: 3}
+  UnBroken: {fileID: 21300000, guid: b97a823d081d15d4b92f0839272a2ebe, type: 3}
+  Broken: {fileID: 21300000, guid: 9d880b5adde363047b990b6c3fbd7089, type: 3}
   BrokeTime: 5
   BrokeTimer: 5
   air: {fileID: 6234083204611757041}
