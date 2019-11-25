@@ -1,14 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.Networking;
 /// <summary>
 /// Homing laser functionality, moves directly toward an enemy
 /// Author: Lew Fortwangler
 /// Version: 1
 /// </summary>
 
-public class HomingMovement : MonoBehaviour
+public class HomingMovement : NetworkBehaviour
 {
     public GameObject Shooter { get; set; }
     private float laserSpeed_m = 10.0f;
@@ -29,19 +29,19 @@ public class HomingMovement : MonoBehaviour
 
     private void Update()
     {
-        FindEnemy();
+        CmdFindEnemy();
     }
-
-    private void FindEnemy()
+    [Command]
+    private void CmdFindEnemy()
     {
         float distClosestEnemy_m = Mathf.Infinity;
         Enemy closestEnemy_m = null;
         Enemy[] Enemies_m = GameObject.FindObjectsOfType<Enemy>();
 
-        foreach(Enemy currentEnemy_m in Enemies_m)
+        foreach (Enemy currentEnemy_m in Enemies_m)
         {
             float distToEnemy_m = (currentEnemy_m.transform.position - this.transform.position).sqrMagnitude;
-            if(distToEnemy_m < distClosestEnemy_m)
+            if (distToEnemy_m < distClosestEnemy_m)
             {
                 distClosestEnemy_m = distToEnemy_m;
                 closestEnemy_m = currentEnemy_m;
@@ -64,7 +64,8 @@ public class HomingMovement : MonoBehaviour
                 {
                     Destroy(gameObject);
                     var healthComponent = other.gameObject.GetComponent<EnemyHealth>();
-                    healthComponent.TakeDamage(Shooter);
+                    healthComponent.TakeDamage();
+                    Shooter.GetComponent<PlayerShip>().Points += healthComponent.SCOREVALUE;
 
                     break;
                 }

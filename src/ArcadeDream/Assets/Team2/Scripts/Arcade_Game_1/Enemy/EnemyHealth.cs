@@ -1,13 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.Networking;
 /// <summary>
 /// Implements enemy health and damage functions
 /// Author: Jared Anderson
 /// Version: 1
 /// </summary>
-public class EnemyHealth : MonoBehaviour
+public class EnemyHealth : NetworkBehaviour
 {
     // The amount of health the enemy starts the game with.
     public int STARTINGHEALTH = 1;
@@ -16,7 +16,7 @@ public class EnemyHealth : MonoBehaviour
     //The sound to play when the enemy dies.
     public AudioClip DEATHCLIP;
     // Amount of time before enemy object is destroyed.
-    public float DEATHDURATION = 2f;
+    public float DEATHDURATION = 0f;
 
     // Whether the enemy is dead.
     private bool isDead_m;
@@ -30,7 +30,7 @@ public class EnemyHealth : MonoBehaviour
     /// </summary>
     public MeshRenderer model;
     private Collider hb;
-    
+
 
     void Awake()
     {
@@ -44,22 +44,19 @@ public class EnemyHealth : MonoBehaviour
         hb = GetComponent<Collider>();
     }
 
-    public void TakeDamage(GameObject Shooter)
+    public void TakeDamage()
     {
+        Debug.Log("In cmdTakeDamage");
         // If the enemy is dead, exit the function.
         if (isDead_m)
             return;
 
-     //   audioSource_m.Play();
-          currentHealth_m--;
+        //   audioSource_m.Play();
+        currentHealth_m--;
 
         if (currentHealth_m <= 0)
-        {
-            Shooter.GetComponent<PlayerShip>().Points += SCOREVALUE;
             Die();
-        }
     }
-
     void Die()
     {
         isDead_m = true;
@@ -71,10 +68,11 @@ public class EnemyHealth : MonoBehaviour
         model.enabled = false;
         hb.enabled = false;
         this.enabled = false;
-        
+
         // Increase the player's score by the enemy's score value.
         // TODO: Implement score manager.
         // After the given amount of time, destroy the enemy object.
-        Destroy(gameObject, DEATHDURATION);
+        NetworkServer.Destroy(gameObject);
+
     }
 }

@@ -15,41 +15,39 @@ public class subgame1UI : NetworkBehaviour
     //public Text stageText;
 
     public GameObject gameOverUI;
-    public GameObject startScreenUI;
+    [SyncVar] public GameObject startScreenUI;
     //public GameObject levelClearUI;
-    public GameObject victoryUI;
-    public GameObject highscoreUI;
-    public GameObject escapeMenu;
+    [SyncVar] public GameObject victoryUI;
+    [SyncVar] public GameObject highscoreUI;
+    [SyncVar] public GameObject environment;
 
     bool gameover;
     float time = 2.0f;
 
     void Start()
     {
-        Debug.Log("START");
         player = GameObject.Find("PlayerShip");
         if (player != null)
         {
             playerShip = player.GetComponent<PlayerShip>();
         }
         gameover = false;
-
         Time.timeScale = 0; //pausing game
-        StartCoroutine(StartGame());
+
 
     }
-
-    IEnumerator StartGame()
-    {
-        Debug.Log("STARTGAME");
-        yield return new WaitForSecondsRealtime(time);
-        startScreenUI.SetActive(false);
-        Time.timeScale = 1; //playing game
-    }
-
 
     void Update()
     {
+        if (isServer)
+        {
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                RpcUIChange();// not networked only happens on server RPC command to tell clients to change scenes
+
+
+            }
+        }
         if (player != null)
         {
             scoreText.text = "Score " + playerShip.Points.ToString();
@@ -70,19 +68,20 @@ public class subgame1UI : NetworkBehaviour
                 playerShip = player.GetComponent<PlayerShip>();
             }
         }
-
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            escapeMenu.SetActive(true);
-        }
     }
-
+    [ClientRpc]
+    void RpcUIChange()
+    {
+        startScreenUI.SetActive(false);
+        Time.timeScale = 1; //playing game
+        environment.SetActive(true);
+    }
     //moving to highscore screen
     public void GameOverUIButton()
     {
         gameOverUI.SetActive(false);
         highscoreUI.SetActive(true);
-        
+
     }
 
     //moving to highscore screen
@@ -96,17 +95,7 @@ public class subgame1UI : NetworkBehaviour
     //moving back to main game lobby
     public void highscoreUIButton()
     {
-
-        SceneManager.LoadScene("Main");
-    }
-
-    public void ReturnToArcade()
-    {
-        SceneManager.LoadScene("Main");
-    }
-
-    public void Resume()
-    {
-        escapeMenu.SetActive(false);
+        //
+        //SceneManager.GetSceneByName("NAME OF MAIN LOBBY");
     }
 }

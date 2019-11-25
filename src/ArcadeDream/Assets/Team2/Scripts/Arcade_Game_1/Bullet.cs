@@ -1,33 +1,76 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
 [RequireComponent(typeof(Rigidbody))]
-public class Bullet : MonoBehaviour
+public class Bullet : NetworkBehaviour
 {
     public GameObject Shooter { get; set; }
     private bool isOnScreen_m = false;
 
-    private void Start()
-    {
-        Shooter = gameObject.transform.parent.gameObject;
-    }
-
     private void OnTriggerEnter(Collider other)
     {
-        if (Shooter.gameObject.tag == other.gameObject.tag || 
-            other.gameObject.tag == "Background" ||
-            other.gameObject.tag == "Boundary")
-            return;
-
-        else if (other.gameObject.tag == "Enemy")
+        if (!isServer || other == null || Shooter.gameObject.tag == other.gameObject.tag)
         {
-            var healthComponent = other.gameObject.GetComponent<EnemyHealth>();
-
-            healthComponent.TakeDamage(Shooter);
+            if (Shooter == null)
+            {
+                Debug.Log("Null");
+            }
+            return;
         }
 
-        Destroy(gameObject);
+        switch (other.gameObject.tag)
+        {
+            case "Player":
+                {
+                    // other.gameObject.GetComponent<PlayerShip>().HEALTH 
+
+                    NetworkServer.Destroy(gameObject);
+
+                    break;
+                }
+            case "Enemy":
+                {
+                    var healthComponent = other.gameObject.GetComponent<EnemyHealth>();
+
+                    healthComponent.TakeDamage();
+                    Shooter.GetComponent<PlayerShip>().Points += healthComponent.SCOREVALUE;
+                    NetworkServer.Destroy(gameObject);
+
+                    break;
+                }
+            case "PowerupObstacle":
+                {
+                    // other.gameObject.GetComponent<Obstacle>().HEALTH 
+                    NetworkServer.Destroy(gameObject);
+                    break;
+                }
+            case "1upPowerup":
+                {
+                    NetworkServer.Destroy(gameObject);
+                    break;
+                }
+            case "LaserPowerup":
+                {
+                    NetworkServer.Destroy(gameObject);
+                    break;
+                }
+            case "RapidFirePowerup":
+                {
+                    NetworkServer.Destroy(gameObject);
+                    break;
+                }
+            case "TopGunPowerup":
+                {
+                    NetworkServer.Destroy(gameObject);
+                    break;
+                }
+            default:
+                {
+                    break;
+                }
+        }
     }
 
     //If the obstacle is visible on screen, set variable to true
@@ -42,7 +85,7 @@ public class Bullet : MonoBehaviour
     {
         if (isOnScreen_m == true)
         {
-            Destroy(gameObject);
+            NetworkServer.Destroy(gameObject);
             isOnScreen_m = false;
         }
     }

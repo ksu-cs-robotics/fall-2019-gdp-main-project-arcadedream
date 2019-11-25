@@ -53,7 +53,7 @@ public class Laser : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        switch(other.gameObject.tag)
+        switch (other.gameObject.tag)
         {
             case "Player":
                 {
@@ -63,7 +63,8 @@ public class Laser : MonoBehaviour
                 {
                     var healthComponent = other.gameObject.GetComponent<EnemyHealth>();
 
-                    healthComponent.TakeDamage(Shooter);
+                    healthComponent.TakeDamage();
+                    Shooter.GetComponent<PlayerShip>().Points += healthComponent.SCOREVALUE;
 
                     break;
                 }

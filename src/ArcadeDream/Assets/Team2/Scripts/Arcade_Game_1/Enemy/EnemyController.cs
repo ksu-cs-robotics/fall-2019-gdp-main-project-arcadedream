@@ -2,16 +2,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.Networking;
 /// <summary>
 /// Implements enemy spawning
 /// Author: Jared Anderson, and to a much lesser extent, Josh Dotson
 /// Version: 2
 /// </summary>
-public class EnemyController : MonoBehaviour
+public class EnemyController : NetworkBehaviour
 {
     // The enemy prefab to be spawned.
-    public GameObject ENEMYPREFAB;
+    [SyncVar] public GameObject ENEMYPREFAB;
 
     // The spawn point of this enemy.
     private Transform position_m;
@@ -20,6 +20,7 @@ public class EnemyController : MonoBehaviour
     void Start()
     {
         position_m = GetComponent<Transform>();
-        Instantiate(ENEMYPREFAB, position_m.position, position_m.rotation);
+        GameObject enemy = Instantiate(ENEMYPREFAB, position_m.position, position_m.rotation);
+        NetworkServer.Spawn(enemy);
     }
 }
