@@ -31,7 +31,7 @@ public class ArcadeButtons : MonoBehaviour
     public void PlayArcade1MultiplayerButton()
     {
         Debug.Log("Multiplayer Xeonic Fleet");
-        waitingForPlayersUI.SetActive(true);
+        //waitingForPlayersUI.SetActive(true);
     }
 
     ///\/\/\/\/\/\/\/\ 
@@ -49,7 +49,7 @@ public class ArcadeButtons : MonoBehaviour
     public void PlayArcade2MultiplayerButton()
     {
         Debug.Log("Multiplayer Extreme Pong");
-        waitingForPlayersUI.SetActive(true);
+        //waitingForPlayersUI.SetActive(true);
     }
 
     ///\/\/\/\/\/\/\/\ 
@@ -67,7 +67,7 @@ public class ArcadeButtons : MonoBehaviour
     public void PlayArcade3MultiplayerButton()
     {
         Debug.Log("Multiplayer BloodBorn");
-        waitingForPlayersUI.SetActive(true);
+        //waitingForPlayersUI.SetActive(true);
     }
 
     //When the play button is pressed
@@ -81,7 +81,7 @@ public class ArcadeButtons : MonoBehaviour
     public void PlayArcade4MultiplayerButton()
     {
         Debug.Log("Multiplayer Extreme Pong");
-        waitingForPlayersUI.SetActive(true);
+        //waitingForPlayersUI.SetActive(true);
     }
 
 

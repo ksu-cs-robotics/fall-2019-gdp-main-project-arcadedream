@@ -17,6 +17,8 @@ public class Wallet : MonoBehaviour
     public Text TicketsText;
     public Text ToiletTicketsText;
 
+    public AudioSource flushSound;
+
     private const string filepath_m = "./money.txt";
     private int cash_m;
     private int tickets_m;
@@ -71,6 +73,11 @@ public class Wallet : MonoBehaviour
         toiletTickets_m = toiletTickets_m + tickets_m;
         tickets_m = 0;
         SaveWallet();
+        //Playing flush sound
+        if (!flushSound.isPlaying)
+        {
+            flushSound.Play();
+        }
     }
 
     public void RetrieveTickets()

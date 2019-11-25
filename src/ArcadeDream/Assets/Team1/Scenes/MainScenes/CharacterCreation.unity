@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 170076734}
-  m_IndirectSpecularColor: {r: 0.4465782, g: 0.49641252, b: 0.5748167, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1845,6 +1845,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 379834028, guid: 48de995ae8ed83e4585c6b2b4703c1ee, type: 3}
+      propertyPath: m_Constraints
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 130972303535447074, guid: 48de995ae8ed83e4585c6b2b4703c1ee,
         type: 3}
       propertyPath: m_Name
@@ -1925,6 +1929,11 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 0.81709146
       objectReference: {fileID: 0}
+    - target: {fileID: 130972303643164922, guid: 48de995ae8ed83e4585c6b2b4703c1ee,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 130972303643164923, guid: 48de995ae8ed83e4585c6b2b4703c1ee,
         type: 3}
       propertyPath: m_LocalRotation.x
@@ -1953,15 +1962,6 @@ PrefabInstance:
     - target: {fileID: 130972303643164923, guid: 48de995ae8ed83e4585c6b2b4703c1ee,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 379834028, guid: 48de995ae8ed83e4585c6b2b4703c1ee, type: 3}
-      propertyPath: m_Constraints
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 130972303643164922, guid: 48de995ae8ed83e4585c6b2b4703c1ee,
-        type: 3}
-      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5699091904642804882, guid: 48de995ae8ed83e4585c6b2b4703c1ee,
@@ -2949,7 +2949,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 0.14017442, g: 0.4163088, b: 0.8490566, a: 0}
+  m_BackGroundColor: {r: 0.014017452, g: 0.1727785, b: 0.4245283, a: 0}
   m_projectionMatrixMode: 1
   m_SensorSize: {x: 36, y: 24}
   m_LensShift: {x: 0, y: 0}
