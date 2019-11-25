@@ -33,6 +33,7 @@ public class subgame1UI : NetworkBehaviour
         }
         gameover = false;
         Time.timeScale = 0; //pausing game
+        startScreenUI.SetActive(true);
 
 
     }
