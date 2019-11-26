@@ -12,6 +12,8 @@ public class Owner : MonoBehaviour
     private int sneakSpeed = 2;
     private int runSpeed = 5;
 
+    public GameObject stealingUI;
+
     private void Start()
     {
         Alfred = GetComponent<NavMeshAgent>();
@@ -61,6 +63,14 @@ public class Owner : MonoBehaviour
             Alfred.speed = runSpeed;
             Alfred.SetDestination(restingSpot.transform.position);
             StartCoroutine("StealTickets");
+            StartCoroutine("ShowStealingUI");
         }
+    }
+
+    IEnumerator ShowStealingUI()
+    {
+        stealingUI.SetActive(true);
+        yield return new WaitForSeconds(3);
+        stealingUI.SetActive(false);
     }
 }
