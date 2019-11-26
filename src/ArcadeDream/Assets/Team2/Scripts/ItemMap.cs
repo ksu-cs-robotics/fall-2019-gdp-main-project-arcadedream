@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Collections;
 using System.Collections.Generic;
 using System.Security.Cryptography;
@@ -8,52 +9,89 @@ using UnityEngine;
 /// Main class used in encrypting/decrypting config, and wallet data
 /// Author(s): Josh Dotson
 /// Version: 1
-/// Notes: Thanks to Mr.Peyravi for 'Computer Network Security' RSA 
 /// </summary>
 public class ADRSAServiceProvider : IDisposable
 {
     // make this private in the future, and configure our own methods for it
     private RSACryptoServiceProvider ADRSA;
-    private RSAParameters ADRSAParams;
-
-    // This is not the safest thing for now, but it's just the config file
-    private static readonly byte[] _d = { 0x0 };
-    private static readonly byte[] _dmodp = { 0x0 };
-    private static readonly byte[] _dmodq = { 0x0 };
-    private static readonly byte[] _e = { 0x0 };
-    private static readonly byte[] _qinv = { 0x0 };
-    private static readonly byte[] _modulus = { 0x0 };
-    private static readonly byte[] _p = { 0x0 };
-    private static readonly byte[] _q = { 0x0 };
 
     public ADRSAServiceProvider()
     {
-        RSAParameters adRSAParameters = ADRSA.ExportParameters(false);
-
-        adRSAParameters.D = _d;
-        adRSAParameters.DP = _dmodp;
-        adRSAParameters.DQ = _dmodq;
-        adRSAParameters.Exponent = _e;
-        adRSAParameters.InverseQ = _qinv;
-        adRSAParameters.Modulus = _modulus;
-        adRSAParameters.P = _p;
-        adRSAParameters.Q = _q;
+        ADRSA = new RSACryptoServiceProvider();
     }
+    public ADRSAServiceProvider(string xmlString) : this() { InitializeFromXML(xmlString); }
+
+    // Generates a new set of RSA parameters for first time users
+    public void GenerateRSAParameters() { ADRSA.ExportParameters(true); }
+    // Initializes parameters from XML file
+    public void InitializeFromXML(string xmlString) { ADRSA.FromXmlString(xmlString); }
 
     // Placeholders for now
-    public byte[] Encrypt(byte[] data)
-    {
-        return new byte[0];
-    }
-    public byte[] Decrypt(byte[] data)
-    {
-        return new byte[0];
-    }
+    public byte[] Encrypt(byte[] data) { return ADRSA.Encrypt(data, false); }
+    public byte[] Decrypt(byte[] data) { return ADRSA.Decrypt(data, false); }
 
     // C# destructor
     public void Dispose()
     {
         ADRSA.Dispose();
+    }
+}
+
+/// <summary>
+/// Manages all IO operations between .arcadedream files, and this program
+/// Author: Josh Dotson
+/// Version: 1
+/// </summary>
+public static class ADIOManager
+{
+    // Const map to the config file location on the player's local machine
+    private static readonly string _configFilePath = $@"{Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)}\Arcade Dream\config.arcadedream";
+    private static readonly string _certFilePath = $@"{Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)}\Arcade Dream\adcert.arcadedream";
+
+    public static bool GenerateNewConfigFile()
+    {
+        try
+        {
+            File.Create(_configFilePath);
+            return true;
+        }
+        catch { return false; }
+    }
+    public static bool GenerateNewCertFile()
+    {
+        try
+        {
+            File.Create(_certFilePath);
+            return true;
+        }
+        catch { return false; }
+    }
+
+    public static bool GetConfigFileContents(out byte[] bytes)
+    {
+        try
+        {
+            bytes = File.ReadAllBytes(_configFilePath);
+            return true;
+        }
+        catch
+        {
+            bytes = default(byte[]);
+            return false;
+        }
+    }
+    public static bool GetCertFileContents(out string xmlString)
+    {
+        try
+        {
+            xmlString = File.ReadAllText(_certFilePath);
+            return true;
+        }
+        catch
+        {
+            xmlString = default(string);
+            return false;
+        }
     }
 }
 
@@ -87,28 +125,17 @@ public class Item
 /// </summary>
 public class ItemMap : MonoBehaviour
 {
-    public List<Item> IDMap;
     private static readonly uint _mapSize = 64; // BITS
     private const uint _typeNumber = 4;
 
     // Tells ItemMap where to segment a _mapSize bit hash for the resulting sub-hashs to encompass exactly 1 type of item
     private static readonly uint[] _typeBitShiftMap = new uint[4]
     {
-        // By default, there are 4 sections (types) in ItemMap, each having 8 items in total. These may be changed here...
+        // By default, there are 4 sections (types) in ItemMap, each having 16 items in total. These may be changed here...
         0x000f, 0x001f, 0x002f, 0x003f
     };
 
-    [TextArea] public string ItemType1Description;
-    [SerializeField] Material ID0, ID1, ID2, ID3, ID4, ID5, ID6, ID7, ID8, ID9, ID10, ID11, ID12, ID13, ID14, ID15;
-
-    [TextArea] public string ItemType2Description;
-    [SerializeField] Material ID16, ID17, ID18, ID19, ID20, ID21, ID22, ID23, ID24, ID25, ID26, ID27, ID28, ID29, ID30, ID31;
-
-    [TextArea] public string ItemType3Description;
-    [SerializeField] Material ID32, ID33, ID34, ID35, ID36, ID37, ID38, ID39, ID40, ID41, ID42, ID43, ID44, ID45, ID46, ID47;
-
-    [TextArea] public string ItemType4Description;
-    [SerializeField] Material ID48, ID49, ID50, ID51, ID52, ID53, ID54, ID55, ID56, ID57, ID58, ID59, ID60, ID61, ID62, ID63;
+    [SerializeField] Material[] ItemIDMap = new Material[_mapSize];
 
     #region ** Bitwise Method Implementations **
     /// <summary>
@@ -152,7 +179,7 @@ public class ItemMap : MonoBehaviour
     /// </summary>
     /// <param name="permissionsHash">Unsigned 64 Bit int from the database</param>
     /// <returns></returns>
-    public List<Item> HasUnlocked(ulong permissionsHash)
+    public List<Item> IsUnlocked(ulong permissionsHash)
     {
         List<Item> unlockedItems = new List<Item>();
 
@@ -190,19 +217,19 @@ public class ItemMap : MonoBehaviour
     public void Awake()
     {
         // Initialize the map list
-        IDMap = new List<Item>();
+        // IDMap = new List<Item>();
 
         // This uses reflection to avoid typing out all of the variable names
-        for (var i = 0; i < _mapSize; ++i)
+        /* for (var i = 0; i < _mapSize; ++i)
         {
             try // In case some of the ID#s don't hold references to anything
             {
                 Item item = new Item(i); // Create a new Item with an ID
                 item.item = (GameObject)typeof(ItemMap).GetField($"ID{i}").GetValue(this); // Using reflection, set the item reference
 
-                IDMap.Add(item);
+                // IDMap.Add(item);
             }
             catch { continue; }
-        }
+        }*/
     }
 }
