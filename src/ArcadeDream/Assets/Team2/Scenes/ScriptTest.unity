@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.37311953, g: 0.38074014, b: 0.3587274, a: 1}
+  m_IndirectSpecularColor: {r: 0.37311992, g: 0.38074034, b: 0.35872713, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1301,74 +1301,71 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d6c3337481f81b94990034006e734712, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ItemType1Description: 
-  ID0: {fileID: 0}
-  ID1: {fileID: 0}
-  ID2: {fileID: 0}
-  ID3: {fileID: 0}
-  ID4: {fileID: 0}
-  ID5: {fileID: 0}
-  ID6: {fileID: 0}
-  ID7: {fileID: 0}
-  ID8: {fileID: 0}
-  ID9: {fileID: 0}
-  ID10: {fileID: 0}
-  ID11: {fileID: 0}
-  ID12: {fileID: 0}
-  ID13: {fileID: 0}
-  ID14: {fileID: 0}
-  ID15: {fileID: 0}
-  ItemType2Description: 
-  ID16: {fileID: 0}
-  ID17: {fileID: 0}
-  ID18: {fileID: 0}
-  ID19: {fileID: 0}
-  ID20: {fileID: 0}
-  ID21: {fileID: 0}
-  ID22: {fileID: 0}
-  ID23: {fileID: 0}
-  ID24: {fileID: 0}
-  ID25: {fileID: 0}
-  ID26: {fileID: 0}
-  ID27: {fileID: 0}
-  ID28: {fileID: 0}
-  ID29: {fileID: 0}
-  ID30: {fileID: 0}
-  ID31: {fileID: 0}
-  ItemType3Description: 
-  ID32: {fileID: 0}
-  ID33: {fileID: 0}
-  ID34: {fileID: 0}
-  ID35: {fileID: 0}
-  ID36: {fileID: 0}
-  ID37: {fileID: 0}
-  ID38: {fileID: 0}
-  ID39: {fileID: 0}
-  ID40: {fileID: 0}
-  ID41: {fileID: 0}
-  ID42: {fileID: 0}
-  ID43: {fileID: 0}
-  ID44: {fileID: 0}
-  ID45: {fileID: 0}
-  ID46: {fileID: 0}
-  ID47: {fileID: 0}
-  ItemType4Description: 
-  ID48: {fileID: 0}
-  ID49: {fileID: 0}
-  ID50: {fileID: 0}
-  ID51: {fileID: 0}
-  ID52: {fileID: 0}
-  ID53: {fileID: 0}
-  ID54: {fileID: 0}
-  ID55: {fileID: 0}
-  ID56: {fileID: 0}
-  ID57: {fileID: 0}
-  ID58: {fileID: 0}
-  ID59: {fileID: 0}
-  ID60: {fileID: 0}
-  ID61: {fileID: 0}
-  ID62: {fileID: 0}
-  ID63: {fileID: 0}
+  ItemIDMap:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!1 &1180933211
 GameObject:
   m_ObjectHideFlags: 0
@@ -1895,6 +1892,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3bad7cfefa7dc2e409f25a715bf3fddc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  StealRatio: 0.33
+  cashText: {fileID: 0}
+  TicketsText: {fileID: 0}
+  ToiletTicketsText: {fileID: 0}
+  flushSound: {fileID: 0}
 --- !u!1 &1777898097
 GameObject:
   m_ObjectHideFlags: 0
@@ -2130,6 +2132,11 @@ PrefabInstance:
     - target: {fileID: 7026474990916643824, guid: 715052dd4d3b99a41857ed8d1a06645d,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7026474991299005874, guid: 715052dd4d3b99a41857ed8d1a06645d,
+        type: 3}
+      propertyPath: m_LocalPosition.z
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

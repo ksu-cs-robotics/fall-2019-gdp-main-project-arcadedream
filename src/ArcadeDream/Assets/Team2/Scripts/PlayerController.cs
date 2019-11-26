@@ -46,7 +46,9 @@ public class PlayerController : NetworkBehaviour // NetworkBehaviour
 {
     // This will likely be set from a local config file
     public string PlayerUsername;
-    private bool canBeRobbed;
+
+    private bool _canBeRobbed; // When it says use auto property, tell it to hush...doesn't work in here
+    public bool CanBeRobbed { get { return _canBeRobbed; } }
 
     [SerializeField] public float WALKSPEED = 3.0f;
     [SerializeField] public float RUNSPEED = 5.0f;
@@ -77,39 +79,66 @@ public class PlayerController : NetworkBehaviour // NetworkBehaviour
         byte[] configContent;
         string configContentPlainText;
         string certContent;
+        bool dbHasPriority = false;
 
+        #region ** Open, and Decrypt Config File Contents **
         if (ADIOManager.GetConfigFileContents(out configContent) && ADIOManager.GetCertFileContents(out certContent))
         {
             // Decrypt file contents
-            using (ADRSAServiceProvider RSA = new ADRSAServiceProvider(certContent))
+            using (RSACryptoServiceProvider RSA = new RSACryptoServiceProvider())// (ADRSAServiceProvider RSA = new ADRSAServiceProvider(certContent))
             {
-                var decryptedFileContents = RSA.Decrypt(configContent);
+                RSA.FromXmlString(certContent);
 
+                // Decrypt the contents...
+                var decryptedFileContents = RSA.Decrypt(configContent, false);
                 // Convert to string, extract the info, and configure the player object with it
-                configContentPlainText = BitConverter.ToString(decryptedFileContents);
+                configContentPlainText = Encoding.UTF8.GetString(decryptedFileContents);
             }
         }
         else
         {
+            // Since the config file needs to be regenerated, it will need to be synced with the database to be valid
+            dbHasPriority = true;
+
+            // Generate a new config file
             ADIOManager.GenerateNewConfigFile();
-            ADIOManager.GetConfigFileContents(out configContent);
+            ADIOManager.GetConfigFileContents(out configContentPlainText);
 
-            // Convert to string, extract the info, and configure the player object with it
-            configContentPlainText = BitConverter.ToString(configContent);
+            // Generate a new encryption file just to be safe
+            ADIOManager.GenerateNewCertFile();
+
+            // Encrypt the new file so it cannot be tampered with
+            ADIOManager.UpdateConfigFileContents(ADIOManager.EncryptThis(Encoding.UTF8.GetBytes(configContentPlainText)));
         }
+        #endregion
 
+        #region ** Sync Config File and Database **
         try
         {
             using (DatabaseManager dbManager = new DatabaseManager())
             {
-                // Hashes not implemented yet in getPlayer(), so for now, this is a placeholder
-                // dbManager.getPlayer();
+                if (dbHasPriority)
+                {
+                    // Sync config file to the database
+
+                    // Hashes not implemented yet in getPlayer(), so for now, this is a placeholder
+                    // dbManager.getPlayer();
+                    // ADIOManager.UpdateConfigFileContents(/*...*/);
+                }
+                else
+                {
+                    // Sync the database to the config file
+                    // dbManager.updatePlayer()
+                }
             }
         }
-        catch
+        catch (Exception ex)
         {
-            
+            // Poop...didn't work...
+
+            if (dbHasPriority) { /* Really poop! */ }
         }
+        #endregion
     }
 
     // Whenever the equipmentHash changes, the player needs to be reinitialized with there new clothing
@@ -121,7 +150,8 @@ public class PlayerController : NetworkBehaviour // NetworkBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        canBeRobbed = true;
+        _canBeRobbed = true;
+
         // Dress the player up...
         ReinitializePlayer();
 
@@ -256,7 +286,7 @@ public class PlayerController : NetworkBehaviour // NetworkBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag == "Game")
-            canBeRobbed = false;
+            _canBeRobbed = false;
         
         // If other is not interactable, just forget it
         if (!other.GetComponent<InteractController>())
@@ -283,7 +313,7 @@ public class PlayerController : NetworkBehaviour // NetworkBehaviour
     private void OnTriggerExit(Collider other)
     {
         if (other.gameObject.tag == "Game")
-            canBeRobbed = true;
+            _canBeRobbed = true;
 
         // Remove other, as it just moved out of range
         nearbyInteractableObjects_m.Remove(other);
@@ -302,8 +332,18 @@ public class PlayerController : NetworkBehaviour // NetworkBehaviour
         }
     }
 
+    // Gets called when the player object is destroyed...
+    private void OnDestroy()
+    {
+        // if (isLocalPlayer)
+        {
+            // Save stuff to config file...
+        }
+    }
+
+    // Added a property that essentially implements this
     public bool getRobbableStatus()
     {
-        return canBeRobbed;
+        return _canBeRobbed;
     }
 }

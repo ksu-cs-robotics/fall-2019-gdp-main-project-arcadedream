@@ -32,9 +32,9 @@ public class Wallet : MonoBehaviour
         tickets_m = System.Int32.Parse(wallet[1]);
         toiletTickets_m = System.Int32.Parse(wallet[2]);
         // Initialize the UI text.
-        cashText.text = wallet[0];
-        TicketsText.text = wallet[1];
-        ToiletTicketsText.text = wallet[2];
+        // cashText.text = wallet[0];
+        // TicketsText.text = wallet[1];
+        // ToiletTicketsText.text = wallet[2];
     }
 
     public void SpendCash(int amount)

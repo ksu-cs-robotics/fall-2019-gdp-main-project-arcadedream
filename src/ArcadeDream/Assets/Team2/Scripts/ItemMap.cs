@@ -1,24 +1,22 @@
 ﻿using System;
 using System.IO;
+using System.Text;
 using System.Collections;
 using System.Collections.Generic;
 using System.Security.Cryptography;
 using UnityEngine;
 
 /// <summary>
-/// Main class used in encrypting/decrypting config, and wallet data
+/// Main class used in encrypting/decrypting config, and wallet data (Retired)
 /// Author(s): Josh Dotson
 /// Version: 1
 /// </summary>
-public class ADRSAServiceProvider : IDisposable
+/*public class ADRSAServiceProvider : IDisposable
 {
     // make this private in the future, and configure our own methods for it
     private RSACryptoServiceProvider ADRSA;
 
-    public ADRSAServiceProvider()
-    {
-        ADRSA = new RSACryptoServiceProvider();
-    }
+    public ADRSAServiceProvider() { ADRSA = new RSACryptoServiceProvider(); }
     public ADRSAServiceProvider(string xmlString) : this() { InitializeFromXML(xmlString); }
 
     // Generates a new set of RSA parameters for first time users
@@ -26,16 +24,26 @@ public class ADRSAServiceProvider : IDisposable
     // Initializes parameters from XML file
     public void InitializeFromXML(string xmlString) { ADRSA.FromXmlString(xmlString); }
 
-    // Placeholders for now
     public byte[] Encrypt(byte[] data) { return ADRSA.Encrypt(data, false); }
-    public byte[] Decrypt(byte[] data) { return ADRSA.Decrypt(data, false); }
+    public byte[] Decrypt(byte[] data)
+    {
+        try
+        {
+            return ADRSA.Decrypt(data, false);
+        }
+        catch (Exception ex)
+        {
+            var test = ex;
+            return default(byte[]);
+        }
+    }
 
     // C# destructor
     public void Dispose()
     {
         ADRSA.Dispose();
     }
-}
+} */
 
 /// <summary>
 /// Manages all IO operations between .arcadedream files, and this program
@@ -45,14 +53,19 @@ public class ADRSAServiceProvider : IDisposable
 public static class ADIOManager
 {
     // Const map to the config file location on the player's local machine
-    private static readonly string _configFilePath = $@"{Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)}\Arcade Dream\config.arcadedream";
-    private static readonly string _certFilePath = $@"{Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)}\Arcade Dream\adcert.arcadedream";
+    private static readonly string _configFilePath =    $@"{Environment.CurrentDirectory}\config.arcadedream";
+    private static readonly string _certFilePath =      $@"{Environment.CurrentDirectory}\adcert.arcadedream";
 
     public static bool GenerateNewConfigFile()
     {
         try
         {
-            File.Create(_configFilePath);
+            // Create the new config file...
+            File.Create(_configFilePath).Dispose();
+            // Generate a new default set of contents for it...
+            string[] contents = { "#userID", "#permissions=0", "#equipment=0", "#cash=0", "#tickets=0", "#toilet_tickets=0" };
+            File.WriteAllLines(_configFilePath, contents, System.Text.Encoding.UTF8);
+            // And return success!
             return true;
         }
         catch { return false; }
@@ -61,7 +74,13 @@ public static class ADIOManager
     {
         try
         {
-            File.Create(_certFilePath);
+            using (RSACryptoServiceProvider rsa = new RSACryptoServiceProvider())
+            {
+                File.Create(_certFilePath).Dispose();
+                string contents = rsa.ToXmlString(true);
+                File.WriteAllText(_certFilePath, contents);
+            }
+
             return true;
         }
         catch { return false; }
@@ -80,6 +99,28 @@ public static class ADIOManager
             return false;
         }
     }
+    public static bool GetConfigFileContents(out string lines)
+    {
+        try
+        {
+            /*using (RSACryptoServiceProvider RSA = new RSACryptoServiceProvider())
+            {
+                RSA.FromXmlString(File.ReadAllText(_certFilePath));
+
+                // Get the contents, and then decrypt them into lines
+                var contents = File.ReadAllBytes(_configFilePath);
+                lines = Encoding.UTF8.GetString(RSA.Decrypt(contents, false));
+            }*/
+
+            lines = File.ReadAllText(_configFilePath, System.Text.Encoding.UTF8);
+            return true;
+        }
+        catch
+        {
+            lines = default(string);
+            return false;
+        }
+    }
     public static bool GetCertFileContents(out string xmlString)
     {
         try
@@ -93,8 +134,119 @@ public static class ADIOManager
             return false;
         }
     }
-}
 
+    public static bool UpdateConfigFileContents(uint userID, ulong permissions, ulong equipment, uint cash, uint tickets, uint toilet_tickets)
+    {
+        try
+        {
+            // Clear the contents of the file...
+            File.WriteAllText(_configFilePath, string.Empty);
+            // Generate the new contents...
+            string contents =
+                $"#userID={userID}" +
+                $"#permissions={permissions}" +
+                $"#equipment={equipment}" +
+                $"#cash={cash}" +
+                $"#tickets={tickets}" +
+                $"#toilet_tickets={toilet_tickets}";
+
+            // Encrypt those new contents
+            using (RSACryptoServiceProvider RSA = new RSACryptoServiceProvider())
+            {
+                RSA.FromXmlString(File.ReadAllText(_certFilePath));
+                return UpdateConfigFileContents(RSA.Encrypt(Encoding.UTF8.GetBytes(contents), false));
+            }
+        }
+        catch { return false; }
+    }
+    public static bool UpdateConfigFileContents(byte[] bytes)
+    {
+        try
+        {
+            // Clear file contents...
+            File.WriteAllText(_configFilePath, string.Empty);
+            // And write the new bytes to the file
+            File.WriteAllBytes(_configFilePath, bytes);
+
+            return true;
+        }
+        catch { return false; }
+    }
+
+    // Takes some data by reference, and encrypts/decrypts it, returning true on success.
+    public static bool EncryptThis(ref byte[] data)
+    {
+        try
+        {
+            using (RSACryptoServiceProvider RSA = new RSACryptoServiceProvider())
+            {
+                string contents;
+                if (GetCertFileContents(out contents))
+                {
+                    RSA.FromXmlString(contents);
+                    // Decrypt the data
+                    data = RSA.Encrypt(data, false);
+                }
+            }
+            // Return success!
+            return true;
+        }
+        catch { return false; }
+    }
+    public static byte[] EncryptThis(byte[] data)
+    {
+        try
+        {
+            using (RSACryptoServiceProvider RSA = new RSACryptoServiceProvider())
+            {
+                string contents;
+                if (!GetCertFileContents(out contents))
+                    throw new Exception("Could not open certificate file for reading");
+                
+                RSA.FromXmlString(contents);
+                // Decrypt the data
+                return RSA.Encrypt(data, false);
+            }
+        }
+        catch { return default(byte[]); }
+    }
+    public static bool DecryptThis(ref byte[] data)
+    {
+        try
+        {
+            using (RSACryptoServiceProvider RSA = new RSACryptoServiceProvider())
+            {
+                string contents;
+                if (GetCertFileContents(out contents))
+                {
+                    RSA.FromXmlString(contents);
+                    // Decrypt the data
+                    data = RSA.Decrypt(data, false);
+                }
+            }
+            // Return success!
+            return true;
+        }
+        catch { return false; }
+    }
+    public static byte[] DecryptThis(byte[] data)
+    {
+        try
+        {
+            using (RSACryptoServiceProvider RSA = new RSACryptoServiceProvider())
+            {
+                string contents;
+                if (!GetCertFileContents(out contents))
+                    throw new Exception("Could not open certificate file for reading");
+
+                RSA.FromXmlString(contents);
+                // Decrypt the data
+                return RSA.Decrypt(data, false);
+            }
+        }
+        catch { return default(byte[]); }
+    }
+}
 
 /// <summary>
 /// Stores an Item gameObject along with its corresponding ID
@@ -125,11 +277,11 @@ public class Item
 /// </summary>
 public class ItemMap : MonoBehaviour
 {
-    private static readonly uint _mapSize = 64; // BITS
+    private const uint _mapSize = 64; // BITS
     private const uint _typeNumber = 4;
 
     // Tells ItemMap where to segment a _mapSize bit hash for the resulting sub-hashs to encompass exactly 1 type of item
-    private static readonly uint[] _typeBitShiftMap = new uint[4]
+    private static readonly uint[] _typeBitShiftMap = new uint[/*_typeNumber*/]
     {
         // By default, there are 4 sections (types) in ItemMap, each having 16 items in total. These may be changed here...
         0x000f, 0x001f, 0x002f, 0x003f

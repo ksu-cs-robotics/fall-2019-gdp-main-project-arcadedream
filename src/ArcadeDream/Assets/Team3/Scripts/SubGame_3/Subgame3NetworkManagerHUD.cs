@@ -120,7 +120,7 @@ public class Subgame3NetworkManagerHUD : MonoBehaviour
             {
                 if (GUI.Button(new Rect(xpos, ypos, 200, 20), "Exit Game"))
                 {
-                    if (isHosting) { manager.StopHost(); }
+                    if (isHosting) { manager.StopHost(); manager.EndGame(); }
                     else { manager.StopClient(); }
 
                     // manager.StopHost();
