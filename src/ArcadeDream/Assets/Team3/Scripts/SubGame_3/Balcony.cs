@@ -1,11 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Networking;
+using Photon.Pun;
+using Photon.Realtime;
 
-public class Balcony : NetworkBehaviour
+public class Balcony : MonoBehaviourPunCallbacks
 {
-
     public GameObject Rubble;
     public float BrokeTime; //amouot of time wall stays broken
     public float BrokeTimer; //timer for how long it will stay broken
@@ -41,7 +41,7 @@ public class Balcony : NetworkBehaviour
         }
     }
 
-    [ClientRpc]
+    [PunRPC]
     private void RpcRubble()
     {
         Rubble.GetComponent<SpriteRenderer>().enabled = true;
@@ -51,7 +51,7 @@ public class Balcony : NetworkBehaviour
         BrokeTimer = BrokeTime;
     }
 
-    [ClientRpc]
+    [PunRPC]
     private void RpcBalcony()
     {
         Rubble.GetComponent<SpriteRenderer>().enabled = false;

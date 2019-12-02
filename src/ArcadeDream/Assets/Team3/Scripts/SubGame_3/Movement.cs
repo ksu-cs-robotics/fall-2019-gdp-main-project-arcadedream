@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.Networking;
+using Photon.Pun;
+using Photon.Realtime;
 
 //Base for movement script taken from https://github.com/mixandjam/Celeste-Movement/blob/master/Assets/Scripts/Movement.cs
 
-public class Movement : NetworkBehaviour
+public class Movement : MonoBehaviourPunCallbacks
 {
     //Components
     public Text countdownText;
@@ -77,7 +78,7 @@ public class Movement : NetworkBehaviour
 
         speedAtStart = speed;
     }
-
+    /*
     public override void OnStartLocalPlayer()
     {
         base.OnStartLocalPlayer();
@@ -88,12 +89,13 @@ public class Movement : NetworkBehaviour
         // Start the local timer when the players start. This shouldnt have to be networked
         localUICanvas = GameObject.FindGameObjectWithTag("UI").gameObject;
     }
-
+    */
     // Update is called once per frame
     void Update()
     {
-        if (isLocalPlayer)
+        //if (PhotonView.isMine)
         {
+            /*
             if (countdown)
             {
                 countdownTime -= Time.deltaTime;
@@ -109,7 +111,7 @@ public class Movement : NetworkBehaviour
                     //gun.GetComponent<GUN>().canShoot = true;
                 }
             }
-
+            */
             //if (!countdown) timer.runTimer = true;
 
             float x = Input.GetAxis("Horizontal");

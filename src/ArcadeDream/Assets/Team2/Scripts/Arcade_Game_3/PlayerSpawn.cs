@@ -17,6 +17,7 @@ namespace Bloodrun
         public GameObject spawnPoint3;
         public GameObject spawnPoint4;
         public GameObject button;
+        public GameObject countdownObj;
 
         public Text countdown;
 
@@ -25,8 +26,6 @@ namespace Bloodrun
         private int seconds = 5;
         [SerializeField]
         private int currentPlayers;
-
-        private bool gameStarted = false;
 
         void Start()
         {
@@ -65,14 +64,19 @@ namespace Bloodrun
                 PhotonNetwork.CurrentRoom.IsOpen = false;
                 PhotonNetwork.CurrentRoom.IsVisible = false;
             }
+            if(seconds == 0)
+            {
+                countdownObj.SetActive(false);
+                player.GetComponent<Movement>().canMove = true;
+            }
         }
 
         public void Wrapper()
         {
-            gameStarted = true;
             StartCoroutine("Countdown");
         }
 
+        [PunRPC]
         private IEnumerator CountDown()
         {
             yield return new WaitForSeconds(1);

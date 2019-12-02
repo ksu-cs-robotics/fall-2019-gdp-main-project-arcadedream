@@ -1,9 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Networking;
+using Photon.Pun;
+using Photon.Realtime;
 
-public class WallBreak : NetworkBehaviour
+public class WallBreak : MonoBehaviourPunCallbacks
 {
     public Sprite UnBroken; //sprite for unbroken wall
     public Sprite Broken; //borken wall
@@ -43,7 +44,7 @@ public class WallBreak : NetworkBehaviour
         }
     }
 
-    [ClientRpc]
+    [PunRPC]
     private void RpcChangeSprite()
     {
         BrokeTimer = BrokeTime;

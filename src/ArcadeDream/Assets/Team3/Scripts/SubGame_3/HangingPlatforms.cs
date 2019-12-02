@@ -1,9 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Networking;
+using Photon.Pun;
+using Photon.Realtime;
 
-public class HangingPlatforms : NetworkBehaviour
+public class HangingPlatforms : MonoBehaviourPunCallbacks
 {
     public float BrokeTime; //amouot of time wall stays broken
     public float BrokeTimer; //timer for how long it will stay broken
@@ -43,7 +44,7 @@ public class HangingPlatforms : NetworkBehaviour
         }
     }
 
-    [ClientRpc]
+    [PunRPC]
     private void RpcRotate()
     {
         BrokeTimer = BrokeTime;

@@ -1,9 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Networking;
+using Photon.Pun;
+using Photon.Realtime;
 
-public class Pipe : NetworkBehaviour
+public class Pipe : MonoBehaviourPunCallbacks
 {
     //public float thrust;
     public float horizThrust;
@@ -69,7 +70,7 @@ public class Pipe : NetworkBehaviour
         }
     }
 
-    [ClientRpc]
+    [PunRPC]
     private void RpcChangeSprite()
     {
         BrokeTimer = BrokeTime;
