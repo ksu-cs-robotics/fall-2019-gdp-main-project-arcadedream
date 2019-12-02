@@ -1,13 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using System.IO;
+using System.Text;
 using UnityEngine;
 using UnityEngine.UI;
 
 /// <summary>
 /// Implements player currency and tickets
 /// Author: Jared Anderson
-/// Version: 1
+/// Version: 2
 /// </summary>
 public class Wallet : MonoBehaviour
 {
@@ -19,7 +19,6 @@ public class Wallet : MonoBehaviour
 
     public AudioSource flushSound;
 
-    private const string filepath_m = "./money.txt";
     private int cash_m;
     private int tickets_m;
     private int toiletTickets_m;
@@ -27,14 +26,23 @@ public class Wallet : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        string[] wallet = File.ReadAllLines(filepath_m);
-        cash_m = System.Int32.Parse(wallet[0]);
-        tickets_m = System.Int32.Parse(wallet[1]);
-        toiletTickets_m = System.Int32.Parse(wallet[2]);
+        // Open the config file, decrypt it, and retain the cash, tickets, and toilet tickets.
+        byte[] lines;
+        ADIOManager.GetConfigFileContents(out lines);
+        ADIOManager.DecryptThis(ref lines);
+        var decrypted = Encoding.UTF8.GetString(lines);
+        string[] decryptedLines = decrypted.Split('\n');
+        string cashString = decryptedLines[3].Split('=')[1];
+        string ticketsString = decryptedLines[4].Split('=')[1];
+        string toilet_ticketsString = decryptedLines[5].Split('=')[1];
+        // Convert each string to integers and store them in memory.
+        cash_m = System.Int32.Parse(cashString);
+        tickets_m = System.Int32.Parse(ticketsString);
+        toiletTickets_m = System.Int32.Parse(toilet_ticketsString);
         // Initialize the UI text.
-        // cashText.text = wallet[0];
-        // TicketsText.text = wallet[1];
-        // ToiletTicketsText.text = wallet[2];
+        cashText.text = cashString;
+        TicketsText.text = ticketsString;
+        ToiletTicketsText.text = toilet_ticketsString;
     }
 
     public void SpendCash(int amount)
@@ -89,14 +97,24 @@ public class Wallet : MonoBehaviour
 
     private void SaveWallet()
     {
-        string[] wallet = new string[3];
-        wallet[0] = cash_m.ToString();
-        wallet[1] = tickets_m.ToString();
-        wallet[2] = toiletTickets_m.ToString();
-        File.WriteAllLines(filepath_m, wallet);
+        // Open the config file and decrypt it.
+        byte[] lines;
+        ADIOManager.GetConfigFileContents(out lines);
+        ADIOManager.DecryptThis(ref lines);
+        var decrypted = Encoding.UTF8.GetString(lines);
+        string[] decryptedLines = decrypted.Split('\n');
+        // We don't need to make any changes to these variables, so just convert them back into the proper format.
+        uint userID = System.Convert.ToUInt32(decryptedLines[0].Split('=')[1]);
+        ulong permissions = System.Convert.ToUInt64(decryptedLines[1].Split('=')[1]);
+        ulong equipment = System.Convert.ToUInt64(decryptedLines[2].Split('=')[1]);
+        // Update these variables.
+        uint cash = System.Convert.ToUInt32(cash_m);
+        uint tickets = System.Convert.ToUInt32(tickets_m);
+        uint toilet_tickets = System.Convert.ToUInt32(toiletTickets_m);
+        ADIOManager.UpdateConfigFileContents(userID, permissions, equipment, cash, tickets, toilet_tickets);
         // Update the UI text.
-        cashText.text = wallet[0];
-        TicketsText.text = wallet[1];
-        ToiletTicketsText.text = "Stored Tickets: " + wallet[2];
+        cashText.text = cash_m.ToString();
+        TicketsText.text = tickets_m.ToString();
+        ToiletTicketsText.text = "Stored Tickets: " + toiletTickets_m.ToString();
     }
 }

@@ -63,7 +63,7 @@ public static class ADIOManager
             // Create the new config file...
             File.Create(_configFilePath).Dispose();
             // Generate a new default set of contents for it...
-            string[] contents = { "#userID", "#permissions=0", "#equipment=0", "#cash=0", "#tickets=0", "#toilet_tickets=0" };
+            string[] contents = { "#userID=0", "#permissions=0", "#equipment=0", "#cash=0", "#tickets=0", "#toilet_tickets=0" };
             File.WriteAllLines(_configFilePath, contents, System.Text.Encoding.UTF8);
             // And return success!
             return true;
@@ -143,12 +143,12 @@ public static class ADIOManager
             File.WriteAllText(_configFilePath, string.Empty);
             // Generate the new contents...
             string contents =
-                $"#userID={userID}" +
-                $"#permissions={permissions}" +
-                $"#equipment={equipment}" +
-                $"#cash={cash}" +
-                $"#tickets={tickets}" +
-                $"#toilet_tickets={toilet_tickets}";
+                $"#userID={userID}\n" +
+                $"#permissions={permissions}\n" +
+                $"#equipment={equipment}\n" +
+                $"#cash={cash}\n" +
+                $"#tickets={tickets}\n" +
+                $"#toilet_tickets={toilet_tickets}\n";
 
             // Encrypt those new contents
             using (RSACryptoServiceProvider RSA = new RSACryptoServiceProvider())
