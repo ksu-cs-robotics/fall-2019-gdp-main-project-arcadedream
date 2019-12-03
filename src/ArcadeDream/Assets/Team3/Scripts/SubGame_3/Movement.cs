@@ -20,6 +20,7 @@ public class Movement : MonoBehaviourPunCallbacks
     private Collision collScript;
     private Vector3 respawnPosition;
     private Vector2 respawnDir;
+    public PhotonView myView;
 
     //Movement stats
     public float speed;
@@ -93,7 +94,7 @@ public class Movement : MonoBehaviourPunCallbacks
     // Update is called once per frame
     void Update()
     {
-        //if (PhotonView.isMine)
+        //if (myView.isMine)
         {
             /*
             if (countdown)

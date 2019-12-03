@@ -54,10 +54,7 @@ namespace Bloodrun
         {
             if (currentPlayers >= minPlayers)
             {
-                if (PhotonNetwork.IsMasterClient)
-                {
-                    button.SetActive(true);
-                }
+                button.SetActive(true);
             }
             if (currentPlayers == maxPlayers)
             {
@@ -67,6 +64,7 @@ namespace Bloodrun
             if(seconds == 0)
             {
                 countdownObj.SetActive(false);
+                button.SetActive(false);
                 player.GetComponent<Movement>().canMove = true;
             }
         }
