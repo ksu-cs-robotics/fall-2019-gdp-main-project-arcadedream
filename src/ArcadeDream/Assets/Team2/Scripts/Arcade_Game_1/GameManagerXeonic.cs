@@ -23,7 +23,6 @@ public class GameManagerXeonic : MonoBehaviourPunCallbacks
         {
             PhotonNetwork.Instantiate(playerPrefab.name, new Vector3(0f, 0f, 3f), Quaternion.identity, 0);
         }
-        PhotonNetwork.AutomaticallySyncScene = true;
     }
     
     // Update is called once per frame
