@@ -21,7 +21,7 @@ public class GameManagerXeonic : MonoBehaviourPunCallbacks
         }
         else if(PlayerShip.LocalPlayerInstance == null)
         {
-            PhotonNetwork.Instantiate(playerPrefab.name, new Vector3(0f, 0f, 3f), Quaternion.identity, 0);
+            PhotonNetwork.Instantiate(playerPrefab.name, new Vector3(-10f, 0f, 3f), Quaternion.identity, 0);
         }
     }
     
