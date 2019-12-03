@@ -2,10 +2,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Networking;
+using Photon.Pun;
+using Photon.Realtime;
 using UnityEngine.UI;
 
-public class PlayerPaddleMovement : NetworkBehaviour
+public class PlayerPaddleMovement : MonoBehaviourPunCallbacks
 {
     [SerializeField] float speed;
     [SerializeField] float rotationSpeed;
@@ -45,7 +46,11 @@ public class PlayerPaddleMovement : NetworkBehaviour
 
     //Experimentation
     public Vector2 ballDirection;
-
+    private GameObject ball;
+    public float dist;
+    bool movingtowards;
+    bool found = false;
+    private PhotonView pv;
 
 
     // Start is called before the first frame update
@@ -65,13 +70,14 @@ public class PlayerPaddleMovement : NetworkBehaviour
         greenSpawn = GameObject.Find("GreenPaddlePoint").GetComponent<Transform>();
         yellowSpawn = GameObject.Find("YellowPaddlePoint").GetComponent<Transform>();
 
-        if (this.transform.position == redSpawn.position) this.Init(1);
-        else if (this.transform.position == blueSpawn.position) this.Init(2);
-        else if (this.transform.position == greenSpawn.position) this.Init(3);
-        else if (this.transform.position == yellowSpawn.position) this.Init(4);
+        if (this.name == "Player1Paddle") this.Init(1);
+        else if (this.name == "Player2Paddle") this.Init(2);
+        else if (p.playerNumber == 3) this.Init(3);
+        else if (p.playerNumber == 4) this.Init(4);
 
         //Experimentation
         ballDirection = Vector2.zero;
+        pv = GetComponent<PhotonView>();
     }
 
     //Initializes each player paddle based on the player number 1-4 
@@ -82,24 +88,28 @@ public class PlayerPaddleMovement : NetworkBehaviour
         {
             case 1:
                 // init player 1 (red)
-                pos = new Vector2(PongGameManager.RedPaddleSpawn.x, PongGameManager.RedPaddleSpawn.y);
+                pos = redSpawn.position;
+                transform.position = pos;
                 transform.rotation = redSpawn.rotation;
                 input = "Player1Paddle";
                 //Assign Color
                 gameObject.GetComponent<SpriteRenderer>().sprite = red;
+                Debug.Log(pos);
                 break;
             case 2:
                 // Init player 2 (blue)
-                pos = new Vector2(PongGameManager.BluePaddleSpawn.x, PongGameManager.BluePaddleSpawn.y);
+                pos = blueSpawn.position;
                 transform.rotation = blueSpawn.rotation;
+                transform.position = pos;
                 input = "Player2Paddle";
                 //Assign Color
                 gameObject.GetComponent<SpriteRenderer>().sprite = blue;
                 break;
             case 3:
                 // Init player 3 (green)
-                pos = new Vector2(PongGameManager.GreenPaddleSpawn.x, PongGameManager.GreenPaddleSpawn.y);
+                pos = greenSpawn.position;
                 transform.rotation = greenSpawn.rotation;
+                transform.position = pos;
                 input = "Player3Paddle";
                 //Assign Color 
                 gameObject.GetComponent<SpriteRenderer>().sprite = green;
@@ -107,8 +117,9 @@ public class PlayerPaddleMovement : NetworkBehaviour
                 break;
             case 4:
                 // Init player 4 (Yellow)
-                pos = new Vector2(PongGameManager.YellowPaddleSpawn.x, PongGameManager.YellowPaddleSpawn.y);
+                pos = yellowSpawn.position;
                 transform.rotation = yellowSpawn.rotation;
+                transform.position = pos;
                 input = "Player4Paddle";
                 //Assign Color
                 gameObject.GetComponent<SpriteRenderer>().sprite = yellow;
@@ -132,8 +143,21 @@ public class PlayerPaddleMovement : NetworkBehaviour
     // Update is called once per fixed frame
     void Update()
     {
+
+        if (!found)
+        {
+            if (GameObject.FindWithTag("ExtremePongBall") == null) return;
+            else
+            {
+                ball = GameObject.FindWithTag("ExtremePongBall");
+                found = true;
+            }
+        }
+
+
+
         //mouse scroll changes rotation
-        if (checker && hasAuthority)
+        if (checker && pv.IsMine)
         {
             if (Input.GetAxis("Mouse ScrollWheel") > 0) //scroll up
             {
@@ -155,7 +179,8 @@ public class PlayerPaddleMovement : NetworkBehaviour
         }
 
 
-        if (locked && p.playerNumber == num)
+        if (locked && pv.IsMine)
+            
         {
             Move();
         }
@@ -168,9 +193,27 @@ public class PlayerPaddleMovement : NetworkBehaviour
         //Experimentation
         if (locked)
         {
+           ;
 
-            ballDirection = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y)) - transform.position;
-            ballDirection.Normalize();
+            float distTemp = Vector3.Distance(ball.transform.position, transform.position);
+            if (distTemp <= dist)
+            {
+                dist = distTemp;
+                movingtowards = true;
+            }
+            else if (distTemp > dist)
+            { // rigorous checking
+                dist = distTemp;
+                movingtowards = false;
+            }
+
+            if (movingtowards)
+            {
+                ballDirection = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y)) - transform.position;
+                ballDirection.Normalize();
+            }
+            else
+                ballDirection = Vector2.zero;
 
         }
 

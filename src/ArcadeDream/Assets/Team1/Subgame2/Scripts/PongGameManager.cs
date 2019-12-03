@@ -2,13 +2,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Networking;
+using Photon.Pun;
 using UnityEngine.UI;
 
-public class PongGameManager : NetworkBehaviour
+public class PongGameManager : MonoBehaviourPunCallbacks
 {
-    //public BallMovement ball; // effectively ball prefab
-    //public PlayerPaddleMovement playerPaddle; // playerpaddle prefab
+
     public GoalieMovement goalie; // goalie prefab
 
     public GameObject[] goals;
@@ -43,7 +42,8 @@ public class PongGameManager : NetworkBehaviour
     //Team3 addition
     public GameObject ball;
     public GameObject playerPaddle;
-    private GameObject serverBall = null;
+
+    public Player pScript;
 
     // Start is called before the first frame update
     void Start()
@@ -61,31 +61,41 @@ public class PongGameManager : NetworkBehaviour
         GreenPaddleSpawn = GameObject.Find("GreenPaddlePoint").GetComponent<Transform>().position;
         YellowPaddleSpawn = GameObject.Find("YellowPaddlePoint").GetComponent<Transform>().position;
 
-        //Create ball
-        //Instantiate(ball);
+
+
 
 
     }
 
     void Update()
     {
-        if (Player.active && !spawned)
+        if (pScript.start && !spawned)
         {
-            if (isServer)
-            {
-                serverBall = (GameObject)Instantiate(ball);
-                NetworkServer.Spawn(serverBall);
-                InvokeRepeating("SpawnPowerUp", spawnPowerups, spawnPowerups); // Starting in (spawnPowerups) seconds.
-            }
-
             spawned = true;
+            photonView.RPC("spawnBall", RpcTarget.MasterClient);
+           
+
         }
+
+        /*
         //for singleplayer AI
         if (numberOfPlayers == 1)
         {
             singlePlayerAI.SetActive(true); //Sets the singplayer ai object active which activates the script
         }
+        */
 
+    }
+
+    [PunRPC]
+    void spawnBall()
+    {
+        if(GameObject.FindWithTag("ExtremePongBall") == null)
+        {
+            PhotonNetwork.Instantiate("Subgame2/Ball", Vector2.zero, Quaternion.identity, 0);
+        }
+        spawned = true;
+        //InvokeRepeating("SpawnPowerUp", spawnPowerups, spawnPowerups);
     }
 
 
@@ -96,8 +106,7 @@ public class PongGameManager : NetworkBehaviour
             spawnPointChosen = UnityEngine.Random.Range(0, 8); // random number 0-7
             Debug.Log(powerupChosen);
             //spawn random powerup at random spawn point
-            GameObject PU = (GameObject)Instantiate(powerup[powerupChosen], spawnPoint[spawnPointChosen].position, spawnPoint[spawnPointChosen].rotation);
-            NetworkServer.Spawn(PU);
+            PhotonNetwork.Instantiate(powerup[powerupChosen].name, spawnPoint[spawnPointChosen].position, spawnPoint[spawnPointChosen].rotation);
             Debug.Log("Power up " + powerupChosen + " spawned at spawn point " + spawnPointChosen);
         }
     }

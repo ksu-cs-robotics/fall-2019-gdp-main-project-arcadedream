@@ -13,6 +13,7 @@ public class StartScreen : MonoBehaviour
     public GameObject startUI;
     public GameObject gameplayUI;
     public GameObject controlsUI;
+    public GameObject pTracker;
 
     private bool displayed_m = false;
 
@@ -21,6 +22,8 @@ public class StartScreen : MonoBehaviour
         startUI.SetActive(true);
         gameplayUI.SetActive(false);
         Time.timeScale = 0;
+        //pTracker = GameObject.Find("PlayerTrack");
+        
     }
 
     private void Update()
@@ -29,6 +32,7 @@ public class StartScreen : MonoBehaviour
         {
             startUI.SetActive(false);
             gameplayUI.SetActive(true);
+            pTracker.SetActive(true);
             Time.timeScale = 1;
 
             //

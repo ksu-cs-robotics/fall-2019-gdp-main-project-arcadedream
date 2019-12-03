@@ -4,9 +4,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
+using Photon.Pun;
 
 
-public class GoalieMovement : NetworkBehaviour
+public class GoalieMovement : MonoBehaviourPunCallbacks
 {
     public int leftlimit;
     public int rightlimit;
@@ -23,7 +24,7 @@ public class GoalieMovement : NetworkBehaviour
     private Transform yellowSpawn;
 
     public Player p;
-
+    private PhotonView pv;
 
 
     public int count;
@@ -40,10 +41,7 @@ public class GoalieMovement : NetworkBehaviour
         greenSpawn = GameObject.Find("3").GetComponent<Transform>();
         yellowSpawn = GameObject.Find("2").GetComponent<Transform>();
 
-        if (this.transform.position == redSpawn.position) this.Init(1);
-        else if (this.transform.position == blueSpawn.position) this.Init(2);
-        else if (this.transform.position == greenSpawn.position) this.Init(3);
-        else if (this.transform.position == yellowSpawn.position) this.Init(4);
+        pv = GetComponent<PhotonView>();
     
 }
     // Update is called once per frame
@@ -54,7 +52,7 @@ public class GoalieMovement : NetworkBehaviour
 
     private void FixedUpdate()
     {
-        if (able && isLocalPlayer && p.move_on)
+        if (able && pv.IsMine && p.move_on)
         {
             if (Input.GetKeyDown(KeyCode.A) && leftlimit != 1)
             {
