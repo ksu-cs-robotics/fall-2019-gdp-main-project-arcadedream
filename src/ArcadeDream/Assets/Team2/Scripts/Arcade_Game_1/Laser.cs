@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
+using Photon.Realtime;
 
 /// <summary>
 /// sets laser speed and movement, cleans up lasers
@@ -8,7 +10,7 @@ using UnityEngine;
 /// Version: 2
 /// </summary>
 
-public class Laser : MonoBehaviour
+public class Laser : MonoBehaviourPunCallbacks
 {
     public GameObject Shooter { get; set; }
     private float laserSpeed_m = 20.0f;
@@ -46,7 +48,7 @@ public class Laser : MonoBehaviour
     {
         if (isOnScreen_m == true)
         {
-            Destroy(gameObject);
+            PhotonNetwork.Destroy(gameObject);
             isOnScreen_m = false;
         }
     }

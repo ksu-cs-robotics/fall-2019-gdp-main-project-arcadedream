@@ -1,11 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Networking;
+using Photon.Pun;
+using Photon.Realtime;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-public class subgame1UI : NetworkBehaviour
+public class subgame1UI : MonoBehaviourPunCallbacks
 {
     GameObject player;
     PlayerShip playerShip;
@@ -15,11 +16,11 @@ public class subgame1UI : NetworkBehaviour
     //public Text stageText;
 
     public GameObject gameOverUI;
-    [SyncVar] public GameObject startScreenUI;
+    public GameObject startScreenUI;
     //public GameObject levelClearUI;
-    [SyncVar] public GameObject victoryUI;
-    [SyncVar] public GameObject highscoreUI;
-    [SyncVar] public GameObject environment;
+    public GameObject victoryUI;
+    public GameObject highscoreUI;
+    public GameObject environment;
 
     bool gameover;
     float time = 2.0f;
@@ -40,15 +41,13 @@ public class subgame1UI : NetworkBehaviour
 
     void Update()
     {
-        if (isServer)
-        {
             if (Input.GetKeyDown(KeyCode.Space))
             {
-                RpcUIChange();// not networked only happens on server RPC command to tell clients to change scenes
+                UIChange();// not networked only happens on server RPC command to tell clients to change scenes
 
 
             }
-        }
+       
         if (player != null)
         {
             scoreText.text = "Score " + playerShip.Points.ToString();
@@ -70,8 +69,8 @@ public class subgame1UI : NetworkBehaviour
             }
         }
     }
-    [ClientRpc]
-    void RpcUIChange()
+    
+    void UIChange()
     {
         startScreenUI.SetActive(false);
         Time.timeScale = 1; //playing game

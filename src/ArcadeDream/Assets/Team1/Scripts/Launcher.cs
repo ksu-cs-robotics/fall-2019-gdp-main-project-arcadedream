@@ -42,7 +42,7 @@ public class Launcher : MonoBehaviourPunCallbacks
     {
         Debug.Log("No Room Avaliable Creating MainLobby");
 
-        PhotonNetwork.CreateRoom("MainLobby", new RoomOptions { MaxPlayers = 20 }, TypedLobby.Default);
+        PhotonNetwork.CreateRoom("MainLobby", new RoomOptions { MaxPlayers = 12 }, TypedLobby.Default);
 
         //LoadArena();
     }

@@ -2,13 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
+using Photon.Pun;
+using Photon.Realtime;
+
 /// <summary>
 /// Homing laser functionality, moves directly toward an enemy
 /// Author: Lew Fortwangler
 /// Version: 1
 /// </summary>
 
-public class HomingMovement : NetworkBehaviour
+public class HomingMovement : MonoBehaviourPunCallbacks
 {
     public GameObject Shooter { get; set; }
     private float laserSpeed_m = 10.0f;
@@ -29,10 +32,10 @@ public class HomingMovement : NetworkBehaviour
 
     private void Update()
     {
-        CmdFindEnemy();
+        FindEnemy();
     }
-    [Command]
-    private void CmdFindEnemy()
+    
+    private void FindEnemy()
     {
         float distClosestEnemy_m = Mathf.Infinity;
         Enemy closestEnemy_m = null;
@@ -62,7 +65,7 @@ public class HomingMovement : NetworkBehaviour
                 }
             case "Enemy":
                 {
-                    Destroy(gameObject);
+                    PhotonNetwork.Destroy(gameObject);
                     var healthComponent = other.gameObject.GetComponent<EnemyHealth>();
                     healthComponent.TakeDamage();
                     Shooter.GetComponent<PlayerShip>().Points += healthComponent.SCOREVALUE;

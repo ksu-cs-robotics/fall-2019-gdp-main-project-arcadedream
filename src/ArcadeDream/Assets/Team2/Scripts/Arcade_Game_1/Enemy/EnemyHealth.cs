@@ -1,13 +1,16 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Networking;
+
+using Photon.Pun;
+using Photon.Realtime;
+
 /// <summary>
 /// Implements enemy health and damage functions
 /// Author: Jared Anderson
 /// Version: 1
 /// </summary>
-public class EnemyHealth : NetworkBehaviour
+public class EnemyHealth : MonoBehaviourPunCallbacks
 {
     // The amount of health the enemy starts the game with.
     public int STARTINGHEALTH = 1;
@@ -72,7 +75,7 @@ public class EnemyHealth : NetworkBehaviour
         // Increase the player's score by the enemy's score value.
         // TODO: Implement score manager.
         // After the given amount of time, destroy the enemy object.
-        NetworkServer.Destroy(gameObject);
+        PhotonNetwork.Destroy(gameObject);
 
     }
 }

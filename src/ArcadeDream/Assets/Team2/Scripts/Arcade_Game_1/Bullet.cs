@@ -2,16 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
+using Photon.Pun;
+using Photon.Realtime;
 
 [RequireComponent(typeof(Rigidbody))]
-public class Bullet : NetworkBehaviour
+public class Bullet : MonoBehaviourPunCallbacks
 {
     public GameObject Shooter { get; set; }
     private bool isOnScreen_m = false;
 
     private void OnTriggerEnter(Collider other)
     {
-        if (!isServer || other == null || Shooter.gameObject.tag == other.gameObject.tag)
+        if ( other == null || Shooter.gameObject.tag == other.gameObject.tag)
         {
             if (Shooter == null)
             {
@@ -26,7 +28,7 @@ public class Bullet : NetworkBehaviour
                 {
                     // other.gameObject.GetComponent<PlayerShip>().HEALTH 
 
-                    NetworkServer.Destroy(gameObject);
+                    PhotonNetwork.Destroy(gameObject);
 
                     break;
                 }
@@ -36,34 +38,34 @@ public class Bullet : NetworkBehaviour
 
                     healthComponent.TakeDamage();
                     Shooter.GetComponent<PlayerShip>().Points += healthComponent.SCOREVALUE;
-                    NetworkServer.Destroy(gameObject);
+                    PhotonNetwork.Destroy(gameObject);
 
                     break;
                 }
             case "PowerupObstacle":
                 {
                     // other.gameObject.GetComponent<Obstacle>().HEALTH 
-                    NetworkServer.Destroy(gameObject);
+                    PhotonNetwork.Destroy(gameObject);
                     break;
                 }
             case "1upPowerup":
                 {
-                    NetworkServer.Destroy(gameObject);
+                    PhotonNetwork.Destroy(gameObject);
                     break;
                 }
             case "LaserPowerup":
                 {
-                    NetworkServer.Destroy(gameObject);
+                    PhotonNetwork.Destroy(gameObject);
                     break;
                 }
             case "RapidFirePowerup":
                 {
-                    NetworkServer.Destroy(gameObject);
+                    PhotonNetwork.Destroy(gameObject);
                     break;
                 }
             case "TopGunPowerup":
                 {
-                    NetworkServer.Destroy(gameObject);
+                    PhotonNetwork.Destroy(gameObject);
                     break;
                 }
             default:
@@ -85,7 +87,7 @@ public class Bullet : NetworkBehaviour
     {
         if (isOnScreen_m == true)
         {
-            NetworkServer.Destroy(gameObject);
+            PhotonNetwork.Destroy(gameObject);
             isOnScreen_m = false;
         }
     }

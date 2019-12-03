@@ -1,7 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Networking;
+using Photon.Pun;
+using Photon.Realtime;
+
 /// <summary>
 /// Behavior for Striker enemy
 /// Author: Jared Anderson, Josh Dotson
@@ -28,29 +30,28 @@ public class Striker : Enemy
     protected override void Update()
     {
         base.Update();
-        if (isServer)
-        {
+        
             try
             {
                 if (behaviourIterator_m.Current.IsAttacking && ((1.0 / primaryWeapon_m.FireRate) <= weaponTimer_m) && IsActive)
                 {
                     ChooseVictim(out victim_m);
-                    RpcShoot();
+                    Shoot();
 
                     weaponTimer_m = 0.0f;
                 }
             }
             finally { }
-        }
+        
     }
-    [ClientRpc]
-    protected override void RpcShoot()
+    
+    protected override void Shoot()
     {
         // base.Shoot();
 
         // This class does have a weapon (Laser)
-        GameObject bullet = Instantiate(PROJECTILE, transform.position + Vector3.left, Quaternion.identity);
-        NetworkServer.Spawn(bullet);
+        GameObject bullet = PhotonNetwork.Instantiate(PROJECTILE.name, transform.position + Vector3.left, Quaternion.identity);
+         
         // var targetVelocity = victim_m.GetComponent<Rigidbody>().velocity;
         // var targetDistance = Vector3.Distance(victim_m.transform.position, transform.position);
         // var projectileTravelTime = targetDistance / BULLETSPEED;

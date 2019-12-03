@@ -1,7 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Networking;
+using Photon.Pun;
+using Photon.Realtime;
+
 /// <summary>
 /// Behavior for Ranger enemy
 /// Author: Jared Anderson, Josh Dotson
@@ -24,8 +26,8 @@ public class Ranger : Enemy
 
         transform.Translate(Vector3.forward * (Time.deltaTime / 2));
     }
-    [ClientRpc]
-    protected override void RpcShoot() { }
+    
+    protected override void Shoot() { }
 
     // A rough idea of what we talked about with disabling the enemies till on screen
     private void OnBecameVisible() { IsActive = true; }

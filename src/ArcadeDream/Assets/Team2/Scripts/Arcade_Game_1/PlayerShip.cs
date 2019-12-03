@@ -2,7 +2,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Networking;
+using Photon.Pun;
+using Photon.Realtime;
 
 /// <summary>
 /// Defines various predefined weapon property configurations
@@ -74,20 +75,20 @@ public static class PlayerWeapons
 /// Author: Josh Dotson, Lew Fortwangler
 /// Version: 3
 /// </summary>
-public class PlayerShip : NetworkBehaviour
+public class PlayerShip : MonoBehaviourPunCallbacks
 {
     // Will store the player's username when multiplayer is a thing...
     public string PlayerUsername;
 
     [SerializeField] public float MOVEMENTSPEED = 1.0f;
     [SerializeField] public float BULLETSPEED = 5.0f;
-    [SyncVar] public GameObject BULLETPREFAB;
+    public GameObject BULLETPREFAB;
     [SerializeField] public GameObject LASERPREFAB;
     [SerializeField] public GameObject HOMINGPREFAB;
 
     // These are serialized for debugging purposes
     [SerializeField] public double HEALTH = 100.0f;
-    [SerializeField] [SyncVar] public int LIVES = 3;
+    [SerializeField]  public int LIVES = 3;
 
     private bool isInvulnerable_m;
     private bool isDead_m;
@@ -99,7 +100,7 @@ public class PlayerShip : NetworkBehaviour
 
     protected Rigidbody rigidbody_m;
     protected Weapon primaryWeapon_m;
-    [SyncVar] protected float weaponTimer_m;
+     protected float weaponTimer_m;
 
     //whether or not the user can fire powerups
 
@@ -134,15 +135,24 @@ public class PlayerShip : NetworkBehaviour
     public AudioClip loss;
     // Reference to the audio source.
     private AudioSource audioSource_m;
-
-
+    public static GameObject LocalPlayerInstance;
+    private PhotonView pv;
     //Theme source and all related operations commented out as they don't work with current build
     // public AudioSource themeSource;
-
+    public GameManagerXeonic GMX;
     /// /////////////////////////////////////////////////
     /// </summary>
     void Awake()
     {
+    
+            // #Important
+            // used in GameManager.cs: we keep track of the localPlayer instance to prevent instantiation when levels are synchronized
+            if (photonView.IsMine)
+            {
+                PlayerShip.LocalPlayerInstance = this.gameObject;
+            }
+   
+        
         audioSource_m = GetComponent<AudioSource>();
         audioSource_m.volume = .3f;
     }
@@ -164,15 +174,16 @@ public class PlayerShip : NetworkBehaviour
         spawnProtectionTimer_m = 0.0f;
 
         primaryWeapon_m = PlayerWeapons.Standard;
-
         PointsChanged = () => { };
         HealthChanged = () => { };
         Respawned = () => { };
         Death = () => { };
-
+        
         topGun.SetActive(false);
         rigidbody_m = GetComponent<Rigidbody>();
+        pv = GetComponent<PhotonView>();
     }
+    
     private void Update()
     {
 
@@ -201,52 +212,51 @@ public class PlayerShip : NetworkBehaviour
             primaryWeapon_m = PlayerWeapons.IncreasedFireRate;
 
 
-        if (isServer)
-        {
             weaponTimer_m += Time.deltaTime;
-        }
-        if ((!Input.GetAxis("Fire1").Equals(0)) && ((1.0 / primaryWeapon_m.FireRate) <= weaponTimer_m) && isLocalPlayer)
+        
+        if ((!Input.GetAxis("Fire1").Equals(0)) && ((1.0 / primaryWeapon_m.FireRate) <= weaponTimer_m) && pv.IsMine)
         {
-            CmdAttack();
+            Attack();
         }
     }
     void FixedUpdate()
     {
-        if (!isDead_m) { Movement(); }
+        if (!isDead_m && pv.IsMine) {
+            Movement();
+        }
     }
     #endregion
 
     private void Movement()
     {
-        if (isLocalPlayer)
+        var movement = new Vector3();
+
+        movement.Set(Input.GetAxisRaw("Horizontal"), 0f, Input.GetAxisRaw("Vertical"));
+        movement = movement.normalized * MOVEMENTSPEED * Time.deltaTime;
+
+        if (!movement.Equals(Vector3.zero))
         {
-            var movement = new Vector3();
-
-            movement.Set(Input.GetAxisRaw("Horizontal"), 0f, Input.GetAxisRaw("Vertical"));
-            movement = movement.normalized * MOVEMENTSPEED * Time.deltaTime;
-
-            if (!movement.Equals(Vector3.zero))
-            {
-                rigidbody_m.MovePosition(transform.position + movement);
-            }
+            rigidbody_m.MovePosition(transform.position + movement);
         }
     }
-    [Command]
-    void CmdAttack()
+  
+    void Attack()
     {
         //shooting the default weapon
         if (hasTopGun_m == true)
         {
-            GameObject topBullet = Instantiate(BULLETPREFAB, topGun.transform.position + Vector3.right, transform.rotation);
-            NetworkServer.Spawn(topBullet);
+
+            GameObject topBullet = PhotonNetwork.Instantiate(BULLETPREFAB.name, topGun.transform.position + Vector3.right, transform.rotation);
+      
             topBullet.transform.parent = gameObject.transform;
             topBullet.GetComponent<Rigidbody>().velocity = Vector3.right * BULLETSPEED;
             topBullet.GetComponent<Bullet>().Shooter = gameObject;
         }
 
         // Make the bullet assigned to the player gameObject
-        GameObject bullet = Instantiate(BULLETPREFAB, transform.position + Vector3.right, transform.rotation);
-        NetworkServer.Spawn(bullet);
+
+        GameObject bullet = PhotonNetwork.Instantiate(BULLETPREFAB.name, transform.position + Vector3.right, transform.rotation);
+        
         //bullet.transform.parent = gameObject.transform;
         bullet.GetComponent<Rigidbody>().velocity = Vector3.right * BULLETSPEED;
         bullet.GetComponent<Bullet>().Shooter = gameObject;
@@ -265,7 +275,8 @@ public class PlayerShip : NetworkBehaviour
             ((1.0 / primaryWeapon_m.FireRate) <= weaponTimer_m))
         {
             chargeLaser(timeCharged_m);     //calls chargeLaser to modify width based on charged time
-            GameObject Laser = Instantiate(LASERPREFAB, transform.position + Vector3.right, LASERPREFAB.transform.rotation);
+            GameObject Laser = PhotonNetwork.Instantiate(LASERPREFAB.name, transform.position + Vector3.right, LASERPREFAB.transform.rotation);
+             
             weaponTimer_m = 0.0f;
 
             //team3///////////////////////
@@ -278,8 +289,8 @@ public class PlayerShip : NetworkBehaviour
         if (Input.GetKeyDown("e") &&
             hasHomingLaser_m == true)
         {
-            GameObject HomingLaser = Instantiate(HOMINGPREFAB, transform.position + Vector3.right, HOMINGPREFAB.transform.rotation);
-            hasHomingLaser_m = false;
+            GameObject HomingLaser = PhotonNetwork.Instantiate(HOMINGPREFAB.name, transform.position + Vector3.right, HOMINGPREFAB.transform.rotation);
+            
             StartCoroutine(HomingTimer());
 
             //team3///////////////////////
@@ -353,12 +364,8 @@ public class PlayerShip : NetworkBehaviour
         // if it is an enemy object ie tagged enemy, destory the player object and decrement the lives
         // TookDamage.Invoke();
         // if it is a powerup, delete it, and apply the effects
-        if (!isServer)
-        {
-            return;
-        }
 
-        if (other.gameObject.tag != gameObject.tag)
+        if (other.gameObject.tag != gameObject.tag && pv.IsMine)
         {
             switch (other.gameObject.tag)
             {
@@ -439,9 +446,9 @@ public class PlayerShip : NetworkBehaviour
                                 //themeSource.clip = loss;
                                 //themeSource.Play();
 
-
-                                gameObject.SetActive(false);
-
+                                
+                                PhotonNetwork.Destroy(gameObject);
+                                GMX.LeaveRoom();
 
                             }
                         }

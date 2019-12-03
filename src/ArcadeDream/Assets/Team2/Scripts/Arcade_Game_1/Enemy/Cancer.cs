@@ -1,7 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Networking;
+
+using Photon.Pun;
+using Photon.Realtime;
+
 /// <summary>
 /// Behavior for Cancer boss
 /// Author: Jared Anderson, Josh Dotson
@@ -62,18 +65,19 @@ public class Cancer : Enemy
             if (((1.0 / primaryWeapon_m.FireRate) <= weaponTimer_m) && IsActive)
             {
                 ChooseVictim(out victim_m);
-                RpcShoot();
+                Shoot();
 
                 weaponTimer_m = 0.0f;
             }
         }
         finally { }
     }
-    [ClientRpc]
-    protected override void RpcShoot()
+   
+    protected override void Shoot()
     {
         // This class does have a weapon (Laser)
-        GameObject bullet = Instantiate(PROJECTILE, transform.position + Vector3.left, Quaternion.identity);
+        GameObject bullet = PhotonNetwork.Instantiate(PROJECTILE.name, transform.position + Vector3.left, Quaternion.identity);
+        
 
         bullet.transform.LookAt(victim_m.gameObject.transform.position, Vector3.up);
         bullet.GetComponent<Rigidbody>().AddForce(bullet.transform.forward * BULLETSPEED * 100);

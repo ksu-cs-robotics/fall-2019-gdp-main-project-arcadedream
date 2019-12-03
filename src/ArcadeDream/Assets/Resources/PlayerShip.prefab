@@ -163,9 +163,9 @@ GameObject:
   - component: {fileID: 4706149288350583585}
   - component: {fileID: 4706149288350583587}
   - component: {fileID: 4706149288350583590}
-  - component: {fileID: 2693377905586428215}
-  - component: {fileID: 4423394765960837900}
-  - component: {fileID: 1425902200676393901}
+  - component: {fileID: 5437706009173919856}
+  - component: {fileID: 7866307412790224803}
+  - component: {fileID: 2013463761296329291}
   m_Layer: 0
   m_Name: PlayerShip
   m_TagString: Player
@@ -181,7 +181,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4706149288350583581}
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: -10, y: 0.5, z: 0}
+  m_LocalPosition: {x: -10, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4706149287650513219}
@@ -221,6 +221,7 @@ MonoBehaviour:
   laser: {fileID: 8300000, guid: 1b1b65dbebae2ee478a797bce6dc0924, type: 3}
   destroyed: {fileID: 8300000, guid: 72c78014633383a46955cc8b59d4d003, type: 3}
   loss: {fileID: 8300000, guid: 658a661fc78ed9741bcd0061770339a8, type: 3}
+  GMX: {fileID: 1886650810832805475, guid: d57161204b88d514da150bbfe8771b98, type: 3}
 --- !u!65 &4706149288350583585
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -346,7 +347,7 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &2693377905586428215
+--- !u!114 &5437706009173919856
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -355,31 +356,21 @@ MonoBehaviour:
   m_GameObject: {fileID: 4706149288350583581}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 372142912, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_SceneId:
-    m_Value: 0
-  m_AssetId:
-    i0: 0
-    i1: 0
-    i2: 0
-    i3: 0
-    i4: 0
-    i5: 0
-    i6: 0
-    i7: 0
-    i8: 0
-    i9: 0
-    i10: 0
-    i11: 0
-    i12: 0
-    i13: 0
-    i14: 0
-    i15: 0
-  m_ServerOnly: 0
-  m_LocalPlayerAuthority: 1
---- !u!114 &4423394765960837900
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 1
+  ObservedComponents:
+  - {fileID: 7866307412790224803}
+  - {fileID: 2013463761296329291}
+  viewIdField: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
+--- !u!114 &7866307412790224803
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -388,20 +379,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 4706149288350583581}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: -1768714887, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_TransformSyncMode: 3
-  m_SendInterval: 0.1
-  m_SyncRotationAxis: 7
-  m_RotationSyncCompression: 0
-  m_SyncSpin: 0
-  m_MovementTheshold: 0.001
-  m_VelocityThreshold: 0.0001
-  m_SnapThreshold: 5
-  m_InterpolateRotation: 1
-  m_InterpolateMovement: 1
---- !u!114 &1425902200676393901
+  m_SynchronizePosition: 1
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 0
+--- !u!114 &2013463761296329291
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -410,9 +394,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 4706149288350583581}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1401a66cc9043f34787120cc6d2f6d6b, type: 3}
+  m_Script: {fileID: 11500000, guid: 64179f3720bbfe947b7724caa67b7c1d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_SynchronizeVelocity: 1
+  m_SynchronizeAngularVelocity: 0
+  m_TeleportEnabled: 0
+  m_TeleportIfDistanceGreaterThan: 3
 --- !u!1001 &4706149287559529492
 PrefabInstance:
   m_ObjectHideFlags: 0
