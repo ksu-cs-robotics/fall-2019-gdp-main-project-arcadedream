@@ -87,6 +87,13 @@ public class Movement : MonoBehaviourPunCallbacks
         playerSprite = gameObject.GetComponent<SpriteRenderer>();
 
         speedAtStart = speed;
+
+        if (photonView.IsMine)
+        {
+            LocalPlayerInstance.gameObject.name = "LocalPlayer";
+            GameObject.FindGameObjectWithTag("MainCamera").GetComponent<MainCamera>().SetPlayer(this.gameObject);
+            localUICanvas = GameObject.FindGameObjectWithTag("UI").gameObject;
+        }
     }
     /*
     public override void OnStartLocalPlayer()
