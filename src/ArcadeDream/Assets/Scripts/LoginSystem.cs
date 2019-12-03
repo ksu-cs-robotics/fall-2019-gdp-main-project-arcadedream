@@ -80,7 +80,14 @@ public class LoginSystem : MonoBehaviour
     public void BackButton()
     {
         //Back to main level
-        SceneManager.LoadScene("Main");
+        SceneManager.LoadScene("TitleScreen");
+
+    }
+
+    public void CreationButton()
+    {
+        //Back to main level
+        SceneManager.LoadScene("CharacterCreation");
 
     }
 

@@ -121,7 +121,7 @@ public class CharacterSelection : MonoBehaviour
 
         //go to main level
         Destroy(player);
-        SceneManager.LoadScene("Main");
+        SceneManager.LoadScene("loginUI");
 
     }
 
