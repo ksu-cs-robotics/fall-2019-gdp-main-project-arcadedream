@@ -6,6 +6,7 @@ using UnityEngine.AI;
 public class Owner : MonoBehaviour
 {
     NavMeshAgent Alfred;
+    public int secondsToSteal;
     public GameObject restingSpot;
     private GameObject victim_m;
 
@@ -22,7 +23,7 @@ public class Owner : MonoBehaviour
 
     private IEnumerator StealTickets()
     {
-        yield return new WaitForSeconds(5);
+        yield return new WaitForSeconds(secondsToSteal);
         getPlayers();
     }
 
@@ -42,6 +43,7 @@ public class Owner : MonoBehaviour
         {
             Alfred.speed = sneakSpeed;
             Alfred.SetDestination(victim_m.transform.position);
+            StartCoroutine("CheckForFailedSteal");
         }
         else
         {
@@ -73,4 +75,11 @@ public class Owner : MonoBehaviour
         yield return new WaitForSeconds(3);
         stealingUI.SetActive(false);
     }
+
+    IEnumerator CheckForFailedSteal()
+    {
+        yield return new WaitForSeconds(15);
+        Alfred.SetDestination(restingSpot.transform.position);
+    }
+       
 }
