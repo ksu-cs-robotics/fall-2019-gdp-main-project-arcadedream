@@ -3413,7 +3413,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 534669902}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6319f55a77a1acf4ca511e6f1a20391e, type: 3}
   m_Name: 
@@ -3433,7 +3433,7 @@ Animation:
   m_Animations:
   - {fileID: 7400000, guid: 796915934b1106942828d80b5798a249, type: 2}
   m_WrapMode: 0
-  m_PlayAutomatically: 0
+  m_PlayAutomatically: 1
   m_AnimatePhysics: 0
   m_CullingType: 0
 --- !u!1 &579661778
@@ -10869,6 +10869,11 @@ PrefabInstance:
       propertyPath: m_StaticEditorFlags
       value: 8
       objectReference: {fileID: 0}
+    - target: {fileID: 3231158577269259590, guid: dad97831ddf618642bd9309f71f39de7,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3231158577269259585, guid: dad97831ddf618642bd9309f71f39de7,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -10966,6 +10971,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 3231158577269259586, guid: dad97831ddf618642bd9309f71f39de7, type: 3}
+    - {fileID: 3231158577269259597, guid: dad97831ddf618642bd9309f71f39de7, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: dad97831ddf618642bd9309f71f39de7, type: 3}
 --- !u!1 &1980919738
 GameObject:
