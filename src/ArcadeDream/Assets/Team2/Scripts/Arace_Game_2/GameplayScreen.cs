@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Photon.Pun;
 
 /// <summary>
 /// controls the countdown timer, displays player scores, responsible for ending game
 /// Author: Lew Fortwangler
 /// </summary>
-public class GameplayScreen : MonoBehaviour
+public class GameplayScreen : MonoBehaviourPunCallbacks
 {
     public GameObject gameoverUI;
     public GameObject overtimeUI;
@@ -20,59 +21,76 @@ public class GameplayScreen : MonoBehaviour
 
     private bool tieGame_m = false;
 
+    private Player p;
+    private bool started = false;
+
     private void Start()
     {
         countdownMin.text = "2";
         countdownSec.text = "00";
+        p = GameObject.Find("PlayerTracker").GetComponent<Player>();
+        
 
-        StartCoroutine("Countdown");
     }
 
     private void Update()
     {
+        if (p.start && !started)
+        {
+            started = true;
+            StartCoroutine("Countdown");
+        }
+
+
+
         countdownMin.text = "\n" + minutesLeft_m;
 
-        if (secondsLeft_m == 60)
-            countdownSec.text = "\n\n     00";
-        else if (secondsLeft_m < 10)
-            countdownSec.text = "\n\n     0" + secondsLeft_m;
-        else
-            countdownSec.text = "\n\n     " + secondsLeft_m;
+            if (secondsLeft_m == 60)
+                countdownSec.text = "\n\n     00";
+            else if (secondsLeft_m < 10)
+                countdownSec.text = "\n\n     0" + secondsLeft_m;
+            else
+                countdownSec.text = "\n\n     " + secondsLeft_m;
 
-        if(minutesLeft_m == 0 && secondsLeft_m <= 5)
-        {
-            tieGame_m = CheckGameTie();
-        }
+            if (minutesLeft_m == 0 && secondsLeft_m <= 5)
+            {
+                tieGame_m = CheckGameTie();
+            }
 
-        if(secondsLeft_m == 0 && minutesLeft_m == 0 && tieGame_m == true)
-        {
-            overtimeUI.SetActive(true);
-        }
-        else if(secondsLeft_m == 0 && minutesLeft_m == 0 && tieGame_m == false)
-        {
-            gameoverUI.SetActive(true);  //activate the gameover UI
-            this.enabled = false;  //deactivate this UI
-            Time.timeScale = 0;
-        }
+            if (secondsLeft_m == 0 && minutesLeft_m == 0 && tieGame_m == true)
+            {
+                overtimeUI.SetActive(true);
+            }
+            else if (secondsLeft_m == 0 && minutesLeft_m == 0 && tieGame_m == false)
+            {
+                gameoverUI.SetActive(true);  //activate the gameover UI
+                this.enabled = false;  //deactivate this UI
+                Time.timeScale = 0;
+            }
+        
     }
 
     IEnumerator Countdown()
     {
-        while (secondsLeft_m != 0 || minutesLeft_m != 0)
         {
-            yield return new WaitForSeconds(1);
-            if (secondsLeft_m == 60)
+            while (secondsLeft_m != 0 || minutesLeft_m != 0)
             {
-                minutesLeft_m--;
-            }
-            secondsLeft_m--;
+                yield return new WaitForSeconds(1);
+                if (secondsLeft_m == 60)
+                {
+                    minutesLeft_m--;
+                }
+                secondsLeft_m--;
 
-            if (secondsLeft_m == 0 && minutesLeft_m > 0)
-            {
-                secondsLeft_m = 60;
+                if (secondsLeft_m == 0 && minutesLeft_m > 0)
+                {
+                    secondsLeft_m = 60;
+                }
             }
         }
     }
+
+   
 
     bool CheckGameTie()
     {

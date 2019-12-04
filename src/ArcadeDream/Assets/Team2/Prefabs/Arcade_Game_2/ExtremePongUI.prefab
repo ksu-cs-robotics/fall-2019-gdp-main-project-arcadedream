@@ -1987,6 +1987,7 @@ MonoBehaviour:
   startUI: {fileID: 7026474990213391228}
   gameplayUI: {fileID: 7026474991199384791}
   controlsUI: {fileID: 7026474991313966485}
+  pTracker: {fileID: 0}
 --- !u!114 &7026474990916643826
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2542,13 +2543,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 7026474991199384791}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 71821510002aaad4f8d959d6879c2e05, type: 3}
+  m_Script: {fileID: 11500000, guid: dd8461a96720dbc48b56fbf428b99518, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameoverUI: {fileID: 7026474991760702746}
+  gameoverUI: {fileID: 0}
   overtimeUI: {fileID: 0}
-  countdownMin: {fileID: 7026474990845478291}
-  countdownSec: {fileID: 7026474990652860275}
+  countdownMin: {fileID: 0}
+  countdownSec: {fileID: 0}
 --- !u!1 &7026474991212775425
 GameObject:
   m_ObjectHideFlags: 0
