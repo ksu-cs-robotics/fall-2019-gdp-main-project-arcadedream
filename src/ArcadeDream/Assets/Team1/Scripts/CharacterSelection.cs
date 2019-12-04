@@ -89,9 +89,8 @@ public class CharacterSelection : MonoBehaviour
     //Pressing the back button in the top left of the scene will take you back to the previous scene
     public void BackButton()
     {
-        int previousLevel = PlayerPrefs.GetInt("previousLevel");
         Destroy(player);
-        SceneManager.LoadScene(previousLevel);
+        SceneManager.LoadScene("loginUI");
     }
 
     public void NextPanelButton()
@@ -121,7 +120,7 @@ public class CharacterSelection : MonoBehaviour
 
         //go to main level
         Destroy(player);
-        SceneManager.LoadScene("Main");
+        SceneManager.LoadScene("loginUI");
 
     }
 

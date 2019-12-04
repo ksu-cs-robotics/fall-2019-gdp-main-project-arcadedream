@@ -23,7 +23,8 @@ public class Jukebox : MonoBehaviour
 
     private void Start()
     {
-        currentSong_m = Music[0]; //sets the current song to the first item in array as default
+        int rand = Random.Range(0, Music.Length-1); //picks a random song
+        currentSong_m = Music[rand]; //sets the current song to the first item in array as default
         songName.text = currentSong_m.name; //displays the current song text
         Audio = GetComponent<AudioSource>();
         Audio.clip = currentSong_m;
