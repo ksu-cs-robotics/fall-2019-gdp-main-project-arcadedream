@@ -37,10 +37,14 @@ public class GoalLivesManager : MonoBehaviourPunCallbacks //Not lives points now
             if(goal.GetComponent<SpriteRenderer>().color == goalColor)
             {
                 goal.GetComponent<GoalLivesManager>().points++;
-               
+                photonView.RPC("addPoint", RpcTarget.Others, goal);
             }
         }
     }
 
-
+    [PunRPC]
+    void addPoint(GameObject goal)
+    {
+        goal.GetComponent<GoalLivesManager>().points++;
+    }
 }
