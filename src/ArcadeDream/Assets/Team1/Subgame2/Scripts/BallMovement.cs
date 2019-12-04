@@ -6,7 +6,7 @@ using UnityEngine.Networking;
 using UnityEngine.UI;
 using Photon.Pun;
 
-public class BallMovement : MonoBehaviourPunCallbacks, IPunObservable
+public class BallMovement : MonoBehaviourPunCallbacks
 {
     float speed = .05f;
     float radius;
@@ -51,7 +51,7 @@ public class BallMovement : MonoBehaviourPunCallbacks, IPunObservable
        
     }
 
-
+    /*
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
         if (stream.IsWriting)
@@ -71,7 +71,7 @@ public class BallMovement : MonoBehaviourPunCallbacks, IPunObservable
         }
     }
 
-
+    */
 
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -80,18 +80,18 @@ public class BallMovement : MonoBehaviourPunCallbacks, IPunObservable
         {
             Debug.Log("Player Bounce");
             //Changes the color of the ball based on the last player to hit it last
-            switch (collision.name)
+            switch (collision.tag)
             {
-                case "Player1Paddle":
+                case "paddle1":
                     color = Color.red;
                     break;
-                case "Player2Paddle":
+                case "paddle2":
                     color = Color.blue;
                     break;
-                case "Player3Paddle":
+                case "paddle3":
                     color = Color.green;
                     break;
-                case "Player4Paddle":
+                case "paddle4":
                     color = Color.yellow;
                     break;
                 default:

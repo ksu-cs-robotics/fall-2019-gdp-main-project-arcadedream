@@ -7,10 +7,7 @@ public class paddleGrowPowerup : MonoBehaviour
     GameObject paddleToGrow;
 
     void Start(){
-
-
         paddleToGrow = GameObject.Find("PlayerPaddle");
-        
     }
 
     void Update()
