@@ -73,6 +73,8 @@ public class PongGameManager : MonoBehaviourPunCallbacks
         {
             spawned = true;
             photonView.RPC("spawnBall", RpcTarget.MasterClient);
+           
+
         }
 
         /*
@@ -93,18 +95,18 @@ public class PongGameManager : MonoBehaviourPunCallbacks
             PhotonNetwork.Instantiate("Subgame2/Ball", Vector2.zero, Quaternion.identity, 0);
         }
         spawned = true;
-        InvokeRepeating("SpawnPowerUp", spawnPowerups, spawnPowerups);
+        //InvokeRepeating("SpawnPowerUp", spawnPowerups, spawnPowerups);
     }
 
 
 
         void SpawnPowerUp()
         {
-            powerupChosen = UnityEngine.Random.Range(0, 6); // random number 0-6
+            powerupChosen = UnityEngine.Random.Range(0, 7); // random number 0-6
             spawnPointChosen = UnityEngine.Random.Range(0, 8); // random number 0-7
             Debug.Log(powerupChosen);
             //spawn random powerup at random spawn point
-            PhotonNetwork.Instantiate("Subgame2/"+powerup[powerupChosen].name, spawnPoint[spawnPointChosen].position, spawnPoint[spawnPointChosen].rotation);
+            PhotonNetwork.Instantiate(powerup[powerupChosen].name, spawnPoint[spawnPointChosen].position, spawnPoint[spawnPointChosen].rotation);
             Debug.Log("Power up " + powerupChosen + " spawned at spawn point " + spawnPointChosen);
         }
     }

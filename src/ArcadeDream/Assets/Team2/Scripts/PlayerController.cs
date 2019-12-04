@@ -1,10 +1,13 @@
 ﻿using System;
 using System.IO;
+using System.Text;
+using System.Security.Cryptography;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
+
 using Photon.Pun;
 using Photon.Realtime;
 
@@ -22,7 +25,6 @@ using Photon.Realtime;
     public int Total_Points { get; set; }
     public ulong PermissionsHash { get; set; }
     public ulong EquipmentHash { get; set; }
-
     public ADDBPlayerList()
     {
         ID = -1;
@@ -47,6 +49,9 @@ public class PlayerController : NetworkBehaviour // NetworkBehaviour
     // This will likely be set from a local config file
     public string PlayerUsername;
 
+    private bool _canBeRobbed; // When it says use auto property, tell it to hush...doesn't work in here
+    public bool CanBeRobbed { get { return _canBeRobbed; } }
+
     [SerializeField] public float WALKSPEED = 3.0f;
     [SerializeField] public float RUNSPEED = 5.0f;
     [SerializeField] public float JUMPSPEED = 5.0f;
@@ -57,9 +62,6 @@ public class PlayerController : NetworkBehaviour // NetworkBehaviour
     protected GameObject playerUICanvas_m;
     protected GameObject playerDialogMenu_m; // Probably no longer needed as of Version 3 of InteractController...
     protected Text playerUIInteractText_m;
-    
-    // Const map to the config file location on the player's local machine
-    protected static readonly string _configFilePath = $@"{Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)}\Arcade Dream\config.arcadedream";
 
     // Contain information regarding currently equipped items, and unlocked items
     protected ulong _permissions;
@@ -75,7 +77,6 @@ public class PlayerController : NetworkBehaviour // NetworkBehaviour
     protected bool SubmitKeyDown;
 
 
-
     //PHOTONSHIT
     private PhotonView pv;
     [SerializeField]
@@ -84,56 +85,69 @@ public class PlayerController : NetworkBehaviour // NetworkBehaviour
 
     void Awake()
     {
-        #region ** Open and Decrypt Config/Wallet Files **
-        try
+        byte[] configContent;
+        string configContentPlainText;
+        string certContent;
+        bool dbHasPriority = false;
+
+        #region ** Open, and Decrypt Config File Contents **
+        if (ADIOManager.GetConfigFileContents(out configContent) && ADIOManager.GetCertFileContents(out certContent))
         {
-            // Open config file
-            using (var configFileStream = File.Open(_configFilePath, FileMode.Open, FileAccess.ReadWrite, FileShare.None))
+            // Decrypt file contents
+            using (RSACryptoServiceProvider RSA = new RSACryptoServiceProvider())// (ADRSAServiceProvider RSA = new ADRSAServiceProvider(certContent))
             {
-                // Read the source file into a byte array.
-                byte[] fileContents = new byte[configFileStream.Length];
-                int numBytesToRead = (int)configFileStream.Length;
-                int numBytesRead = 0;
+                RSA.FromXmlString(certContent);
 
-                while (numBytesToRead > 0)
-                {
-                    // May return 0 - configFileStream.Length, therefore, we must keep numBytesRead, and numBytesToRead as indexers
-                    int numberOfBytes = configFileStream.Read(fileContents, numBytesRead, numBytesToRead);
-
-                    // Break when the end of the file is reached.
-                    if (numberOfBytes == 0)
-                        break;
-
-                    numBytesRead += numberOfBytes;
-                    numBytesToRead -= numberOfBytes;
-                }
-
-                // Decrypt file contents
-                using (ADRSAServiceProvider RSA = new ADRSAServiceProvider())
-                {
-                    var decryptedFileContents = RSA.Decrypt(fileContents);
-
-                    // Convert to string, extract the info, and configure the player object with it
-                    string bitString = BitConverter.ToString(decryptedFileContents);
-                }
+                // Decrypt the contents...
+                var decryptedFileContents = RSA.Decrypt(configContent, false);
+                // Convert to string, extract the info, and configure the player object with it
+                configContentPlainText = Encoding.UTF8.GetString(decryptedFileContents);
             }
         }
-        catch
+        else
         {
-            // Config file has been either moved, or tampered with...
+            // Since the config file needs to be regenerated, it will need to be synced with the database to be valid
+            dbHasPriority = true;
+
+            // Generate a new config file
+            ADIOManager.GenerateNewConfigFile();
+            ADIOManager.GetConfigFileContents(out configContentPlainText);
+
+            // Generate a new encryption file just to be safe
+            ADIOManager.GenerateNewCertFile();
+
+            // Encrypt the new file so it cannot be tampered with
+            ADIOManager.UpdateConfigFileContents(ADIOManager.EncryptThis(Encoding.UTF8.GetBytes(configContentPlainText)));
         }
         #endregion
 
-        /*try
+        #region ** Sync Config File and Database **
+        try
         {
             using (DatabaseManager dbManager = new DatabaseManager())
             {
-                // Hashes not implemented yet in getPlayer(), so for now, this is a placeholder
-                // dbManager.getPlayer();
+                if (dbHasPriority)
+                {
+                    // Sync config file to the database
+
+                    // Hashes not implemented yet in getPlayer(), so for now, this is a placeholder
+                    // dbManager.getPlayer();
+                    // ADIOManager.UpdateConfigFileContents(/*...*/);
+                }
+                else
+                {
+                    // Sync the database to the config file
+                    // dbManager.updatePlayer()
+                }
             }
         }
-        catch { Could not open database connection!  }*/
+        catch (Exception ex)
+        {
+            // Poop...didn't work...
 
+            if (dbHasPriority) { /* Really poop! */ }
+        }
+        #endregion
     }
 
     // Whenever the equipmentHash changes, the player needs to be reinitialized with there new clothing
@@ -145,6 +159,8 @@ public class PlayerController : NetworkBehaviour // NetworkBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        _canBeRobbed = true;
+
         // Dress the player up...
         ReinitializePlayer();
 
@@ -168,7 +184,7 @@ public class PlayerController : NetworkBehaviour // NetworkBehaviour
             //createdCamera.gameObject.transform.parent = this.gameObject.transform;
             createdCamera.GetComponent<PHOTONSHIT.CameraController>().PLAYER = this.gameObject;
         }
-        
+
     }
 
     void FixedUpdate()
@@ -287,6 +303,9 @@ public class PlayerController : NetworkBehaviour // NetworkBehaviour
     // When object comes in contact with the player, add it to the list of nearby objects
     private void OnTriggerEnter(Collider other)
     {
+        if (other.gameObject.tag == "Game")
+            _canBeRobbed = false;
+
         // If other is not interactable, just forget it
         if (!other.GetComponent<InteractController>())
             return;
@@ -310,7 +329,10 @@ public class PlayerController : NetworkBehaviour // NetworkBehaviour
 
     // When object leaves the proximity of the player, remove it from the list of nearby objects
     private void OnTriggerExit(Collider other)
-    {      
+    {
+        if (other.gameObject.tag == "Game")
+            _canBeRobbed = true;
+
         // Remove other, as it just moved out of range
         nearbyInteractableObjects_m.Remove(other);
 
@@ -328,12 +350,15 @@ public class PlayerController : NetworkBehaviour // NetworkBehaviour
         }
     }
 
-
+    // Gets called when the player object is destroyed...
     private void OnDestroy()
     {
-        Debug.Log("Destroying Camera");
         Destroy(createdCamera);
     }
 
-
+    // Added a property that essentially implements this
+    public bool getRobbableStatus()
+    {
+        return _canBeRobbed;
+    }
 }

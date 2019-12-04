@@ -20,7 +20,7 @@ public class Movement : MonoBehaviourPunCallbacks
     private Collision collScript;
     private Vector3 respawnPosition;
     private Vector2 respawnDir;
-    public PhotonView myView;
+    public GameObject LocalPlayerInstance;
 
     //Movement stats
     public float speed;
@@ -54,6 +54,15 @@ public class Movement : MonoBehaviourPunCallbacks
     //Respawn variables
     public float respawnThreshold;
 
+    private void Awake()
+    {
+        if (photonView.IsMine)
+        {
+            LocalPlayerInstance = this.gameObject;
+        }
+        DontDestroyOnLoad(this.gameObject);
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -68,7 +77,7 @@ public class Movement : MonoBehaviourPunCallbacks
 
         countdownObject = countdownTextTemp.gameObject;
         countdownText = countdownTextTemp.gameObject.GetComponent<Text>();
-        countdownTime = 5;
+        countdownTime = 10;
 
         canMove = false;
         rb = GetComponent<Rigidbody2D>();
@@ -78,6 +87,13 @@ public class Movement : MonoBehaviourPunCallbacks
         playerSprite = gameObject.GetComponent<SpriteRenderer>();
 
         speedAtStart = speed;
+
+        if (photonView.IsMine)
+        {
+            LocalPlayerInstance.gameObject.name = "LocalPlayer";
+            GameObject.FindGameObjectWithTag("MainCamera").GetComponent<MainCamera>().SetPlayer(this.gameObject);
+            localUICanvas = GameObject.FindGameObjectWithTag("UI").gameObject;
+        }
     }
     /*
     public override void OnStartLocalPlayer()
@@ -92,11 +108,10 @@ public class Movement : MonoBehaviourPunCallbacks
     }
     */
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        //if (myView.isMine)
+        if (photonView.IsMine)
         {
-            /*
             if (countdown)
             {
                 countdownTime -= Time.deltaTime;
@@ -112,7 +127,7 @@ public class Movement : MonoBehaviourPunCallbacks
                     //gun.GetComponent<GUN>().canShoot = true;
                 }
             }
-            */
+            
             //if (!countdown) timer.runTimer = true;
 
             float x = Input.GetAxis("Horizontal");

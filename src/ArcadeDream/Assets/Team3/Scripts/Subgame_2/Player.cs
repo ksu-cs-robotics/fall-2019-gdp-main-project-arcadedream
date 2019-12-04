@@ -14,7 +14,6 @@ public class Player : MonoBehaviourPunCallbacks
     public bool start = false;
     public bool move_on = false;
 
-    public Text startButtonText;
     public Button startButton;
     public GameObject player1Prefab;
     public GameObject player2Prefab;
@@ -61,78 +60,53 @@ public class Player : MonoBehaviourPunCallbacks
 
         if (GameObject.FindWithTag("paddle1") == null)
         {
-            
             playerNumber = 1;
             PhotonNetwork.Instantiate("Subgame2/"+player1Prefab.name, RedPaddleSpawn.position, RedPaddleSpawn.rotation, 0);
             PhotonNetwork.Instantiate("Subgame2/Goalie1", RedGoalieSpawn.position, RedGoalieSpawn.rotation);
-            GameObject g = PhotonNetwork.Instantiate("Subgame2/RedGoal", new Vector2(5, -5), Quaternion.Euler(0,0,135));
-
-            
         }
         else if (GameObject.FindWithTag("paddle2") == null)
         {
             playerNumber = 2;
             PhotonNetwork.Instantiate("Subgame2/" + player2Prefab.name, BluePaddleSpawn.position, BluePaddleSpawn.rotation, 0);
             PhotonNetwork.Instantiate("Subgame2/Goalie2", BlueGoalieSpawn.position, BlueGoalieSpawn.rotation);
-            GameObject g = PhotonNetwork.Instantiate("Subgame2/BlueGoal", new Vector2(-5, 5), Quaternion.Euler(0,0,315));
-
         }
-        else if (GameObject.FindWithTag("paddle3") == null)
+        else if (GameObject.FindWithTag("paddle2") == null)
         {
             playerNumber = 3;
             PhotonNetwork.Instantiate("Subgame2/" + player3Prefab.name, GreenPaddleSpawn.position, GreenPaddleSpawn.rotation, 0);
             PhotonNetwork.Instantiate("Subgame2/Goalie3", GreenGoalieSpawn.position, GreenGoalieSpawn.rotation);
-            GameObject g = PhotonNetwork.Instantiate("Subgame2/GreenGoal", new Vector2(-5, -5), Quaternion.Euler(0,0,45));
-
         }
-        else if (GameObject.FindWithTag("paddle4") == null)
+        else if (GameObject.FindWithTag("paddle2") == null)
         {
             playerNumber = 4;
             PhotonNetwork.Instantiate("Subgame2/" + player4Prefab.name, YellowPaddleSpawn.position, YellowPaddleSpawn.rotation, 0);
             PhotonNetwork.Instantiate("Subgame2/Goalie4", YellowGoalieSpawn.position, YellowGoalieSpawn.rotation);
-            PhotonNetwork.Instantiate("Subgame2/YellowGoal", new Vector2(5, 5), Quaternion.Euler(0,0,225));
-        }
+       }
     }
 
 
-
-    public void startGame()
+    private void FixedUpdate()
     {
-           photonView.RPC("activateMove", RpcTarget.All);
-        
-       // else StartCoroutine(buttonText());
 
+      
+        if (!start && !move_on && Input.GetKeyDown(KeyCode.F)) //Force start for testing purposes
+        {
+
+            //PhotonNetwork.Instantiate("Subgame2/Ball", Vector2.zero, Quaternion.identity, 0);
+            //move_on = true;
+
+
+            start = true;
+            photonView.RPC("activateMove", RpcTarget.All);
+        } 
     }
 
-    IEnumerator buttonText()
-    {
-        startButtonText.text = "Please wait for another player!";
-        yield return new WaitForSeconds(3f);
-        startButtonText.text = "Start Game";
-    }
-
-    IEnumerator countdown()
-    {
-        move_on = true;
-        startButtonText.text = "3";
-        yield return new WaitForSeconds(1f);
-        startButtonText.text = "2";
-        yield return new WaitForSeconds(1f);
-        startButtonText.text = "1";
-        yield return new WaitForSeconds(1f);
-        startButtonText.text = "Go!";
-        start = true;
-        yield return new WaitForSeconds(1f);
-        Destroy(startButton);
-
-            
-    }
 
     [PunRPC]
     void activateMove()
     {
-
-        StartCoroutine(countdown());
+        start = true;
+        move_on = true;
         Debug.Log("Game Start");
     }
 

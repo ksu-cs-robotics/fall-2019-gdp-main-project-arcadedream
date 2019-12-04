@@ -103,7 +103,7 @@ public class GoalieStopper : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.tag == "paddle1")
+        if (collision.name == "Player1Paddle")
         {
             powerupUI.SetActive(true);
             GameObject temp = GameObject.FindGameObjectWithTag("goalieb");
@@ -143,7 +143,7 @@ public class GoalieStopper : MonoBehaviour
         }
 
 
-        if (collision.tag == "paddle2")
+        if (collision.name == "Player2Paddle")
         {
             powerupUI.SetActive(true);
             GameObject temp = GameObject.FindGameObjectWithTag("Goalie");
@@ -183,7 +183,7 @@ public class GoalieStopper : MonoBehaviour
         }
 
 
-        if (collision.tag == "paddle3")
+        if (collision.name == "Player3Paddle")
         {
             powerupUI.SetActive(true);
             GameObject temp = GameObject.FindGameObjectWithTag("goalieb");
@@ -224,7 +224,7 @@ public class GoalieStopper : MonoBehaviour
 
 
 
-        if (collision.tag == "paddle4")
+        if (collision.name == "Player4Paddle")
         {
             powerupUI.SetActive(true);
             GameObject temp = GameObject.FindGameObjectWithTag("goalieb");

@@ -495,6 +495,7 @@ MonoBehaviour:
   cashText: {fileID: 0}
   TicketsText: {fileID: 0}
   ToiletTicketsText: {fileID: 0}
+  flushSound: {fileID: 0}
 --- !u!114 &379834024
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -763,10 +764,6 @@ PrefabInstance:
     - target: {fileID: 100018, guid: af003aabedbe1884c80ff91aae4f774e, type: 3}
       propertyPath: m_Name
       value: ChibiAnimated
-      objectReference: {fileID: 0}
-    - target: {fileID: 100018, guid: af003aabedbe1884c80ff91aae4f774e, type: 3}
-      propertyPath: m_TagString
-      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 400018, guid: af003aabedbe1884c80ff91aae4f774e, type: 3}
       propertyPath: m_LocalPosition.x

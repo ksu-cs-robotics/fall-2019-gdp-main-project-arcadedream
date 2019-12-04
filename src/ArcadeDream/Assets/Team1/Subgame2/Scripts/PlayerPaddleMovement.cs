@@ -230,7 +230,7 @@ public class PlayerPaddleMovement : MonoBehaviourPunCallbacks
             if (speedtime != 500)
             {
                 speedtime++;
-                transform.position = Vector2.MoveTowards(transform.position, pos_move, Time.deltaTime * 15);
+                transform.position = Vector2.Lerp(pos_move, lerped, Time.deltaTime * 3);
             }
             if (speedtime == 500)
             {
@@ -244,10 +244,14 @@ public class PlayerPaddleMovement : MonoBehaviourPunCallbacks
             if (speedtime != 500)
             {
                 speedtime++;
-                transform.position = Vector2.MoveTowards(transform.position, pos_move, 6 * Time.deltaTime);
+                count++;
+                if (count == 20)
+                {
+                    transform.position = Vector2.Lerp(pos_move, lerped, Time.deltaTime * 3);
+                    count = 0;
+                }
             }
-        
-            else if (speedtime >= 500)
+            if (speedtime == 500)
             {
                 speedtime = 0;
                 slow = false;
@@ -256,7 +260,13 @@ public class PlayerPaddleMovement : MonoBehaviourPunCallbacks
 
         if (!fast && !slow)
         {
-                    
+             //count++;
+            //if (count == 10)
+            // {
+            //transform.position = Vector2.Lerp(pos_move, lerped, Time.deltaTime * 10);
+            //    count = 0;
+            // }
+            
             //Team3 Testing
             transform.position = Vector2.MoveTowards(transform.position, pos_move, 10 * Time.deltaTime);
         }
@@ -271,17 +281,42 @@ public class PlayerPaddleMovement : MonoBehaviourPunCallbacks
         if (collision.tag == "GrowPowerup")
         {
             growUI.SetActive(true);
-            Vector3 scale = new Vector3(1.5f, 2.5f, 1f);
-            transform.localScale = scale;
+                Vector3 scale = new Vector3(.5f, 2, 1f);
+                transform.localScale = scale;
 
-            coroutine2 = WaitandScale2(6f);
-            StartCoroutine(coroutine2);
+                coroutine2 = WaitandScale2(3f);
+                StartCoroutine(coroutine2);
+            
             Debug.Log("Player powerup Grow");
            
             Destroy(collision.gameObject);
         }
+        if (collision.tag == "ShrinkPowerup")
+        {
+            shrinkUI.SetActive(true);
+            Vector3 scale = new Vector3(.25f, 1, 1f);
+            Vector3 scale2 = new Vector3(.5f, 1.5f, 1f);
+            GameObject[] paddles;
+            paddles = GameObject.FindGameObjectsWithTag("Player");
+            foreach (GameObject paddler in paddles)
+            {
+
+                paddler.transform.localScale = scale;
+                coroutine = WaitandScale(3f);
+                StartCoroutine(coroutine);
+
+            }
+            
+
+           
+            transform.localScale = scale2;
 
 
+
+            Debug.Log("Player powerup Shrink");
+          
+            Destroy(collision.gameObject);
+        }
         if (collision.tag == "powerup")
         {
             Debug.Log("Player powerup");
@@ -292,8 +327,26 @@ public class PlayerPaddleMovement : MonoBehaviourPunCallbacks
     IEnumerator WaitandScale2(float waitTime)
     {
         yield return new WaitForSeconds(waitTime);
-        Vector3 scale2 = new Vector3(1.5f, 1.5f, 1f);
+        Vector3 scale2 = new Vector3(.5f, 1.5f, 1f);
         transform.localScale = scale2;
     }
     
+     IEnumerator WaitandScale(float waitTime)
+    {
+      //  waiting = true;
+        yield return new WaitForSeconds(waitTime);
+
+        Vector3 scale2 = new Vector3(.5f, 1.5f, 1f);
+        GameObject[] paddles;
+        paddles = GameObject.FindGameObjectsWithTag("Player");
+        foreach (GameObject paddler in paddles)
+        {
+            // paddler.transform.localScale = scale;
+
+            paddler.transform.localScale = scale2;
+
+        }
+      //  waiting = false;
+
+    }
 }

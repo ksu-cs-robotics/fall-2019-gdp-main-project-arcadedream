@@ -1,10 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Networking;
+using Photon.Pun;
+using Photon.Realtime;
 
 
-public class GUN : NetworkBehaviour
+public class GUN : MonoBehaviourPunCallbacks
 {
     public GameObject bullet;
     public bool canShoot = true;
@@ -24,7 +25,7 @@ public class GUN : NetworkBehaviour
     void Update()
     {
         pos = gameObject.transform.position;
-        if ((Input.GetKeyDown(KeyCode.E) || Input.GetButtonDown("SG3Shoot")) && timeLeft <= 0 && canShoot && isLocalPlayer) 
+        if ((Input.GetKeyDown(KeyCode.E) || Input.GetButtonDown("SG3Shoot")) && timeLeft <= 0 && canShoot && photonView.IsMine) 
         {
             mousePos = new Vector3(Input.mousePosition.x, Input.mousePosition.y, 10);
             Vector3 lookPos = Camera.main.ScreenToWorldPoint(mousePos);
@@ -40,13 +41,14 @@ public class GUN : NetworkBehaviour
         }
     }
 
-    [Command]
+    [PunRPC]
     void CmdShootGun(float angle, Vector2 pos)
     {
         Debug.Log("SERVER SHOOT");
-        
-        GameObject bullet_temp = Instantiate(bullet, pos, Quaternion.Euler(0, 0, angle));
-        NetworkServer.Spawn(bullet_temp);
+        //GameObject bullet_temp = Instantiate(bullet, pos, Quaternion.Euler(0, 0, angle));
+        if (photonView.IsMine){
+            PhotonNetwork.Instantiate(bullet.name, pos, Quaternion.Euler(0, 0, angle), 0);
+        }
     }
 
 }

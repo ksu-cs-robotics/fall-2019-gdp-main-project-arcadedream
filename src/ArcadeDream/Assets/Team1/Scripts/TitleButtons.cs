@@ -3,9 +3,10 @@ using UnityEngine;
 
 public class TitleButtons : MonoBehaviour
 {
-    string levelToLoad = "CharacterCreation";
+    string levelToLoad = "loginUI";
     public GameObject titleScreenUI;
     public GameObject settingsUI;
+    public GameObject creditsUI;
 
     private void Start()
     {
@@ -24,6 +25,12 @@ public class TitleButtons : MonoBehaviour
         //make setting UI visable 
         titleScreenUI.SetActive(false);
         settingsUI.SetActive(true);
+    }
+
+    public void Credits()
+    {
+        Debug.Log("Opening Credits");
+        creditsUI.SetActive(true);
     }
 
     public void Quit()

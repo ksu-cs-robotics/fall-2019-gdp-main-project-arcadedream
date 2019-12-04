@@ -21,6 +21,8 @@ public class DialogSystem : MonoBehaviour
     public bool dialogEnded = false;
     public bool outOfRange = true;
 
+    public GameObject shopUI;
+
     //Can add an audio effect of text popping up
     //public AudioClip audioClip;
     //public AudioSource audioSource;
@@ -34,7 +36,11 @@ public class DialogSystem : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (shopUI.activeSelf == true)
+        {
+            OutOfRange();
+            dialogGUI.SetActive(false);
+        }
     }
     //When player enters the collider this is called.
     //If dialog was previously being played it will be reset.
@@ -103,6 +109,12 @@ public class DialogSystem : MonoBehaviour
     //creates the the effect of typing out the string.
     private IEnumerator DisplayString(string stringToDisplay)
     {
+        if(stringToDisplay == "")
+        {
+            shopUI.SetActive(true);
+            yield return 0;
+        }
+
         if(outOfRange == false)
         {
             int stringLength = stringToDisplay.Length;
@@ -163,5 +175,11 @@ public class DialogSystem : MonoBehaviour
             dialogGUI.SetActive(false);
             dialogBoxUI.gameObject.SetActive(false);
         }
+    }
+
+    //When the player clicks the exit shop button
+    public void ExitShopButton()
+    {
+        shopUI.SetActive(false);
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
@@ -9,7 +10,7 @@ using UnityEngine.Networking;
 
 //version: 1.0
 
-public class DatabaseManager : MonoBehaviour
+public class DatabaseManager : MonoBehaviour, IDisposable
 {
     // Start is called before the first frame update
     void Start()
@@ -80,7 +81,7 @@ public class DatabaseManager : MonoBehaviour
         WWWForm form = new WWWForm();
         form.AddField("userID", userID);
         Debug.Log("running");
-        
+
         using (UnityWebRequest www = UnityWebRequest.Post("http://131.123.42.251/Unity/DBPull.php", form))
         {
             yield return www.SendWebRequest();
@@ -104,4 +105,6 @@ public class DatabaseManager : MonoBehaviour
         }));
         return playerObject;
     }
+
+    public void Dispose() { }
 }

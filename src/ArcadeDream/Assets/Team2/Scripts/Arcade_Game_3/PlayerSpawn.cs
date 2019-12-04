@@ -16,22 +16,19 @@ namespace Bloodrun
         public GameObject spawnPoint2;
         public GameObject spawnPoint3;
         public GameObject spawnPoint4;
-        public GameObject button;
         public GameObject countdownObj;
 
         public Text countdown;
 
         private int minPlayers = 1;
         private int maxPlayers = 4;
-        private int seconds = 5;
         [SerializeField]
         private int currentPlayers;
+        private string game;
 
         void Start()
         {
             currentPlayers = PhotonNetwork.PlayerList.Length;
-            button.SetActive(false);
-            countdown.text = "5";
             if (currentPlayers == 0)
             {
                 PhotonNetwork.Instantiate(player.name, spawnPoint.transform.position, Quaternion.identity, 0);
@@ -52,34 +49,42 @@ namespace Bloodrun
 
         void Update()
         {
-            if (currentPlayers >= minPlayers)
-            {
-                button.SetActive(true);
-            }
             if (currentPlayers == maxPlayers)
             {
                 PhotonNetwork.CurrentRoom.IsOpen = false;
                 PhotonNetwork.CurrentRoom.IsVisible = false;
             }
-            if(seconds == 0)
+        }
+
+        public void StartGame(string name)
+        {
+            if (name == "BloodRun")
             {
-                countdownObj.SetActive(false);
-                button.SetActive(false);
-                player.GetComponent<Movement>().canMove = true;
+                PhotonNetwork.LeaveRoom(false);
+                game = "BloodRun";
             }
         }
 
-        public void Wrapper()
+        public override void OnConnectedToMaster()
         {
-            StartCoroutine("Countdown");
+            Debug.Log("OnConnectedToMaster Called in GameManager");
+            PhotonNetwork.JoinRoom(game);
         }
 
-        [PunRPC]
-        private IEnumerator CountDown()
+        public override void OnJoinRoomFailed(short returnCode, string message)
         {
-            yield return new WaitForSeconds(1);
-            countdown.text = $"{seconds}";
-            --seconds;
+            Debug.Log("No room avaliable for " + game + "\nCreating one now");
+            PhotonNetwork.CreateRoom(game, new RoomOptions { MaxPlayers = 4 });
+
+        }
+        public override void OnJoinedRoom()
+        {
+            Debug.Log("Sucssefully Joined Room " + game);
+            if (!PhotonNetwork.IsMasterClient)
+            {
+                Debug.LogError("Trying to Load a level but we are not the Master Client");
+            }
+            PhotonNetwork.LoadLevel(game);
         }
     }
 }

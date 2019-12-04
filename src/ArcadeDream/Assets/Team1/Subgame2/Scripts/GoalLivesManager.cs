@@ -4,14 +4,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
-using Photon.Pun;
 // This is placed on each Goal Zone object in the game and when the ball enters it a point is given to the last player who touched the ball
 
-public class GoalLivesManager : MonoBehaviourPunCallbacks //Not lives points now
+public class GoalLivesManager : NetworkBehaviour //Not lives points now
 {
     public GameObject[] goals;
     Text pointsText;
-    public int points;
+    [SyncVar] public int points;
     string input;
     // Start is called before the first frame update
     void Start()
@@ -31,20 +30,13 @@ public class GoalLivesManager : MonoBehaviourPunCallbacks //Not lives points now
     // So we give the point to the player of the color of the ball
     public void GainPoint(Color goalColor) 
     {
-        goals = GameObject.FindGameObjectsWithTag("GoalZone");
         foreach (GameObject goal in goals)
         {
             if(goal.GetComponent<SpriteRenderer>().color == goalColor)
             {
                 goal.GetComponent<GoalLivesManager>().points++;
-                photonView.RPC("addPoint", RpcTarget.Others, goal);
+                
             }
         }
-    }
-
-    [PunRPC]
-    void addPoint(GameObject goal)
-    {
-        goal.GetComponent<GoalLivesManager>().points++;
     }
 }
